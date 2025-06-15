@@ -1,0 +1,16 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.nav-link {
+    font-size: 15px;
+}
+
+.nav-link.active {
+    background-color: transparent;
+    font-weight: 600;
+}
+
+.sidebar img {
+    max-height: 40px;
+}
