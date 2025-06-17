@@ -161,7 +161,7 @@
                 <label for="password">Password</label>
                 <input type="password" name="password" placeholder="Shh… your secret key to growth" required>
             </div>
-            <button type="submit" class="btn"><a href="{{ route('strategy.index') }}">Launch My Dashboard! ↗</button>
+            <button type="submit" class="btn"><a href="{{ route('strategy.index') }}" style="text-decoration: none">Launch My Dashboard! ↗</button>
         </form>
 
         <p class="forgot-password">Forgot Your Password? 🔒</p>

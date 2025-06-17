@@ -144,22 +144,10 @@
     </div>
     <small class="text-uppercase text-white-50 px-3">Menu</small>
     <div class="menu mt-2">
-        <a href="/dashboard"><i class="bi bi-grid me-2"></i> Home</a>
-
-        <li class="nav-item dropdown dropend">
-            <a class="nav-link dropdown-toggle {{ Request::is('community*') ? 'active' : '' }}" href="#" data-bs-toggle="dropdown">
-                <i class="bi bi-people me-2"></i> Community
-            </a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/community/investor">Investor</a></li>
-                <li><a class="dropdown-item" href="/community/mentor">Mentor</a></li>
-                <li><a class="dropdown-item" href="/community/company">Company</a></li>
-            </ul>
-        </li>
-
+        <a href="/dashboard"><i class="bi bi-grid me-2"></i> Dashboard</a>
+        <a href="/strategy/strategy" class="{{ Request::is('strategy') ? 'active' : '' }}"><i class="bi bi-bar-chart-line me-2"></i> Strategize</a>
         <a href="/myproject" class="{{ Request::is('my-project') ? 'active' : '' }}"><i class="bi bi-clipboard me-2"></i> My Project</a>
-        <a href="/mentor" class="{{ Request::is('community.find-company') ?'active' : '' }}"><i class="bi bi-clipboard-data-fill me-2"></i> Mentor</a>
-        <a href="/dashboard-invest" class="{{ Request::is('invest') ?'active' : '' }}"><i class="bi bi-clipboard-data-fill me-2"></i> Invest</a>
+
     </div>
 </div>
 

@@ -54,25 +54,5 @@ public function show($id)
     return view('community.investor-profile', compact('investor', 'investments'));
 }
 
- public function indexInvest()
-    {
-        // Data dummy (nanti bisa diganti dengan database)
-        $user = [
-            'name' => 'Agraditya Putra',
-            'role' => 'INVESTOR',
-            'avatar' => 'https://i.pravatar.cc/100',
-            'total_projects' => 312,
-            'companies_backed' => 50,
-            'total_invested' => '$20M+',
-        ];
 
-        $chartData = [
-            'labels' => ['2015','2017','2019','2021','2023','2024'],
-            'datasetA' => [5, 10, 15, 25, 40, 20],
-            'datasetB' => [3, 8, 12, 20, 35, 18],
-            'datasetC' => [2, 6, 10, 18, 30, 15],
-        ];
-
-        return view('community.dashboard-invest', compact('user', 'chartData'));
-    }
 }

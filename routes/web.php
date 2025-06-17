@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StepController;
 use App\Http\Controllers\StepInvestController;
 use App\Http\Controllers\ProjectController;
@@ -61,11 +62,12 @@ Route::get('/step8', [StepController::class, 'showStep8'])->name('step8');
 Route::get('/myproject', [ProjectController::class, 'index'])->name('myproject.index');
 
 Route::get('/strategy', [StrategyController::class, 'index'])->name('strategy.index');
+Route::get('/strategy/strategy', [StrategyController::class, 'index1'])->name('strategy.strategy');
 
 Route::get('/community/investor', [InvestorController::class, 'index'])->name('investor.index');
 Route::get('/community/find-investor-2', [InvestorController::class, 'findInvestor'])->name('community.find-investor-2');
 Route::get('/community/investor/{id}', [InvestorController::class, 'show'])->name('investor.profile');
-Route::get('/dashboard', [InvestorController::class, 'indexInvest'])->name('community.dashboard-invest');
+Route::get('/dashboard-invest', [DashboardController::class, 'indexInvest'])->name('community.dashboard-invest');
 
 Route::get('/investment', [InvestmentController::class, 'approve'])->name('investment.approve');
 Route::get('/investment/{id}/details', [InvestmentController::class, 'show'])->name('investment.details');
@@ -132,3 +134,5 @@ Route::get('/step9-invest', [StepInvestController::class, 'showStep9'])->name('s
 
 Route::post('/step9-invest', [StepInvestController::class, 'submitStep9'])->name('step9-invest.submit');
 Route::get('/dashboard-invest', [StepInvestController::class, 'showDashboard'])->name('community.dashboard-invest');
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('community.dashboard-business');
