@@ -91,7 +91,7 @@
     <small class="text-uppercase text-white-50 px-3">Menu</small>
     <div class="menu mt-2">
         <a href="/dashboard"><i class="bi bi-grid me-2"></i> Dashboard</a>
-        <a href="/strategy" class="{{ Request::is('strategy') ? 'active' : '' }}"><i class="bi bi-bar-chart-line me-2"></i> Strategize</a>
+        <a href="/strategy/strategy" class="{{ Request::is('strategy') ? 'active' : '' }}"><i class="bi bi-bar-chart-line me-2"></i> Strategize</a>
         <li class="nav-item dropdown dropend">
     <a class="nav-link dropdown-toggle {{ Request::is('community*') ? 'active' : '' }}" href="#" data-bs-toggle="dropdown" aria-expanded="false">
         <i class="bi-people me-2"></i> Community

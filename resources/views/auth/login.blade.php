@@ -58,17 +58,17 @@
             font-style: italic;
         }
 
-        .btn {
+        .btn-full-width {
             background-color: #1d2653;
             color: white;
-            font-weight: 600;
-            padding: 12px;
+            display: block;
             width: 100%;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-bottom: 16px;
+            text-align: center;
+            padding: 0.5rem 1rem;
+            font-weight: bold;
+            text-decoration: none;
         }
+
 
         .btn:hover {
             opacity: 0.95;
@@ -161,8 +161,12 @@
                 <label for="password">Password</label>
                 <input type="password" name="password" placeholder="Shh… your secret key to growth" required>
             </div>
-            <button type="submit" class="btn"><a href="{{ route('strategy.index') }}" style="text-decoration: none">Launch My Dashboard! ↗</button>
+            <a href="{{ route('investor.index') }}" class="btn btn-costum btn-full-width" style="border-radius: 6px">
+  Launch My Dashboard! ↗
+</a>
+
         </form>
+
 
         <p class="forgot-password">Forgot Your Password? 🔒</p>
         <p class="bottom-text">New to ImpactMate? <a href="{{ route('register.step1') }}">Join here</a> to turn your goals into glory!</p>
@@ -186,7 +190,7 @@
 
     <div class="right-panel">
         <div class="help-btn">
-            <img src="{{ asset('assets/images/max.png') }}" alt="Help">
+            <img src="{{ asset('images/max.png') }}" alt="Help">
             Need Help?
         </div>
     </div>

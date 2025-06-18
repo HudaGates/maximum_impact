@@ -78,8 +78,8 @@
                 <div class="mb-4">
                     <input type="tel" name="phone" class="form-control custom" placeholder="Phone Number" required>
                 </div>
-                <button type="submit" class="btn btn-dark-blue w-100 mb-3"><a href="{{ route('register.step2') }}"> Continue <i class="bi bi-arrow-right ms-2"></i></button>
-                <p class="text-center">Already have an account? <a href="/login" class="text-primary">Login</a></p>
+                <a href="{{ route('register.step2') }}" type="submit" class="btn btn-dark-blue w-100 mb-3"> Continue <i class="bi bi-arrow-right ms-2"></i></a></button>
+                <p class="text-center">Already have an account? <a href="/login" class="text-primary" style="text-decoration: none">Login</a></p>
             </form>
 
             <div class="dot-pattern mt-4 ms-3">
@@ -93,7 +93,7 @@
         <div class="col-md-6 bg-right position-relative">
             <div class="position-absolute bottom-0 end-0 m-4">
                 <div class="help-bubble shadow">
-                    <img src="{{ asset('assets/images/max.png') }}" alt="help" width="24" class="me-2">
+                    <img src="{{ asset('images/max.png') }}" alt="help" width="24" class="me-2">
                     Need Help?
                 </div>
             </div>

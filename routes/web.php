@@ -80,8 +80,12 @@ Route::get('/investment', [InvestmentController::class, 'approve'])->name('inves
 Route::get('/investment/{id}/details', [InvestmentController::class, 'show'])->name('investment.details');
 Route::get('/investment/status', [InvestmentController::class, 'status'])->name('investment.status');
 Route::get('/invest/investment-status', [InvestmentController::class, 'index'])->name('investment.investment-status');
-
-
+Route::get('/investment-report', [InvestmentController::class, 'report'])->name('investment.investment-report');
+Route::get('/investment-expense', [InvestmentController::class, 'expense'])->name('investment.investment-expense');
+Route::get('/investment/add-income', [InvestmentController::class, 'add'])->name('investment.add-income');
+Route::post('/investment/store', [InvestmentController::class, 'store1']);
+Route::get('/investment/add-expense', [InvestmentController::class, 'addexpense'])->name('investment.add-expense');
+Route::post('/expense/store2', [InvestmentController::class, 'store2']);
 
 Route::get('/report-overview', [ReportController::class, 'overview'])->name('reports.overview');
 

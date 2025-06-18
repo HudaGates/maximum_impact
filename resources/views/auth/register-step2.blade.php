@@ -75,7 +75,7 @@
                 <div class="mb-3">
                     <input type="password" name="password" class="form-control custom" placeholder="Password" required>
                 </div>
-                <button type="submit" class="btn btn-dark-blue w-100 mb-3"><a href="{{ route('login') }}"> Continue <i class="bi bi-arrow-right ms-2"></i></button>
+                <a href="{{ route('login') }}" type="submit" class="btn btn-dark-blue w-100 mb-3"> Continue <i class="bi bi-arrow-right ms-2"></i></a></button>
                 <p class="text-center">Already have an account? <a href="/login" class="text-primary">Login</a></p>
             </form>
 
@@ -90,7 +90,7 @@
         <div class="col-md-6 bg-right position-relative">
             <div class="position-absolute bottom-0 end-0 m-4">
                 <div class="help-bubble shadow">
-                    <img src="{{ asset('assets/images/max.png') }}" alt="help" width="24" class="me-2">
+                    <img src="{{ asset('images/max.png') }}" alt="help" width="24" class="me-2">
                     Need Help?
                 </div>
             </div>

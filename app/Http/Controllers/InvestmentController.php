@@ -149,5 +149,103 @@ public function create()
         ]);
     }
 
+public function report()
+    {
+        // Dummy data to simulate database records
+        $data = [
+            [
+                'date' => '02/10/2024',
+                'sender' => 'Mikarta',
+                'source_bank' => 'BCA',
+                'destination_bank' => 'BNI',
+                'amount' => '$3 Million',
+                'funding_type' => 'Series C Funding',
+                'investment_type' => 'Crowdfunding',
+            ],
+            [
+                'date' => '02/10/2024',
+                'sender' => 'Micarta',
+                'source_bank' => 'BCA',
+                'destination_bank' => 'BNI',
+                'amount' => '$3 Million',
+                'funding_type' => 'Series C Funding',
+                'investment_type' => 'Crowdfunding',
+            ],
+            [
+                'no' => 3,
+                'date' => '02/10/2024',
+                'sender' => 'Mikarta',
+                'source_bank' => 'BCA',
+                'destination_bank' => 'BNI',
+                'amount' => '$3 Million',
+                'funding_type' => 'Series C Funding',
+                'investment_type' => 'Crowdfunding',
+            ],
+            [
+                'no' => 4,
+                'date' => '02/10/2024',
+                'sender' => 'Mikarta',
+                'source_bank' => 'BCA',
+                'destination_bank' => 'BNI',
+                'amount' => '$3 Million',
+                'funding_type' => 'Series C Funding',
+                'investment_type' => 'Crowdfunding',
+            ],
+            [
+                'no' => 5,
+                'date' => '02/10/2024',
+                'sender' => 'Mikarta',
+                'source_bank' => 'BCA',
+                'destination_bank' => 'BNI',
+                'amount' => '$3 Million',
+                'funding_type' => 'Series C Funding',
+                'investment_type' => 'Crowdfunding',
+            ],
+            // You can add more dummy data here up to 10 for the first page
+        ];
 
+        return view('investment.investment-report', compact('data'));
+    }
+    public function expense(Request $request)
+    {
+        // Data dummy (biasanya ini dari database)
+        $data = collect([
+            ['date' => '02/10/2024', 'category' => 'Internal', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #001'],
+            ['date' => '02/10/2024', 'category' => 'External', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #002'],
+            ['date' => '02/10/2024', 'category' => 'Internal', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #003'],
+            ['date' => '02/10/2024', 'category' => 'External', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #004'],
+            ['date' => '02/10/2024', 'category' => 'Internal', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #005'],
+            ['date' => '02/10/2024', 'category' => 'External', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #006'],
+            ['date' => '02/10/2024', 'category' => 'Internal', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #007'],
+            ['date' => '02/10/2024', 'category' => 'External', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #008'],
+            ['date' => '02/10/2024', 'category' => 'Internal', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #009'],
+            ['date' => '02/10/2024', 'category' => 'External', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #010'],
+            ['date' => '02/10/2024', 'category' => 'Internal', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #011'],
+        ]);
+
+        // Pagination manual (karena data dari array)
+
+
+        return view('investment.investment-expense', compact('data'));
+    }
+    public function add()
+    {
+        return view('investment.add-income');
+    }
+
+    public function store1(Request $request)
+    {
+        // Validasi & simpan data di sini
+        return redirect()->back()->with('success', 'Income added successfully!');
+    }
+     public function addexpense()
+    {
+        return view('investment.add-expense');
+    }
+
+    public function store2(Request $request)
+    {
+        // Validasi dan proses simpan (jika diperlukan)
+        return redirect()->back()->with('success', 'Expense added successfully!');
+    }
 }
