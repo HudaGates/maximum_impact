@@ -38,4 +38,40 @@ class ProjectController extends Controller
 
         return redirect()->route('myprojects.create')->with('success', 'Project submitted successfully!');
     }
+    public function sdgs()
+    {
+        return view('myproject.sdgs');
+    }
+    public function indicators()
+{
+    return view('myproject.indikator');
+}
+public function metrics()
+    {
+        $metrics = [
+            [
+                'id' => 1,
+                'title' => 'Client Individuals: Smallholder',
+                'description' => 'Number of unique smallholder farmer individuals who were clients during the reporting period.'
+            ],
+            [
+                'id' => 2,
+                'title' => 'Supplier Individuals: Smallholder',
+                'description' => 'Number of smallholder farmer individuals who sold to the organization during the reporting period.'
+            ],
+            [
+                'id' => 3,
+                'title' => 'Payments to Supplier Individuals: Smallholder',
+                'description' => 'Value of payments made to smallholder farmer individuals who sold to the organization.'
+            ],
+            [
+                'id' => 4,
+                'title' => 'Percent Supplier Payments to Smallholders',
+                'description' => 'Payments made to smallholder farmer suppliers as a percentage of total payments made to all suppliers.'
+            ],
+            // ...tambahkan sesuai kebutuhan
+        ];
+
+        return view('myproject.metrics', compact('metrics'));
+    }
 }

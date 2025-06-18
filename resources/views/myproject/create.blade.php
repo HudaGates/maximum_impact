@@ -193,7 +193,7 @@
 
                 <div class="mb-3">
                     <label class="form-label">SDGs Categories, Indicators, and Metrics</label>
-                    <input type="text" name="sdgs" class="form-control" placeholder="Add SDGs, Indicators, Metric">
+                    <a href="{{ route('myproject.sdgs') }}" type="button" name="sdgs" class="form-control text-center" style="text-decoration: none">Add SDGs, Indicators, Metric</a></button>
                 </div>
 
                 <h5 class="fw-bold mt-4">Maps</h5>

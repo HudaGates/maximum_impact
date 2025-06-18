@@ -62,6 +62,9 @@ Route::get('/step8', [StepController::class, 'showStep8'])->name('step8');
 Route::get('/myproject', [ProjectController::class, 'index'])->name('myproject.index');
 Route::get('/myproject/create', [ProjectController::class, 'create'])->name('projects.create');
 Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
+Route::get('myproject/create/sdgs', [ProjectController::class, 'sdgs'])->name('myproject.sdgs');
+Route::get('/myproject/create/sdgs/indicators', [ProjectController::class, 'indicators'])->name('myproject.indikator');
+Route::get('/myproject/create/sdgs/metrics', [ProjectController::class, 'metrics'])->name('myproject.metrics');
 
 Route::get('/strategy', [StrategyController::class, 'index'])->name('strategy.index');
 Route::get('/strategy/strategy', [StrategyController::class, 'index1'])->name('strategy.strategy');
@@ -71,9 +74,13 @@ Route::get('/community/find-investor-2', [InvestorController::class, 'findInvest
 Route::get('/community/investor/{id}', [InvestorController::class, 'show'])->name('investor.profile');
 Route::get('/dashboard-invest', [DashboardController::class, 'indexInvest'])->name('community.dashboard-invest');
 
+Route::get('/invest', [InvestmentController::class, 'create'])->name('investment.create');
+Route::post('/invest', [InvestmentController::class, 'store'])->name('investment.store');
 Route::get('/investment', [InvestmentController::class, 'approve'])->name('investment.approve');
 Route::get('/investment/{id}/details', [InvestmentController::class, 'show'])->name('investment.details');
 Route::get('/investment/status', [InvestmentController::class, 'status'])->name('investment.status');
+Route::get('/invest/investment-status', [InvestmentController::class, 'index'])->name('investment.investment-status');
+
 
 
 Route::get('/report-overview', [ReportController::class, 'overview'])->name('reports.overview');

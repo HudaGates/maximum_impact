@@ -98,4 +98,56 @@ class InvestmentController extends Controller
 
         return view('investment.status', compact('investments'));
 }
+public function create()
+    {
+        return view('investment.create', [
+            'projects' => ['Project A- Housing Development', 'Project B - Application Development', 'Project C - Renewable Energy Factory'],
+            'fundingTypes' => ['Equity', 'Debt', 'Grant'],
+            'paymentMethods' => ['Bank Transfer', 'Credit Card', 'E-Wallet']
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'amount' => 'required|numeric|min:1',
+            'funding_type' => 'required',
+            'project' => 'required',
+            'payment_method' => 'required',
+        ]);
+
+        // Simpan ke database atau proses lainnya di sini...
+
+        return redirect()->route('investment.create')->with('success', 'Investment registered successfully.');
+    }
+     public function index()
+    {
+        // Kamu bisa kirim data jika perlu
+        return view('investment.investment-status');
+    }
+    public function show1()
+    {
+        $investment = Investment::where('user_id', auth()->id())->first();
+
+        if (!$investment) {
+            abort(404, 'Investment not found');
+        }
+
+        // Auto update dari 'Processed' ke 'Approved' jika lebih dari 1 menit
+        if ($investment->status === 'Processed' && $investment->status_updated_at) {
+            $elapsed = Carbon::now()->diffInMinutes($investment->status_updated_at);
+
+            if ($elapsed >= 1) { // kamu bisa ganti waktunya (misalnya 10)
+                $investment->status = 'Approved';
+                $investment->status_updated_at = Carbon::now();
+                $investment->save();
+            }
+        }
+
+        return view('investment.investment-status', [
+            'status' => $investment->status
+        ]);
+    }
+
+
 }
