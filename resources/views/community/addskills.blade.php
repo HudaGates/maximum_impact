@@ -26,7 +26,7 @@
                 Save
             </button>
         </form>
-         <form id="skillsForm" method="POST" action="*" style="display: flex; flex-direction: column; gap: 15px;">
+         <form id="skillsForm" method="POST" action="{{ route('skills.store') }}" style="display: flex; flex-direction: column; gap: 15px;">
             @csrf
         </form>
 

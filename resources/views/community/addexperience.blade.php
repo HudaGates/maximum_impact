@@ -3,7 +3,7 @@
         <span class="close" onclick="closeExperiencePopup()" style="float: right; font-size: 26px; font-weight: bold; cursor: pointer;">&times;</span>
         <h2 style="font-size: 22px; font-weight: bold; margin-bottom: 20px;">Add Experience</h2>
 
-        <form method="POST" action="*" style="display: flex; flex-direction: column; gap: 15px;">
+        <form method="POST" action="{{ route('experience.store') }}" style="display: flex; flex-direction: column; gap: 15px;">
             @csrf
 
             <div>

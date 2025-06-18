@@ -99,13 +99,16 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/community/mentor', [MentorController::class, 'index'])->name('mentors.index');
 Route::get('/community/mentor/{id}', [MentorController::class, 'show'])->name('mentors.show');
 Route::get('/mentor', [MentorController::class, 'showDashboard'])->name('mentor.dashboard');
-
+Route::post('/education/store', [MentorController::class, 'storeEducation'])->name('education.store');
+Route::post('/experience/store', [MentorController::class, 'storeExperience'])->name('experience.store');
+Route::post('/skills/store', [MentorController::class, 'storeSkills'])->name('skills.store');
 
 
 Route::get('/community/company', [CompanyReportController::class, 'comp'])->name('company.comp');
 Route::get('/company-profile/{name}', [CompanyReportController::class, 'show'])->name('company.show');
 Route::get('/community/company/profile', [CompanyReportController::class, 'index1'])->name('company.profile');
 Route::post('/members/store', [CompanyReportController::class, 'store'])->name('members.store');
+Route::get('/company-profiles', [CompanyreportController::class, 'profile']);
 
 Route::get('/', [LandingPageController::class, 'index']);
 

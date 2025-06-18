@@ -52,6 +52,45 @@ class MentorController extends Controller
     return view('community.dashboard', compact('mentor'));
 }
 
+ public function storeEducation(Request $request)
+    {
+        $request->validate([
+            'school' => 'required|string|max:255',
+            'degree' => 'required|string|max:255',
+            'start_date' => 'required|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+        ]);
 
+        // Simpan ke DB (model Education diasumsikan sudah ada)
+        \App\Models\Education::create($request->all());
+
+        return redirect()->back()->with('success', 'Education added successfully.');
+    }
+
+    public function storeExperience(Request $request)
+    {
+        $request->validate([
+            'company' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
+            'start_date' => 'required|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+        ]);
+
+        \App\Models\Experience::create($request->all());
+
+        return redirect()->back()->with('success', 'Experience added successfully.');
+    }
+
+    public function storeSkills(Request $request)
+    {
+        $request->validate([
+            'skill' => 'required|string|max:255',
+            'level' => 'required|in:Beginner,Intermediate,Advanced',
+        ]);
+
+        \App\Models\Skill::create($request->all());
+
+        return redirect()->back()->with('success', 'Skill added successfully.');
+    }
 
 }

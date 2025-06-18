@@ -264,5 +264,39 @@ class CompanyReportController extends Controller
 
     return redirect()->route('community.company-profile', ['tab' => 'people'])->with('success', 'Member added!');
 }
+public function profile()
+    {
+        // Data statis untuk contoh (bisa diambil dari database jika dibutuhkan)
+        $company = [
+            'name' => 'Lion Bird',
+            'type' => 'Software as a Service (SaaS)',
+            'description' => 'To become a global leader in providing innovative, secure, and sustainable cloud-based software solutions, empowering businesses worldwide to operate more efficiently, flexibly, and competitively in the digital economy.',
+            'phone' => '070 4531 9507',
+            'location' => 'New York',
+            'logo' => 'images/lion-bird.png',
+        ];
 
+        $team = [
+    [
+        'name' => 'Claire',
+        'position' => 'Web Designer',
+        'image' => 'images/team/claire.png',
+    ],
+    [
+        'name' => 'Albert Flores',
+        'position' => 'Marketing Coordinator',
+        'image' => 'images/team/albert.png',
+    ],
+    // ... dan seterusnya
+];
+    $fundings = [
+    ['team' => 'Dallas Cowboys', 'industry' => 'Software', 'stage' => 'Series A', 'amount' => '$2 Million', 'year' => '2021'],
+    ['team' => 'Chicago Bears', 'industry' => 'Renewable Energy', 'stage' => 'Seed', 'amount' => '$1.5 Million', 'year' => '2020'],
+    ['team' => 'Green Bay Packers', 'industry' => 'Software', 'stage' => 'Series A', 'amount' => '$2 Million', 'year' => '2021'],
+    ['team' => 'Carolina Panthers', 'industry' => 'Health Care', 'stage' => 'Series B', 'amount' => '$3 Million', 'year' => '2022'],
+];
+
+
+        return view('community.company-profiles', compact('company', 'team', 'fundings'));
+    }
 }
