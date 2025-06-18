@@ -60,6 +60,8 @@ Route::post('/step7', [StepController::class, 'submitStep7'])->name('step7.submi
 Route::get('/step8', [StepController::class, 'showStep8'])->name('step8');
 
 Route::get('/myproject', [ProjectController::class, 'index'])->name('myproject.index');
+Route::get('/myproject/create', [ProjectController::class, 'create'])->name('projects.create');
+Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
 
 Route::get('/strategy', [StrategyController::class, 'index'])->name('strategy.index');
 Route::get('/strategy/strategy', [StrategyController::class, 'index1'])->name('strategy.strategy');

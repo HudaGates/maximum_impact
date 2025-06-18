@@ -50,7 +50,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 
     {{-- Project Lists --}}
@@ -76,7 +76,7 @@
 
     {{-- Button --}}
     <div class="text-center mt-4">
-        <button class="btn text-white px-5 py-2" style="background-color: #222d66;">Register New Project</button>
+        <a href="{{ route('projects.create') }}" class="btn text-white px-5 py-2" style="background-color: #222d66; text-decoration: none;">Register New Project</a></button>
     </div>
 </div>
 <script>

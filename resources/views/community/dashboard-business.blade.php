@@ -40,7 +40,6 @@ canvas.donut {
   </div>
 </div><br>
 
-        <!-- Bootstrap & Chart.js CDN -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -48,13 +47,12 @@ canvas.donut {
   <canvas id="reportDonut" width="120" height="120" class="mx-auto mb-3"></canvas>
   <h5 class="fw-bold text-dark mb-1">Last Month’s<br>Completed Report</h5><br><br>
 
-  <!-- Arrow Button -->
+
   <div onclick="toggleReport()" style="cursor: pointer;" class="mt-2">
     <i id="toggleArrow" class="bi bi-chevron-down fs-5 text-secondary"></i>
   </div>
 </div>
 
-<!-- Collapsible Report Section -->
 <div id="reportSection" class="card p-3" style="background: #F6E9B5; display: none;">
   <ul class="list-unstyled mb-0">
     <li class="d-flex justify-content-between align-items-center mb-3">
