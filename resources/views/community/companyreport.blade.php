@@ -20,8 +20,8 @@
     }
 
     .report-title {
-    color: #223060; /* biru tua */
-    margin-bottom: 35px; /* jarak bawah */
+    color: #223060;
+    margin-bottom: 35px;
     font-size: 25px;
     font-weight: bold;
 }
@@ -43,7 +43,7 @@
 }
 
 .company-header {
-    background-color: #223060; /* biru tua */
+    background-color: #223060;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -491,7 +491,7 @@
 
 
     <div class="main-wrapper">
-        <!-- KIRI -->
+
         <div class="left-column">
            <div class="company-box">
                 <div class="company-header">
@@ -560,9 +560,9 @@
 
 
 
-        <!-- KANAN -->
+
         <div class="report-box-container">
-            <!-- Pathway Box -->
+
             <div>
                 <div class="report-heading">Your Monthly Report Pathway</div>
                 <div class="report-box">
@@ -579,7 +579,7 @@
                 </div>
             </div>
 
-            <!-- Mini Progress Boxes -->
+
             <div class="mini-boxes">
                 <div class="mini-box">
                     <div class="mini-circle">
@@ -633,7 +633,7 @@
                 </div>
             </div>
 
-            <!-- Recent Progress Chart Box -->
+
         <div style="margin-top: 40px;">
                 <div class="report-box" style="width: 600px; padding: 20px 24px; flex-direction: column; align-items: flex-start; position: relative;">
                     <div style="position: absolute; top: 12px; left: 24px; font-weight: bold; color: #1c2d59; font-size: 16px;">
@@ -654,7 +654,6 @@
 
     </div>
 
-         <!-- Latest Project Funds -->
 <div class="project-funds-box">
     <div class="table-responsive">
         <h5><strong>Latest Project Funds</strong></h5>
@@ -731,7 +730,7 @@
             <span>Total = 1 - 10 of 200</span>
         </div>
 
-        <!-- HANYA bagian ini yang dibungkus border -->
+
         <div class="pagination-nav">
             <span class="pagination-link">Previous</span>
             <span class="pagination-link active">1</span>
@@ -800,12 +799,12 @@
         }
     });
 
-    // Toggle buttons
+
     const buttons = document.querySelectorAll('.progress-btn');
     buttons.forEach(btn => {
         btn.addEventListener('click', function () {
-            buttons.forEach(b => b.classList.remove('active')); // reset all
-            this.classList.add('active'); // activate current
+            buttons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
 
             const type = this.id.replace('btn-', '');
             updateChart(chartData[type]);

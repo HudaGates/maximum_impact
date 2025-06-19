@@ -4,10 +4,8 @@
 <div class="container-fluid px-4 mt-4">
     <h3 class="fw-bold mb-4" style="color: #232F65;">Mentor Profile</h3>
 
-    <!-- Mentor Profile Card -->
     <div class="card shadow-sm border-0 p-4 mb-4">
         <div class="row align-items-center">
-            <!-- Profile Image & Contact -->
             <div class="col-md-3 text-center mb-3 mb-md-0">
                 <img src="{{ asset('images/mask-group.png') }}" alt="Profile Logo" class="img-fluid rounded mb-3" width="120" height="120">
                 <div class="text-muted small">
@@ -17,7 +15,6 @@
                 </div>
             </div>
 
-            <!-- Profile Detail -->
             <div class="col-md-9">
                 <h4 class="fw-bold mb-1">Jane Cooper</h4>
                 <p class="text-success mb-2">UI/UX Design</p>
@@ -45,9 +42,7 @@
         </div>
     </div>
 
-    <!-- CV & Portfolio Section -->
     <div class="row">
-        <!-- CV Box -->
         <div class="col-md-6 mb-4">
             <div class="card shadow-sm border-0 text-center h-100 p-4">
                 <h6 class="text-muted mb-3">Curriculum Vitae</h6>
@@ -60,7 +55,6 @@
             </div>
         </div>
 
-        <!-- Portfolio Box -->
         <div class="col-md-6 mb-4">
             <div class="card shadow-sm border-0 text-center h-100 p-4">
                 <h6 class="text-muted mb-3">Portfolio</h6>

@@ -21,16 +21,16 @@ canvas.donut {
 </div>
 
 <div class="row px-4 mt-4">
-    <!-- Left Column -->
+
     <div class="col-md-4">
         <div class="card shadow-sm rounded overflow-hidden" style="max-width: 400px;">
-  <!-- Header Section -->
+
   <div class="px-4 py-3" style="background-color: #F6E9B5;">
     <h6 class="fw-bold text-dark mb-1">Welcome Back!</h6>
     <p class="mb-0 text-muted small">ImpactMate Dashboard</p>
   </div>
 
-  <!-- Content Section -->
+
   <div class="d-flex align-items-center gap-3 px-4 py-3 bg-white">
     <img src="{{ asset('images/lion.png') }}" alt="Logo" class="rounded-circle" width="64" height="64">
     <div>
@@ -78,18 +78,17 @@ canvas.donut {
   </ul>
 </div>
 
-<!-- Bootstrap Icons -->
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
 
     </div>
 
-    <!-- Right Column -->
+
     <div class="col-md-8">
        <div class="goal-pathway mb-4">
     <h5 class="fw-bold mb-4">Your 6-Month Goal Pathway</h5>
     <div class="row g-4">
-        <!-- Revenue -->
         <div class="col-md-4">
             <div class="goal-card text-center p-3 shadow-sm rounded bg-white">
                 <canvas id="revenueDonut" width="100" height="100"></canvas>
@@ -97,7 +96,7 @@ canvas.donut {
                 <small>IDR 15.000.000 / IDR 20.000.000</small>
             </div>
         </div>
-        <!-- Net Profit -->
+
         <div class="col-md-4">
             <div class="goal-card text-center p-3 shadow-sm rounded bg-white">
                 <canvas id="profitDonut" width="100" height="100"></canvas>
@@ -105,7 +104,7 @@ canvas.donut {
                 <small>IDR 12.400.000 / IDR 20.000.000</small>
             </div>
         </div>
-        <!-- Impact -->
+
         <div class="col-md-4">
             <div class="goal-card text-center p-3 shadow-sm rounded bg-white">
                 <canvas id="impactDonut" width="100" height="100"></canvas>
@@ -126,7 +125,7 @@ canvas.donut {
 </div>
     </div><br>
 
-<!-- 2. Chart.js & Donut Code -->
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 <div class="card mb-3 p-4 text-center shadow-sm">
@@ -182,7 +181,7 @@ const centerTextPlugin = {
     const color = config.options.customColor || '#333';
     const fontFamily = config.options.customFont || 'Poppins, Arial, sans-serif';
 
-    const fontSize = Math.min(width, height) / 4; // Responsive font size
+    const fontSize = Math.min(width, height) / 4;
 
     ctx.save();
     ctx.font = `bold ${fontSize}px ${fontFamily}`;

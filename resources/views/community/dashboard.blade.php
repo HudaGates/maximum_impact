@@ -129,9 +129,9 @@
     display: flex;
     align-items: center;
     background-color: #f0f0f0;
-    padding: 2px 6px; /* Ukuran padding lebih kecil */
+    padding: 2px 6px;
     border-radius: 4px;
-    font-size: 12px; /* Ukuran teks lebih kecil */
+    font-size: 12px;
     color: #333;
     border: 1px solid #ccc;
     text-decoration: none;
@@ -139,7 +139,7 @@
 }
 
 .edit-btn-profile img {
-    width: 14px; /* Ikon lebih kecil */
+    width: 14px;
     height: 14px;
 }
 .edit-btn-about {
@@ -149,9 +149,9 @@
     display: flex;
     align-items: center;
     background-color: #f0f0f0;
-    padding: 2px 6px; /* Ukuran padding lebih kecil */
+    padding: 2px 6px;
     border-radius: 4px;
-    font-size: 12px; /* Ukuran teks lebih kecil */
+    font-size: 12px;
     color: #333;
     border: 1px solid #ccc;
     text-decoration: none;
@@ -168,16 +168,16 @@
     display: flex;
     align-items: center;
     background-color: #f0f0f0;
-    padding: 2px 6px; /* Ukuran padding lebih kecil */
+    padding: 2px 6px;
     border-radius: 4px;
-    font-size: 12px; /* Ukuran teks lebih kecil */
+    font-size: 12px;
     color: #333;
     border: 1px solid #ccc;
     text-decoration: none;
     gap: 4px;
 }
 .edit-btn-experience img {
-    width: 14px; /* Ikon lebih kecil */
+    width: 14px;
     height: 14px;
 }
 
@@ -185,19 +185,15 @@
 </style>
 
 <div class="container-fluid">
-    {{-- Profile Card --}}
     <div class="mentor-card">
         <div class="mentor-header">
-            {{-- Profile Image --}}
             <img src="{{ asset('images/profil-mentor.png') }}" alt="Profile" class="profile-img">
         </div>
         <div class="mentor-body">
-            {{-- Edit Button --}}
             <a href="#" class="edit-btn-profile">
                 <img src="{{ asset('images/logo-pensil.png') }}" alt="Edit Icon"> Edit
             </a>
 
-            {{-- University Info --}}
             <div class="mentor-university">
                 <img src="{{ asset('images/logo-universitas.png') }}" alt="University Icon">
                 <span class="text-sm text-gray-700">Universitas Trisakti, Jakarta Barat</span>
@@ -210,9 +206,7 @@
         </div>
     </div>
 
-    {{-- About Section --}}
     <div class="about-section">
-        {{-- Edit Button --}}
         <a href="#" class="edit-btn-about">
             <img src="{{ asset('images/logo-pensil.png') }}" alt="Edit Icon"> Edit
         </a>
@@ -245,19 +239,14 @@
             </div>
         </div>
 
-  <!-- Content Experience -->
   <div style="display: flex; gap: 16px;">
-    <!-- Logo -->
     <img src="{{ asset('images/logo.png') }}" alt="MAXY Logo" style="width: 48px; height: 48px; object-fit: contain; margin-top: 10px;">
-    <!-- Experience Info -->
     <div>
       <h5 style="font-weight: bold; margin-top: 20px;">MAXY Academy</h5>
       <p style="margin: 1px 0; color: #555;">1 year</p>
       <p style="margin: 1px 0; color: #888; font-size: 13px;">On Site</p>
 
-      <!-- Timeline -->
       <div style="margin-top: 16px; padding-left: 10px; border-left: 2px solid #ccc;">
-        <!-- Job 1 -->
         <div style="position: relative; margin-bottom: 24px;">
           <div style="width: 10px; height: 10px; background: black; border-radius: 50%; position: absolute; left: -16px; top: 4px;"></div>
           <p style="font-weight: bold; margin: 0;">Mentor UI/UX Designer</p>
@@ -266,7 +255,6 @@
           <p style="margin: 0; font-size: 14px; color: #777;">Jakarta Selatan-Jakarta-Indonesia</p>
         </div>
 
-        <!-- Job 2 -->
         <div style="position: relative; margin-bottom: 24px;">
           <div style="width: 10px; height: 10px; background: black; border-radius: 50%; position: absolute; left: -16px; top: 4px;"></div>
           <p style="font-weight: bold; margin: 0;">Creative Designer</p>
@@ -275,7 +263,6 @@
           <p style="margin: 0; font-size: 14px; color: #777;">Jakarta Selatan-Jakarta-Indonesia</p>
         </div>
 
-        <!-- Job 3 -->
         <div style="position: relative;">
           <div style="width: 10px; height: 10px; background: black; border-radius: 50%; position: absolute; left: -16px; top: 4px;"></div>
           <p style="font-weight: bold; margin: 0;">Creative Designer</p>
@@ -311,14 +298,11 @@
     });
 </script>
 
-<!-- Container putih Education Box -->
 @include('community.addeducation')
     <div style="background-color: #ffffff; padding: 24px; border-radius: 12px; margin-top: 20px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
-        <!-- Header -->
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <h2 style="font-size: 24px; font-weight: bold; margin: 0;">Education</h2>
 
-            <!-- Tombol tambah dan edit -->
             <div style="display: flex; align-items: center; gap: 12px;">
                 <button onclick="openEducationPopup()" title="Add Education"
                     style="background: none; border: none; font-size: 24px; cursor: pointer; padding: 4px; margin-top: 4px;">
@@ -348,14 +332,11 @@
             </div>
         </div>
 
-        <!-- Isi -->
         <div style="display: flex; align-items: center; margin-top: 20px;">
-            <!-- Logo bulat -->
             <div style="width: 60px; height: 60px; border-radius: 50%; background-color: #E9D8FD; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
                 <img src="{{ asset('images/logo-universitas.png') }}" alt="University Logo" style="width: 28px; height: 28px;">
             </div>
 
-            <!-- Informasi -->
             <div>
                 <div style="font-weight: 600; font-size: 16px;">Universitas Trisakti</div>
                 <div style="color: #666; font-size: 14px;">2021 – 2025</div>
@@ -389,14 +370,12 @@
     });
 </script>
 
-<!-- Container putih Skills Box -->
 @include('community.addskills')
     <div style="background-color: #ffffff; padding: 24px; border-radius: 12px; margin-top: 20px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
-        <!-- Header -->
+
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <h2 style="font-size: 24px; font-weight: bold; margin: 0;">Skills</h2>
 
-            <!-- Tombol tambah dan edit -->
             <div style="display: flex; align-items: center; gap: 12px;">
                 <button onclick="openSkillsPopup()" title="Add Skills"
                     style="background: none; border: none; font-size: 24px; cursor: pointer; padding: 4px; margin-top: 4px;">
@@ -428,18 +407,15 @@
             </div>
         </div>
 
-       <!-- Isi -->
+
         <div style="display: flex; flex-direction: column; align-items: start; margin-top: 20px;" id="skillsBox">
-            <!-- Informasi -->
             <div id="skillsInfoText" style="font-size: 16px;">
                 Tell us about your suitability for finding new opportunities - 50% of recruiters use skills data to fill positions
             </div>
 
-            <!-- Skills yang disimpan -->
             <div id="skillsDisplay" style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px;"></div>
         </div>
 
-           <!-- Daftar Skills yang Dipilih -->
             <div id="selectedSkills" style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px;"></div>
         </div>
     </div>
@@ -459,7 +435,6 @@
         const skillsInput = document.getElementById('skillsInput');
         const inputSkills = skillsInput.value.split(',').map(s => s.trim()).filter(s => s !== '');
 
-        // Tampilkan skill hanya di tampilan utama (mentor.blade.php)
         const skillsDisplay = document.getElementById('skillsDisplay');
         const skillsInfoText = document.getElementById('skillsInfoText');
 
@@ -484,7 +459,6 @@
             });
         }
 
-        // Tutup popup & reset input
         closeSkillsPopup();
         skillsInput.value = '';
     }
@@ -505,7 +479,6 @@
             });
         });
 
-        // Pasangkan tombol Save
         const saveButton = document.getElementById('saveSkillsBtn');
         if (saveButton) {
             saveButton.addEventListener('click', saveSkills);

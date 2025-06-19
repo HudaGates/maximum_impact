@@ -6,10 +6,9 @@
 <h2 class="fw-bold mb-4">Profile Company</h2>
 
 <div class="card shadow-sm border-0 rounded-4 mb-4 p-4 d-flex flex-row align-items-start" style="max-width: 800px;">
-    <!-- Logo Perusahaan -->
+
     <img src="{{ asset($company['logo']) }}" alt="Logo" class="me-4 rounded-3" style="width: 100px; height: 100px; object-fit: contain;">
 
-    <!-- Detail Perusahaan -->
     <div class="flex-grow-1">
         <h4 class="fw-bold text-dark mb-1">{{ $company['name'] }}</h4>
         <div class="text-success fw-semibold mb-2">{{ $company['type'] }}</div>

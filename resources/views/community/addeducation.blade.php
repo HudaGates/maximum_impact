@@ -32,7 +32,7 @@
             </div>
 
            <div style="display: flex; gap: 20px;">
-                <!-- Input Bulan -->
+
                 <div style="flex: 1;">
                     <label style="display: block; font-weight: 600;">Start Date</label>
                     <input type="text" name="dayMonth" pattern="^([0][1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])$"
@@ -41,7 +41,6 @@
                         style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
                 </div>
 
-                <!-- Input Tahun -->
                 <div style="flex: 1;">
                     <input type="number" name="Year" min="1900" max="2100"
                         placeholder="YYYY"
@@ -52,7 +51,6 @@
 
 
               <div style="display: flex; gap: 20px;">
-                <!-- Input Bulan -->
                 <div style="flex: 1;">
                     <label style="display: block; font-weight: 600;">End Date</label>
                     <input type="text" name="dayMonth" pattern="^([0][1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])$"
@@ -61,7 +59,6 @@
                         style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
                 </div>
 
-                <!-- Input Tahun -->
                 <div style="flex: 1;">
 
                     <input type="number" name="Year" min="1900" max="2100"

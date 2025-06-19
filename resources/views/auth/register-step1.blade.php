@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <title>{{ $title ?? 'Register' }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap 5 -->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
@@ -57,7 +56,7 @@
 <body>
 <div class="container-fluid h-100">
     <div class="row h-100">
-        <!-- Left -->
+
         <div class="col-md-6 d-flex flex-column justify-content-center align-items-start p-5">
             <div class="dot-pattern mb-4 ms-auto me-3">
                 @for ($i = 0; $i < 25; $i++)
@@ -89,7 +88,6 @@
             </div>
         </div>
 
-        <!-- Right -->
         <div class="col-md-6 bg-right position-relative">
             <div class="position-absolute bottom-0 end-0 m-4">
                 <div class="help-bubble shadow">

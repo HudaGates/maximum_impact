@@ -54,7 +54,6 @@
     <button class="btn text-white" style="background-color: #1F2A69;">Search</button>
 </div>
 
-<!-- Add to Wishlist Button -->
 <div class="d-flex justify-content-end mb-4" style="max-width: 1000px;">
     <button style="
         background: white;

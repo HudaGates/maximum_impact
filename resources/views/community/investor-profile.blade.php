@@ -1,10 +1,9 @@
-@extends('layouts.app') {{-- Gunakan layout utama Anda --}}
+@extends('layouts.app')
 
 @section('content')
 <div class="container py-4">
     <h2 class="fw-bold text-dark mb-4">Investor Profile</h2>
 
-    {{-- Profile Section --}}
     <div class="d-flex align-items-center mb-5">
         <img src="{{ asset('images/lion.png') }}" alt="Investor Logo" width="150" class="me-4 rounded">
         <div>
@@ -15,7 +14,6 @@
         </div>
     </div>
 
-    {{-- Previous Investment --}}
     <h5 class="fw-bold text-dark mb-4">Previous Investment</h5>
     <div class="table-responsive">
         <table class="table mb-0">
@@ -59,7 +57,6 @@
         </table>
     </div>
 
-    {{-- Pagination Info --}}
     <div class="d-flex align-items-center justify-content-start mt-3 small">
         <span class="me-2">Row per page</span>
         <select class="form-select form-select-sm w-auto me-3" style="min-width: 60px;">

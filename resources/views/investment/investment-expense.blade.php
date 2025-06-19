@@ -18,7 +18,7 @@
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     font-weight: 500;
-    color: #6B7280; /* abu */
+    color: #6B7280;
 }
 
 .tab-btn.active-tab {
@@ -31,19 +31,16 @@
 <div class="container-fluid px-4 py-4">
     <h2 class="fw-bold mb-3">Investment Report</h2>
 
-    <!-- Tab Navigation -->
     <div class="tab-wrapper mb-3">
     <a href="{{ route('investment.investment-report') }}" class="tab-btn" style="text-decoration: none">Income</a></button>
     <button class="tab-btn active-tab">Expense</button>
 </div>
 
-
-    <!-- Income Overview -->
     <div class="bg-white p-4 rounded shadow-sm">
         <h5 class="fw-bold mb-4">Expense Tracker</h5>
 
         <div class="d-flex justify-content-end align-items-center gap-2 mb-3">
-    <!-- Search Box -->
+
     <div class="position-relative" style="width: 260px;">
         <input type="text" class="form-control ps-5 py-2 rounded" placeholder="Search Data"
                style="background-color: #F9FAFB; border: 1px solid #E5E7EB;">
@@ -92,7 +89,6 @@
         </tfoot>
     </table>
 
-    <!-- Pagination footer -->
     <div class="d-flex justify-content-between align-items-center mt-2">
         <div>
             <label>Row per page</label>

@@ -2,7 +2,6 @@
 
 @section('content')
 <style>
-    /* Layout */
 .sdgs-wrapper {
     display: flex;
     padding: 20px;
@@ -10,7 +9,6 @@
     font-family: 'Poppins', sans-serif;
 }
 
-/* Sidebar */
 .sdgs-sidebar {
     width: 240px;
     padding-top: 10px;
@@ -54,12 +52,10 @@
     margin-right: 6px;
 }
 
-/* Main */
 .sdgs-main {
     flex: 1;
 }
 
-/* Search bar */
 .search-bar {
     display: flex;
     justify-content: flex-end;
@@ -85,7 +81,6 @@
     cursor: pointer;
 }
 
-/* Grid SDG */
 .sdgs-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -109,7 +104,7 @@
     border-radius: 16px;
 }
 
-/* Checkbox */
+
 .sdg-checkbox {
     position: absolute;
     bottom: 10px;
@@ -130,7 +125,7 @@
     text-decoration: none;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
     .sdgs-wrapper {
         flex-direction: column;
@@ -151,7 +146,7 @@
 </style>
 <div class="sdgs-wrapper">
 
-    <!-- Sidebar Filter -->
+
     <div class="sdgs-sidebar">
 
         <h6>FILTER</h6>
@@ -167,7 +162,7 @@
         </div>
     </div>
 
-    <!-- Main Content -->
+
     <div class="sdgs-main">
 
         <div class="input-group mb-4" style="max-width: 1000px;">

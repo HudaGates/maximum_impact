@@ -74,7 +74,6 @@
 
     <h3 class="mb-4 fw-bold" style="color:#1F2A69">Profile Company</h3>
 
-    {{-- Tabs --}}
     <div class="container-fluid p-4" style="border: 3px solid #ccc; border-radius: 12px;">
 
     <div class="d-flex border-bottom mb-4">
@@ -82,7 +81,6 @@
         <div class="tab-button" onclick="showTab('people')">People</div>
     </div>
 
-    {{-- Tab Content --}}
     <div id="profile" class="tab-content active">
         <div class="text-center mb-4">
             <img src="{{ asset('images/wolf.png') }}" alt="Logo" class="profile-image mb-2">
@@ -117,7 +115,6 @@
     </div>
 
     <div id="people" class="tab-content">
-        <!-- resources/views/company/partials/people.blade.php -->
 
 <div class="mb-3 d-flex align-items-center">
     <div class="input-group" style="max-width: 1000px; margin-left: 100px;">
@@ -163,7 +160,7 @@
     + Add Members
 </button>
 
-    <!-- Modal -->
+
 <div class="modal fade" id="addMemberModal" tabindex="-1" aria-labelledby="addMemberModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content border-0 rounded-3 overflow-hidden">
@@ -227,6 +224,5 @@
 </html>
 
 
-<!-- Optional: Bootstrap Icons -->
 
 @endsection

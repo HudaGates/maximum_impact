@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>ImpactMate</title>
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
@@ -50,7 +49,7 @@
     list-style: none;
 }
         .dropdown-menu .dropdown-item {
-    color: #000 !important; /* Warna hitam */
+    color: #000 !important;
 }
 
         .main-content {
@@ -152,7 +151,6 @@
 </div>
 
 <div class="main-content">
-    <!-- Navbar -->
     <div class="topbar">
         <div>
             <i class="bi bi-list fs-5 me-3" role="button"></i>
@@ -171,7 +169,6 @@
         </div>
     </div>
 
-    <!-- Quest Panel -->
     <div id="questPanel" class="quest-panel">
         <h5>Quest</h5>
         <div class="quest-card">
@@ -209,13 +206,13 @@
         </div>
     </div>
 
-    <!-- Page content -->
+
     <div class="p-4">
         @yield('content')
     </div>
 </div>
 
-<!-- Bootstrap JS + Popper -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>

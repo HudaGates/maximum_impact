@@ -134,7 +134,6 @@
     <div class="left-panel">
         <div class="dots">
             <svg viewBox="0 0 100 100">
-                <!-- Repeat dot pattern -->
                 <circle cx="10" cy="10" r="4" fill="#f3e8c9"/>
                 <circle cx="30" cy="10" r="4" fill="#f3e8c9"/>
                 <circle cx="50" cy="10" r="4" fill="#f3e8c9"/>
@@ -172,7 +171,6 @@
         <p class="bottom-text">New to ImpactMate? <a href="{{ route('register.step1') }}">Join here</a> to turn your goals into glory!</p>
 
         <div class="dots-bottom">
-            <!-- Reuse dots SVG -->
             <svg viewBox="0 0 100 100">
                 <circle cx="10" cy="10" r="4" fill="#f3e8c9"/>
                 <circle cx="30" cy="10" r="4" fill="#f3e8c9"/>

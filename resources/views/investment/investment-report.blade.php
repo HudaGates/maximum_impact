@@ -31,19 +31,18 @@
 <div class="container-fluid px-4 py-4">
     <h2 class="fw-bold mb-3">Investment Report</h2>
 
-    <!-- Tab Navigation -->
     <div class="tab-wrapper mb-3">
     <button class="tab-btn active-tab">Income</button>
     <a href="{{ route('investment.investment-expense') }}" class="tab-btn" style="text-decoration: none">Expense</a></button>
 </div>
 
 
-    <!-- Income Overview -->
+
     <div class="bg-white p-4 rounded shadow-sm">
         <h5 class="fw-bold mb-4">Income Overview</h5>
 
         <div class="d-flex justify-content-end align-items-center gap-2 mb-3">
-    <!-- Search Box -->
+
     <div class="position-relative" style="width: 260px;">
         <input type="text" class="form-control ps-5 py-2 rounded" placeholder="Search Data"
                style="background-color: #F9FAFB; border: 1px solid #E5E7EB;">
@@ -91,7 +90,7 @@
             </table>
         </div>
 
-        <!-- Footer Info & Pagination -->
+
         <div class="d-flex justify-content-between align-items-center mt-3">
             <div class="d-flex align-items-center gap-2">
                 <label for="rows">Row per page</label>
