@@ -1,4 +1,4 @@
-@extends('layouts.app-4')
+@extends('layouts.app-business')
 
 @section('title', 'Dashboard')
 
@@ -47,13 +47,14 @@
               <i class="bi bi-three-dots-vertical text-muted"></i>
             </div>
           </div>
+          <a href="{{ route('bussines-growth1') }}" class="text-decoration-none text-dark">
           <div class="p-3">
             <h6 class="fw-bold mb-1" style="color: #1F2A69">{{ $card['title'] }}</h6>
             <p class="small text-muted mb-3">{{ $card['desc'] }}</p>
             <div class="d-flex justify-content-between small text-muted">
               <span><i class="bi bi-calendar-event me-1"></i>{{ $card['date'] }}</span>
               <span><i class="bi bi-geo-alt me-1"></i>{{ $card['location'] }}</span>
-            </div>
+            </div></a>
           </div>
         </div>
       </div>

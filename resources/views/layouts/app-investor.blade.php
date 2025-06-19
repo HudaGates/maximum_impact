@@ -158,6 +158,8 @@
         </li>
 
         <a href="/myproject" class="{{ Request::is('my-project') ? 'active' : '' }}"><i class="bi bi-clipboard me-2"></i> My Project</a>
+        <a href="/mentor" class="{{ Request::is('community.find-company') ?'active' : '' }}"><i class="bi bi-clipboard-data-fill me-2"></i> Mentor</a>
+        <a href="/dashboard-invest" class="{{ Request::is('invest') ?'active' : '' }}"><i class="bi bi-clipboard-data-fill me-2"></i> Invest</a>
 
     </div>
 </div>

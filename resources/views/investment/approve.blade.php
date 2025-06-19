@@ -26,9 +26,9 @@
                     <td>{{ \Carbon\Carbon::parse($item->investment_date)->format('j M Y') }}</td>
                     <td>{{ $item->investment_type }}</td>
                     <td class="text-success fw-semibold">Approved</td>
-                    <td><a href="{{ route('investment.details', $item->id) }}" class="text-primary text-decoration-underline">View Details</a></td>
-                    <td><button class="btn btn-outline-primary btn-sm">Report Financial</button></td>
-                    <td><button class="btn btn-outline-primary btn-sm">Report Project</button></td>
+                    <td><a href="{{ route('investment.details', $item->id) }}" class="text-decoration-none" style="color: #1F2A69">View Details</a></td>
+                    <td><button class="btn btn-sm" style="background-color: #1F2A69; color: white;">Report Financial</button></td>
+                    <td><button class="btn btn-sm" style="background-color: #1F2A69; color: white;">Report Project</button></td>
                 </tr>
                 @endforeach
             </tbody>

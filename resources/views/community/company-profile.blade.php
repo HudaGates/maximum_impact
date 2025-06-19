@@ -110,7 +110,7 @@
                     <input type="text" name="website" class="form-control" placeholder="Input your website address">
                 </div>
                 <div class="col-12 text-center mt-4">
-                    <button type="submit" class="save-button">Save</button>
+                    <a href="{{ route('community.company-profiles') }}" type="submit" class="save-button" style="text-decoration: none">Save</a></button>
                 </div>
             </div>
         </form>

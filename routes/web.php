@@ -15,6 +15,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MentorController;
 use App\Http\Controllers\CompanyReportController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\BusinessGrowthController;
 
 Route::get('/', function () {
     return redirect('landingpage');
@@ -112,7 +113,7 @@ Route::get('/community/company', [CompanyReportController::class, 'comp'])->name
 Route::get('/company-profile/{name}', [CompanyReportController::class, 'show'])->name('company.show');
 Route::get('/community/company/profile', [CompanyReportController::class, 'index1'])->name('company.profile');
 Route::post('/members/store', [CompanyReportController::class, 'store'])->name('members.store');
-Route::get('/company-profiles', [CompanyreportController::class, 'profile']);
+Route::get('/company-profiles', [CompanyreportController::class, 'profile'])->name('community.company-profiles');
 
 Route::get('/', [LandingPageController::class, 'index']);
 
@@ -152,3 +153,48 @@ Route::post('/step9-invest', [StepInvestController::class, 'submitStep9'])->name
 Route::get('/dashboard-invest', [StepInvestController::class, 'showDashboard'])->name('community.dashboard-invest');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('community.dashboard-business');
+
+Route::get('/bussines-growth1', [BusinessGrowthController::class, 'step1'])->name('bussines-growth1');
+Route::post('/bussines-growth2', [BusinessGrowthController::class, 'step2'])->name('bussines-growth2');
+
+// STEP 2
+Route::get('/bussines-growth2', function () {
+    return view('myproject.bussines-growth2');
+})->name('bussines-growth2-page');
+Route::post('/bussines-growth3', [BusinessGrowthController::class, 'step3'])->name('bussines-growth3');
+
+// STEP 3
+Route::get('/bussines-growth3', function () {
+    return view('myproject.bussines-growth3');
+})->name('bussines-growth3-page');
+Route::post('/bussines-growth4', [BusinessGrowthController::class, 'step4'])->name('bussines-growth4');
+
+// STEP 4
+Route::get('/bussines-growth4', function () {
+    return view('myproject.bussines-growth4');
+})->name('bussines-growth4-page');
+Route::post('/bussines-growth5', [BusinessGrowthController::class, 'step5'])->name('bussines-growth5');
+
+// STEP 5
+Route::get('/bussines-growth5', function () {
+    return view('myproject.bussines-growth5');
+})->name('bussines-growth5-page');
+
+// ✅ STEP 6
+Route::get('/bussines-growth6', [BusinessGrowthController::class, 'step6'])->name('bussines-growth6-page');
+Route::post('/bussines-growth6', [BusinessGrowthController::class, 'step6'])->name('bussines-growth6');
+
+// ✅ STEP 7
+Route::post('/bussines-growth7', [BusinessGrowthController::class, 'step7'])->name('bussines-growth7');
+Route::get('/bussines-growth7', function () {
+    return view('myproject.bussines-growth7');
+})->name('bussines-growth7-page');
+
+// STEP 8
+// STEP 8
+Route::get('/bussines-growth8', function () {
+    return view('myproject.bussines-growth8');
+})->name('bussines-growth8-page');
+
+Route::post('/bussines-growth8', [BusinessGrowthController::class, 'step8'])->name('bussines-growth8');
+
