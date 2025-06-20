@@ -40,9 +40,13 @@
                     <td>{{ $item->origin_bank }}</td>
                     <td>{{ $item->destination_bank }}</td>
                     <td>{{ ucfirst($item->status) }}</td>
-                    <td class="{{ $item->status === 'approved' ? 'text-success' : 'text-danger' }}">
-                        {{ ucfirst($item->status) }}
-                    </td>
+                    <td>
+    <a href="{{ route('investment.investment-report', ['status' => $item->status]) }}"
+       class="{{ $item->status === 'approved' ? 'text-success' : 'text-danger' }}" style="text-decoration: none">
+        {{ ucfirst($item->status) }}
+    </a>
+</td>
+
                 </tr>
                 @endforeach
             </tbody>

@@ -153,6 +153,7 @@ Route::post('/step9-invest', [StepInvestController::class, 'submitStep9'])->name
 Route::get('/dashboard-invest', [StepInvestController::class, 'showDashboard'])->name('community.dashboard-invest');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('community.dashboard-business');
+Route::get('/dashboard-invest', [DashboardController::class, 'indexInvest'])->name('community.dashboard-invest');
 
 Route::get('/bussines-growth1', [BusinessGrowthController::class, 'step1'])->name('bussines-growth1');
 Route::post('/bussines-growth2', [BusinessGrowthController::class, 'step2'])->name('bussines-growth2');
