@@ -204,7 +204,7 @@
         <a href="/dashboard-invest" class="{{ Request::is('invest') ?'active' : '' }}"><i class="bi bi-clipboard-data-fill me-2"></i> Invest</a>
     </div>
 </div>
-
+<!----->
 <div class="main-content">
     <!-- Navbar -->
     <div class="topbar">

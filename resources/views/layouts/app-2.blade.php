@@ -146,16 +146,32 @@
     <div class="menu mt-2">
         <a href="/dashboard"><i class="bi bi-grid me-2"></i> Home</a>
 
-        <li class="nav-item dropdown dropend">
-            <a class="nav-link dropdown-toggle {{ Request::is('community*') ? 'active' : '' }}" href="#" data-bs-toggle="dropdown">
-                <i class="bi bi-people me-2"></i> Community
-            </a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/community/investor">Investor</a></li>
-                <li><a class="dropdown-item" href="/community/mentor">Mentor</a></li>
-                <li><a class="dropdown-item" href="/community/company">Company</a></li>
-            </ul>
-        </li>
+              <li class="nav-item">
+    <a class="nav-link d-flex align-items-center justify-content-between text-white" data-bs-toggle="collapse" href="#communitySubmenu" role="button" aria-expanded="false" aria-controls="communitySubmenu">
+        <span><i class="bi bi-people-fill me-2"></i> Community</span>
+        <i class="bi bi-chevron-down"></i>
+    </a>
+    <div class="collapse ps-4" id="communitySubmenu">
+        <ul class="nav flex-column mt-2">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/community/investor">
+                    <i class="bi bi-people me-2"></i> Investor
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/community/company">
+                    <i class="bi bi-people me-2"></i> Business Owner
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/community/mentor">
+                    <i class="bi bi-people me-2"></i> Mentor
+                </a>
+            </li>
+        </ul>
+    </div>
+</li>
+
 
         <a href="/myproject" class="{{ Request::is('my-project') ? 'active' : '' }}"><i class="bi bi-clipboard me-2"></i> My Project</a>
 
