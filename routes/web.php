@@ -16,6 +16,8 @@ use App\Http\Controllers\MentorController;
 use App\Http\Controllers\CompanyReportController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\BusinessGrowthController;
+use App\Http\Controllers\MentorProfileController;
+
 
 Route::get('/', function () {
     return redirect('landingpage');
@@ -103,10 +105,13 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/community/mentor', [MentorController::class, 'index'])->name('mentors.index');
 Route::get('/community/mentor/{id}', [MentorController::class, 'show'])->name('mentors.show');
-Route::get('/mentor', [MentorController::class, 'showDashboard'])->name('mentor.dashboard');
-Route::post('/education/store', [MentorController::class, 'storeEducation'])->name('education.store');
-Route::post('/experience/store', [MentorController::class, 'storeExperience'])->name('experience.store');
-Route::post('/skills/store', [MentorController::class, 'storeSkills'])->name('skills.store');
+Route::get('/mentor', [MentorController::class, 'index1'])->name('mentor.dashboard');
+Route::post('/experience/store', [MentorController::class, 'store'])->name('experience.store');
+Route::get('/experience/create', [MentorController::class, 'create'])->name('experience.create');
+Route::post('/education/store', [MentorController::class, 'store1'])->name('education.store');
+Route::post('/skills', [MentorController::class, 'store2'])->name('skills.store');
+
+
 
 
 Route::get('/community/company', [CompanyReportController::class, 'comp'])->name('company.comp');
@@ -198,4 +203,5 @@ Route::get('/bussines-growth8', function () {
 })->name('bussines-growth8-page');
 
 Route::post('/bussines-growth8', [BusinessGrowthController::class, 'step8'])->name('bussines-growth8');
+
 

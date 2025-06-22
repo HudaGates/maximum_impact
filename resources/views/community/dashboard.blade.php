@@ -1,491 +1,214 @@
-@extends('layouts.app-2')
+@extends('layouts.app') {{-- Layout yang sudah ada dan berisi sidebar + topbar --}}
 
 @section('content')
-<style>
-    .mentor-card {
-        background-color: white;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        overflow: hidden;
-        margin-bottom: 20px;
-        position: relative;
-    }
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-    .mentor-header {
-        background-color: #1e2a78;
-        height: 130px;
-        position: relative;
-    }
+<div class="container py-4">
+    <div class="card mb-4 rounded-4">
+        <div class="card mb-4 rounded-4 overflow-hidden border-0" style="position: relative;">
+    <!-- Banner atas -->
+    <div style="background-color: #232d65; height: 100px;"></div>
+<div class="col-auto">
+                <img src="{{ asset('images/agradi.jpg') }}"
+                     class="rounded-circle border border-white shadow"
+                     width="140" height="140"
+                     style="object-fit: cover; position: absolute; top:10px; left:20px;"
+                     alt="Profile Picture">
+            </div>
+    <div class="card-body position-relative pt-0">
+        <div class="row">
+            <!-- Foto profil -->
 
-    .mentor-header .profile-img {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        border: 4px solid white;
-        position: absolute;
-        top: 65px;
-        left: 30px;
-        object-fit: cover;
-        background-color: white;
-    }
-
-    .mentor-body {
-        padding: 80px 30px 30px 30px;
-        position: relative;
-    }
-
-    .mentor-body h2 {
-        font-weight: 700;
-        color: #1e2a78;
-        margin-bottom: 2px;
-    }
-
-    .mentor-body p.subtext {
-        color: #999;
-        margin: 2px 0;
-        font-size: 14px;
-    }
-
-    .edit-btn-profile {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        display: flex;
-        align-items: center;
-        background-color: #f0f0f0;
-        padding: 4px 8px;
-        border-radius: 6px;
-        font-size: 14px;
-        color: #333;
-        border: 1px solid #ccc;
-        text-decoration: none;
-        gap: 4px;
-    }
-
-    .edit-btn-profile img {
-        width: 16px;
-        height: 16px;
-    }
-
-    .mentor-university {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-top: 8px;
-        position: absolute;
-        top: 50px;
-        right: 20px;
-    }
-
-    .mentor-university img {
-        width: 20px;
-        height: 20px;
-    }
-
-    .about-section {
-        background-color: white;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        padding: 20px 30px;
-        position: relative;
-    }
-
-
-    .edit-btn-about {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        display: flex;
-        align-items: center;
-        background-color: #f0f0f0;
-        padding: 4px 8px;
-        border-radius: 6px;
-        font-size: 14px;
-        color: #333;
-        border: 1px solid #ccc;
-        text-decoration: none;
-        gap: 4px;
-    }
-
-    .edit-btn-about img {
-        width: 16px;
-        height: 16px;
-    }
-
-    .about-section h4 {
-        font-weight: 600;
-        margin-bottom: 10px;
-    }
-
-    .about-section p {
-        font-size: 14px;
-        color: #333;
-        line-height: 1.6;
-    }
-    .edit-btn-profile {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    background-color: #f0f0f0;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 12px;
-    color: #333;
-    border: 1px solid #ccc;
-    text-decoration: none;
-    gap: 4px;
-}
-
-.edit-btn-profile img {
-    width: 14px;
-    height: 14px;
-}
-.edit-btn-about {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    background-color: #f0f0f0;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 12px;
-    color: #333;
-    border: 1px solid #ccc;
-    text-decoration: none;
-    gap: 4px;
-}
-.edit-btn-about img {
-    width: 14px;
-    height: 14px;
-}
-.edit-btn-experience {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    background-color: #f0f0f0;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 12px;
-    color: #333;
-    border: 1px solid #ccc;
-    text-decoration: none;
-    gap: 4px;
-}
-.edit-btn-experience img {
-    width: 14px;
-    height: 14px;
-}
-
-
-</style>
-
-<div class="container-fluid">
-    <div class="mentor-card">
-        <div class="mentor-header">
-            <img src="{{ asset('images/profil-mentor.png') }}" alt="Profile" class="profile-img">
-        </div>
-        <div class="mentor-body">
-            <a href="#" class="edit-btn-profile">
-                <img src="{{ asset('images/logo-pensil.png') }}" alt="Edit Icon"> Edit
-            </a>
-
-            <div class="mentor-university">
-                <img src="{{ asset('images/logo-universitas.png') }}" alt="University Icon">
-                <span class="text-sm text-gray-700">Universitas Trisakti, Jakarta Barat</span>
+            <!-- Info pengguna -->
+            <div class="col ps-5 ms-5 mt-5">
+                <h2 class="fw-bold text-dark mb-1" style="color: #232d65 !important;">{{ $user['name'] }}</h2>
+                <h5 class="mb-1">{{ $user['job_title'] }}</h5>
+                <p class="text-muted mb-0">{{ $user['location'] }}</p>
             </div>
 
-            <h2 style="margin-bottom: 8px;">Agraditya Putra</h2>
-            <p class="subtext" style="margin-bottom: 8px;"><strong style="color: black;">UI/UX Designer</strong></p>
-            <p class="subtext">Jakarta Selatan, DKI Jakarta, Indonesia</p>
-
-        </div>
-    </div>
-
-    <div class="about-section">
-        <a href="#" class="edit-btn-about">
-            <img src="{{ asset('images/logo-pensil.png') }}" alt="Edit Icon"> Edit
-        </a>
-
-        <h2 style="font-size: 24px; font-weight: bold; margin: 0;">About</h2>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-            sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-            sunt in culpa qui officia deserunt mollit anim id est laboru
-        </p>
-    </div>
-
-
-@include('community.addexperience')
-    <div class="about-section" style="margin-top: 25px;">
-        <div style="position: relative; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h2 style="font-size: 24px; font-weight: bold; margin: 0;">Experience</h2>
-            <div style="display: flex; align-items: center;">
-                <button onclick="openExperiencePopup()" title="Add Experience" style="background: none; border: none; font-size: 24px; cursor: pointer; padding: 4px; margin-right: 80px; margin-top: 7px;">+</button>
-                <a href="#" class="edit-btn-experience">
-                    <img src="{{ asset('images/logo-pensil.png') }}" alt="Edit Icon"> Edit
-                </a>
+            <!-- Tombol Edit dan Institusi -->
+            <div class="col-auto text-end mt-3">
+                <button class="btn btn-outline-dark mb-2">
+                    <i class="bi bi-pencil"></i> Edit
+                </button>
+                <div class="d-flex align-items-center justify-content-end">
+                    <div class="bg-light rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px;">
+                        <i class="bi bi-buildings text-secondary"></i>
+                    </div>
+                    <div class="text-start small">
+                        <div>{{ $user['institution'] }}</div>
+                    </div>
+                </div>
             </div>
         </div>
-
-  <div style="display: flex; gap: 16px;">
-    <img src="{{ asset('images/logo.png') }}" alt="MAXY Logo" style="width: 48px; height: 48px; object-fit: contain; margin-top: 10px;">
-    <div>
-      <h5 style="font-weight: bold; margin-top: 20px;">MAXY Academy</h5>
-      <p style="margin: 1px 0; color: #555;">1 year</p>
-      <p style="margin: 1px 0; color: #888; font-size: 13px;">On Site</p>
-
-      <div style="margin-top: 16px; padding-left: 10px; border-left: 2px solid #ccc;">
-        <div style="position: relative; margin-bottom: 24px;">
-          <div style="width: 10px; height: 10px; background: black; border-radius: 50%; position: absolute; left: -16px; top: 4px;"></div>
-          <p style="font-weight: bold; margin: 0;">Mentor UI/UX Designer</p>
-          <p style="margin: 0; font-size: 14px;">Seasonal</p>
-          <p style="margin: 0; font-size: 14px; color: #777;">Apr 2023 - Present. 1 year 7 mos</p>
-          <p style="margin: 0; font-size: 14px; color: #777;">Jakarta Selatan-Jakarta-Indonesia</p>
-        </div>
-
-        <div style="position: relative; margin-bottom: 24px;">
-          <div style="width: 10px; height: 10px; background: black; border-radius: 50%; position: absolute; left: -16px; top: 4px;"></div>
-          <p style="font-weight: bold; margin: 0;">Creative Designer</p>
-          <p style="margin: 0; font-size: 14px;">Contract</p>
-          <p style="margin: 0; font-size: 14px; color: #777;">Apr 2023 - Present. 1 year 7 mos</p>
-          <p style="margin: 0; font-size: 14px; color: #777;">Jakarta Selatan-Jakarta-Indonesia</p>
-        </div>
-
-        <div style="position: relative;">
-          <div style="width: 10px; height: 10px; background: black; border-radius: 50%; position: absolute; left: -16px; top: 4px;"></div>
-          <p style="font-weight: bold; margin: 0;">Creative Designer</p>
-          <p style="margin: 0; font-size: 14px;">Contract</p>
-          <p style="margin: 0; font-size: 14px; color: #777;">Apr 2023 - Present. 1 year 7 mos</p>
-          <p style="margin: 0; font-size: 14px; color: #777;">Jakarta Selatan-Jakarta-Indonesia</p>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
+</div>
+   <div class="card rounded-4 border-0 shadow-sm mb-4 px-4 py-3">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+        <h2 class="fw-bold mb-0">About</h2>
+        <button class="btn btn-outline-secondary btn-sm d-flex align-items-center">
+            <i class="bi bi-pencil me-1"></i> Edit
+        </button>
+    </div>
+    <div class="text-muted" style="font-size: 16px; text-align: justify; line-height: 1.8;">
+        {{ $user['about'] }}
+    </div>
+    <div class="text-muted mt-3" style="font-size: 16px; text-align: justify; line-height: 1.8;">
+        {{ $user['about'] }}
+    </div>
+</div>
+{{-- Experience Section --}}
+ @include('community.addexperience')
+
+<div class="card rounded-4 border mb-4 p-4">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+        <h2 class="fw-bold mb-0">Experience</h2>
+        <div>
+            <!-- Tombol Add -->
+            <button class="btn btn-link text-dark me-1 p-0" data-bs-toggle="modal" data-bs-target="#addExperienceModal" title="Add">
+                <i class="bi bi-plus-lg fs-5"></i>
+            </button>
+
+            <!-- Tombol Edit -->
+            <button class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#addExperienceModal">
+                <i class="bi bi-pencil me-1"></i> Edit
+            </button>
+        </div>
+    </div>
+
+    @php use Carbon\Carbon; @endphp
+    @php $grouped = $experiences->groupBy('company'); @endphp
+
+    @foreach($grouped as $company => $items)
+        <div class="mb-4">
+            <!-- Header Perusahaan -->
+            <div class="d-flex align-items-start mb-2">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Maxy_Logo.png" alt="{{ $company }}" class="me-3" style="width: 40px; height: 40px;">
+                <div>
+                    <h5 class="mb-0 fw-semibold">{{ $company }}</h5>
+                    <small class="text-muted">1 year</small><br>
+                    <small class="text-muted">On Site</small>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="border-start border-2 ps-3 ms-2">
+                @foreach($items as $exp)
+                    @php
+                        $start = $exp->start_date ? Carbon::parse($exp->start_date) : null;
+                        $end = $exp->end_date ? Carbon::parse($exp->end_date) : now();
+                        $duration = $start ? $start->diffForHumans($end, ['parts' => 2, 'syntax' => Carbon::DIFF_ABSOLUTE]) : '';
+                    @endphp
+
+                    <div class="mb-4 position-relative ps-3">
+                        <span class="position-absolute top-0 start-0 translate-middle bg-dark rounded-circle" style="width: 10px; height: 10px;"></span>
+                        <h6 class="fw-bold mb-1">{{ $exp->position }}</h6>
+                        <small class="text-muted d-block">{{ $exp->type }}</small>
+                        <small class="text-muted d-block">
+                            {{ $start ? $start->format('M Y') : '' }} - {{ $exp->end_date ? $end->format('M Y') : 'Present' }}
+                            • {{ $duration }}
+                        </small>
+                        <small class="text-muted d-block">{{ $exp->location }}</small>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endforeach
 </div>
 
-<script>
-    function openExperiencePopup() {
-        const modal = document.getElementById("experienceModal");
-        if (modal) {
-            modal.style.display = "block";
-        }
-    }
 
-    function closeExperiencePopup() {
-        const modal = document.getElementById("experienceModal");
-        if (modal) {
-            modal.style.display = "none";
-        }
-    }
 
-    window.addEventListener("click", function(event) {
-        const modal = document.getElementById("experienceModal");
-        if (event.target === modal) {
-            closeExperiencePopup();
-        }
-    });
-</script>
-
-@include('community.addeducation')
-    <div style="background-color: #ffffff; padding: 24px; border-radius: 12px; margin-top: 20px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h2 style="font-size: 24px; font-weight: bold; margin: 0;">Education</h2>
-
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <button onclick="openEducationPopup()" title="Add Education"
-                    style="background: none; border: none; font-size: 24px; cursor: pointer; padding: 4px; margin-top: 4px;">
-                    +
+{{-- Education Section --}}
+ @include('community.addeducation')
+<div class="card rounded-4 border mb-4 p-4">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+        <h2 class="fw-bold mb-0">Education</h2>
+        <div>
+            <button class="btn btn-link text-dark me-1 p-0" data-bs-toggle="modal" data-bs-target="#addEducationModal" title="Add">
+                <i class="bi bi-plus-lg fs-5"></i>
             </button>
-                <a href="#"
-                    style="
-                        display: inline-flex;
-                        align-items: center;
-                        gap: 2px;
-                        text-decoration: none;
-                        color: #333;
-                        font-weight: 500;
-                        font-size: 10px;
-                        background-color: #f3f3f3;
-                        padding: 2px 6px;
-                        border: 1px solid #ccc;
-                        border-radius:2px;
-                        transition: background-color 0.2s, box-shadow 0.2s;
-                    "
-                    onmouseover="this.style.backgroundColor='#e0e0e0'; this.style.boxShadow='0 2px 6px rgba(0,0,0,0.1)'"
-                    onmouseout="this.style.backgroundColor='#f3f3f3'; this.style.boxShadow='none'"
-                    >
-                        <img src="{{ asset('images/logo-pensil.png') }}" alt="Edit Icon" style="width: 16px; height: 16px;">
-                        Edit
-                 </a>
-            </div>
+
+            <!-- Tombol Edit -->
+            <button class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#addEducationModal">
+                <i class="bi bi-pencil me-1"></i> Edit
+            </button>
         </div>
+    </div>
 
-        <div style="display: flex; align-items: center; margin-top: 20px;">
-            <div style="width: 60px; height: 60px; border-radius: 50%; background-color: #E9D8FD; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
-                <img src="{{ asset('images/logo-universitas.png') }}" alt="University Logo" style="width: 28px; height: 28px;">
+     @forelse($educations as $edu)
+        <div class="d-flex align-items-start mb-4">
+            {{-- Icon --}}
+            <div class="me-3">
+                <div class="rounded-circle d-flex justify-content-center align-items-center" style="width: 60px; height: 60px; background-color: #e9d8fd;">
+                    <i class="bi bi-buildings text-primary fs-4"></i>
+                </div>
             </div>
 
+            {{-- Content --}}
             <div>
-                <div style="font-weight: 600; font-size: 16px;">Universitas Trisakti</div>
-                <div style="color: #666; font-size: 14px;">2021 – 2025</div>
+                <h5 class="fw-bold mb-1">{{ $edu->university }}</h5>
+                <p class="text-muted mb-1">
+                    {{ optional($edu->start_date)->format('Y') }} - 
+                    {{ optional($edu->end_date)->format('Y') ?? 'Present' }}
+                </p>
+
+                @if($edu->title)
+                    <p class="mb-1"><strong>Title:</strong> {{ $edu->title }}</p>
+                @endif
+
+                @if($edu->field_of_study)
+                    <p class="mb-1"><strong>Field of Study:</strong> {{ $edu->field_of_study }}</p>
+                @endif
+
+                @if($edu->grade)
+                    <p class="mb-1"><strong>Grade:</strong> {{ $edu->grade }}</p>
+                @endif
+
+                @if($edu->activities)
+                    <p class="mb-1"><strong>Activities:</strong> {{ $edu->activities }}</p>
+                @endif
+
+                @if($edu->description)
+                    <p class="mb-0"><strong>Description:</strong> {{ $edu->description }}</p>
+                @endif
             </div>
         </div>
-    </div>
-
-
-
-
-<script>
-    function openEducationPopup() {
-        const modal = document.getElementById("educationMentor");
-        if (modal) {
-            modal.style.display = "block";
-        }
-    }
-
-    function closeEducationPopup() {
-        const modal = document.getElementById("educationMentor");
-        if (modal) {
-            modal.style.display = "none";
-        }
-    }
-
-    window.addEventListener("click", function(event) {
-        const modal = document.getElementById("educationMentor");
-        if (event.target === modal) {
-            closeEducationPopup();
-        }
-    });
-</script>
-
+    @empty
+        <p class="text-muted">No education records available.</p>
+    @endforelse
+</div>
+</div>
+{{-- Skills Section --}}
 @include('community.addskills')
-    <div style="background-color: #ffffff; padding: 24px; border-radius: 12px; margin-top: 20px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+<div class="card rounded-4 border mb-4 p-4">
+    <div class="d-flex justify-content-between align-items-start mb-2">
+        <h2 class="fw-bold mb-0">Skills</h2>
+        <div>
+            <button class="btn btn-link text-dark me-1 p-0" data-bs-toggle="modal" data-bs-target="#addSkillModal" title="Add">
+                <i class="bi bi-plus-lg fs-5"></i>
+            </button>
 
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h2 style="font-size: 24px; font-weight: bold; margin: 0;">Skills</h2>
-
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <button onclick="openSkillsPopup()" title="Add Skills"
-                    style="background: none; border: none; font-size: 24px; cursor: pointer; padding: 4px; margin-top: 4px;">
-                    +
-                </button>
-              <a href="#"
-                    style="
-                        display: inline-flex;
-                        align-items: center;
-                        gap: 2px;
-                        text-decoration: none;
-                        color: #333;
-                        font-weight: 500;
-                        font-size: 10px;
-                        background-color: #f3f3f3;
-                        padding: 2px 6px;
-                        border: 1px solid #ccc;
-                        border-radius:2px;
-                        transition: background-color 0.2s, box-shadow 0.2s;
-                    "
-                    onmouseover="this.style.backgroundColor='#e0e0e0'; this.style.boxShadow='0 2px 6px rgba(0,0,0,0.1)'"
-                    onmouseout="this.style.backgroundColor='#f3f3f3'; this.style.boxShadow='none'"
-                    >
-                        <img src="{{ asset('images/logo-pensil.png') }}" alt="Edit Icon" style="width: 16px; height: 16px;">
-                        Edit
-                 </a>
-
-
-            </div>
-        </div>
-
-
-        <div style="display: flex; flex-direction: column; align-items: start; margin-top: 20px;" id="skillsBox">
-            <div id="skillsInfoText" style="font-size: 16px;">
-                Tell us about your suitability for finding new opportunities - 50% of recruiters use skills data to fill positions
-            </div>
-
-            <div id="skillsDisplay" style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px;"></div>
-        </div>
-
-            <div id="selectedSkills" style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px;"></div>
+            <!-- Tombol Edit -->
+            <button class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#addSkillModal">
+                <i class="bi bi-pencil me-1"></i> Edit
+            </button>
         </div>
     </div>
-
- <script>
-    function openSkillsPopup() {
-        document.getElementById('skillsModul').style.display = 'block';
-    }
-
-    function closeSkillsPopup() {
-        document.getElementById('skillsModul').style.display = 'none';
-    }
-
-    function saveSkills(event) {
-        event.preventDefault();
-
-        const skillsInput = document.getElementById('skillsInput');
-        const inputSkills = skillsInput.value.split(',').map(s => s.trim()).filter(s => s !== '');
-
-        const skillsDisplay = document.getElementById('skillsDisplay');
-        const skillsInfoText = document.getElementById('skillsInfoText');
-
-        if (skillsDisplay && skillsInfoText) {
-            skillsInfoText.textContent = 'Your skills:';
-            skillsDisplay.innerHTML = '';
-
-            inputSkills.forEach(skill => {
-                const skillTag = document.createElement('div');
-                skillTag.textContent = skill;
-                skillTag.style.cssText = `
-                    padding: 6px 12px;
-                    background-color: #e0f0e9;
-                    color: #333;
-                    border-radius: 20px;
-                    font-size: 14px;
-                    border: 1px solid #bcdac8;
-                    margin: 5px;
-                    display: inline-block;
-                `;
-                skillsDisplay.appendChild(skillTag);
-            });
-        }
-
-        closeSkillsPopup();
-        skillsInput.value = '';
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        const skillButtons = document.querySelectorAll('.recommended-skill');
-        const skillsInput = document.getElementById('skillsInput');
-
-        skillButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const skill = button.getAttribute('data-skill') || button.textContent.trim();
-                let currentSkills = skillsInput.value.split(',').map(s => s.trim()).filter(s => s !== '');
-
-                if (!currentSkills.includes(skill)) {
-                    currentSkills.push(skill);
-                    skillsInput.value = currentSkills.join(', ');
-                }
-            });
-        });
-
-        const saveButton = document.getElementById('saveSkillsBtn');
-        if (saveButton) {
-            saveButton.addEventListener('click', saveSkills);
-        }
-    });
-</script>
-
-
+    
+    @forelse($skills as $skill)
+    <div class="mb-4">
+      <div class="fw-semibold">
+        {{ $skill->skill_name }}
+      </div>
+      <div class="text-muted small">
+        UI Designer at SUPIRIN
+      </div>
+      <hr>
+    </div>
+  @empty
+    <p class="text-muted">No skills added yet.</p>
+  @endforelse
+</div>
 
 @endsection

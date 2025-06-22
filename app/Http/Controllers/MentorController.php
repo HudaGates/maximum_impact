@@ -1,9 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\MentorEducation;
+use App\Models\MentorExperience;
+use App\Models\MentorSkill;
+
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 class MentorController extends Controller
 {
     public function index()
@@ -38,59 +43,77 @@ class MentorController extends Controller
 
         return view('community.mentor-profile', compact('mentors'));
     }
-    public function showDashboard()
+    public function index1()
+    {
+        // Dummy data sementara
+        $user = [
+            'name' => 'Agraditya Putra',
+            'job_title' => 'UI/UX Designer',
+            'location' => 'Jakarta Selatan, DKI Jakarta, Indonesia',
+            'institution' => 'Universitas Trisakti Jakarta Barat',
+            'about' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt...'
+        ];
+        $experiences = MentorExperience::all();
+        $educations = MentorEducation::all();
+        $skills = MentorSkill::all();
+
+        return view('community.dashboard', compact('user', 'experiences','educations','skills'));
+    }
+    public function store(Request $request)
 {
-    $mentor = [
-        'name' => 'Agraditya Putra',
-        'title' => 'UI/UX Designer',
-        'location' => 'Jakarta Selatan, DKI Jakarta, Indonesia',
-        'university' => 'Universitas Trisakti Jakarta Barat',
-        'about' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...',
-        'image' => asset('images/agraditya.jpg') // ganti sesuai lokasi file gambar mentor
-    ];
+    $validated = $request->validate([
+        'position' => 'required|string|max:255',
+        'type' => 'required|string',
+        'company' => 'required|string|max:255',
+        'location' => 'nullable|string|max:255',
+        'start_date' => 'required|date',
+        'end_date' => 'nullable|date|after_or_equal:start_date',
+        'description' => 'nullable|string',
+    ]);
+    
 
-    return view('community.dashboard', compact('mentor'));
+    MentorExperience::create($validated);
+
+    return redirect()->back()->with('success', 'Experience added successfully!');
 }
-
- public function storeEducation(Request $request)
-    {
-        $request->validate([
-            'school' => 'required|string|max:255',
-            'degree' => 'required|string|max:255',
-            'start_date' => 'required|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
+public function store1(Request $request)
+{
+    $validated = $request->validate([
+            'university' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'field_of_study' => 'nullable|string|max:255',
+            'location' => 'nullable|string|max:255',
+            'start_date_month' => 'nullable|string',
+            'start_date_year' => 'nullable|numeric',
+            'end_date_month' => 'nullable|string',
+            'end_date_year' => 'nullable|numeric',
+            'grade' => 'nullable|string|max:255',
+            'activities' => 'nullable|string',
+            'description' => 'nullable|string',
         ]);
 
-        // Simpan ke DB (model Education diasumsikan sudah ada)
-        \App\Models\Education::create($request->all());
+        // Gabungkan bulan dan tahun menjadi tanggal yang valid
+        $start_date = null;
+        if ($request->start_date_month && $request->start_date_year) {
+            $start_date = Carbon::createFromFormat('F Y', $request->start_date_month . ' ' . $request->start_date_year);
+        }
 
-        return redirect()->back()->with('success', 'Education added successfully.');
+        $end_date = null;
+        if ($request->end_date_month && $request->end_date_year) {
+            $end_date = Carbon::createFromFormat('F Y', $request->end_date_month . ' ' . $request->end_date_year);
+        }
+         MentorEducation::create($validated);
+
+        return redirect()->back()->with('success', 'Education added successfully!');
     }
-
-    public function storeExperience(Request $request)
-    {
-        $request->validate([
-            'company' => 'required|string|max:255',
-            'position' => 'required|string|max:255',
-            'start_date' => 'required|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
+    public function store2(Request $request)
+{
+    $validated = $request->validate([
+            'skill_name' => 'required|string|max:255',
         ]);
+         MentorSkill::create(['skill_name' => $validated['skill_name'],
+    ]);
 
-        \App\Models\Experience::create($request->all());
-
-        return redirect()->back()->with('success', 'Experience added successfully.');
-    }
-
-    public function storeSkills(Request $request)
-    {
-        $request->validate([
-            'skill' => 'required|string|max:255',
-            'level' => 'required|in:Beginner,Intermediate,Advanced',
-        ]);
-
-        \App\Models\Skill::create($request->all());
-
-        return redirect()->back()->with('success', 'Skill added successfully.');
-    }
-
+        return redirect()->back()->with('success', 'Skill added successfully!');
+}
 }

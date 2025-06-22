@@ -1,55 +1,76 @@
-<div id="experienceModal" class="modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
-    <div class="modal-content" style="background-color: #fff; margin: 4% auto; padding: 30px; border-radius: 12px; width: 95%; max-width: 700px; box-shadow: 0 5px 20px rgba(0,0,0,0.2);">
-        <span class="close" onclick="closeExperiencePopup()" style="float: right; font-size: 26px; font-weight: bold; cursor: pointer;">&times;</span>
-        <h2 style="font-size: 22px; font-weight: bold; margin-bottom: 20px;">Add Experience</h2>
+<!-- Modal -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-        <form method="POST" action="{{ route('experience.store') }}" style="display: flex; flex-direction: column; gap: 15px;">
-            @csrf
+<!-- Modal -->
 
-            <div>
-                <label style="display: block; font-weight: 600;">Position</label>
-                <input type="text" name="position" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+
+<div class="modal fade" id="addExperienceModal" tabindex="-1" aria-labelledby="addExperienceLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content rounded-4 border-0">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold" id="addExperienceLabel">Add Experience</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <form action="{{ route('experience.store') }}" method="POST">
+        @csrf
+        <div class="modal-body px-4">
+
+          <!-- Position -->
+          <div class="mb-3">
+            <label class="form-label">Position</label>
+            <input type="text" name="position" class="form-control rounded-3 border-secondary" required>
+          </div>
+
+          <!-- Type of Work -->
+          <div class="mb-3">
+            <label class="form-label">Type of work</label>
+            <select name="type" class="form-select rounded-3 border-secondary" required>
+              <option disabled selected>-- Select type --</option>
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Internship">Internship</option>
+              <option value="Freelance">Freelance</option>
+            </select>
+          </div>
+
+          <!-- Company Name -->
+          <div class="mb-3">
+            <label class="form-label">Company name</label>
+            <input type="text" name="company" class="form-control rounded-3 border-secondary" required>
+          </div>
+
+          <!-- Location -->
+          <div class="mb-3">
+            <label class="form-label">Location</label>
+            <input type="text" name="location" class="form-control rounded-3 border-secondary">
+          </div>
+
+          <!-- Start & End Date -->
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Start Date</label>
+              <input type="date" name="start_date" class="form-control rounded-3 border-secondary" required>
             </div>
-
-            <div>
-                <label style="display: block; font-weight: 600;">Type of work</label>
-                <select name="type_of_work" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
-                    <option value="">Select...</option>
-                    <option value="fulltime">Full-time</option>
-                    <option value="parttime">Part-time</option>
-                    <option value="internship">Internship</option>
-                </select>
+            <div class="col-md-6">
+              <label class="form-label">End Date</label>
+              <input type="date" name="end_date" class="form-control rounded-3 border-secondary">
             </div>
+          </div>
 
-            <div>
-                <label style="display: block; font-weight: 600;">Company name</label>
-                <input type="text" name="company_name" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
-            </div>
+          <!-- Description -->
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea name="description" class="form-control rounded-3 border-secondary" rows="3"></textarea>
+          </div>
 
-            <div>
-                <label style="display: block; font-weight: 600;">Location</label>
-                <input type="text" name="location" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
-            </div>
-
-            <div style="display: flex; gap: 20px;">
-                <div style="flex: 1;">
-                    <label style="display: block; font-weight: 600;">Start Date</label>
-                    <input type="date" name="start_date" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
-                </div>
-                <div style="flex: 1;">
-                    <label style="display: block; font-weight: 600;">End Date</label>
-                    <input type="date" name="end_date" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
-                </div>
-            </div>
-
-            <div>
-                <label style="display: block; font-weight: 600;">Description</label>
-                <textarea name="description" rows="3" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;"></textarea>
-            </div>
-
-            <button type="submit" style="margin-top: 12px; background-color: #1e2a78; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">
-                Save
-            </button>
-        </form>
+          <!-- Submit Button -->
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary rounded-3 px-4">Save</button>
+          </div>
+          
+        </div>
+      </form>
     </div>
+  </div>
 </div>

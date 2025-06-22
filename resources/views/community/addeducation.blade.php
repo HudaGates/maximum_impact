@@ -1,81 +1,101 @@
-<div id="educationMentor" class="modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
-    <div class="modal-content" style="background-color: #fff; margin: 4% auto; padding: 30px; border-radius: 12px; width: 95%; max-width: 700px; box-shadow: 0 5px 20px rgba(0,0,0,0.2);">
-        <span class="close" onclick="closeEducationPopup()" style="float: right; font-size: 26px; font-weight: bold; cursor: pointer;">&times;</span>
-        <h2 style="font-size: 22px; font-weight: bold; margin-bottom: 20px;">Add Education</h2>
+<!-- Modal -->
+<div class="modal fade" id="addEducationModal" tabindex="-1" aria-labelledby="addEducationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content rounded-4">
+      <div class="modal-header border-0">
+        <h4 class="modal-title fw-bold" id="addEducationModalLabel">Add Education</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form action="{{ route('education.store') }}" method="POST">
+      @csrf
+      <div class="modal-content rounded-4">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold" id="addEducationModalLabel">Add Education</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
 
-        <form method="POST" action="{{ route('education.store') }}" style="display: flex; flex-direction: column; gap: 15px;">
-            @csrf
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">University</label>
+            <input type="text" class="form-control" name="university" required>
+          </div>
 
-            <div>
-                <label style="display: block; font-weight: 600;">University</label>
-                <input type="text" name="position" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Title</label>
+            <input type="text" class="form-control" name="title">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Field of study</label>
+            <input type="text" class="form-control" name="field_of_study">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Location</label>
+            <input type="text" class="form-control" name="location">
+          </div>
+
+          <div class="row">
+            <label class="form-label fw-semibold">Start Date</label>
+            <div class="col">
+              <select class="form-select" name="start_date_month">
+                <option value="" selected disabled>Month</option>
+                @foreach(['January','February','March','April','May','June','July','August','September','October','November','December'] as $month)
+                  <option value="{{ $month }}">{{ $month }}</option>
+                @endforeach
+              </select>
             </div>
-
-            <div>
-                <label style="display: block; font-weight: 600;">Title</label>
-                <select name="type_of_work" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
-                    <option value="">Select...</option>
-                    <option value="fulltime">S1</option>
-                    <option value="parttime">S2</option>
-                    <option value="internship">S3</option>
-                </select>
+            <div class="col">
+              <select class="form-select" name="start_date_year">
+                <option value="" selected disabled>Year</option>
+                @for($i = date('Y'); $i >= 1950; $i--)
+                  <option value="{{ $i }}">{{ $i }}</option>
+                @endfor
+              </select>
             </div>
+          </div>
 
-            <div>
-                <label style="display: block; font-weight: 600;">Field of study</label>
-                <input type="text" name="company_name" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+          <div class="row mt-3">
+            <label class="form-label fw-semibold">End Date</label>
+            <div class="col">
+              <select class="form-select" name="end_date_month">
+                <option value="" selected disabled>Month</option>
+                @foreach(['January','February','March','April','May','June','July','August','September','October','November','December'] as $month)
+                  <option value="{{ $month }}">{{ $month }}</option>
+                @endforeach
+              </select>
             </div>
-
-            <div>
-                <label style="display: block; font-weight: 600;">Location</label>
-                <input type="text" name="location" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+            <div class="col">
+              <select class="form-select" name="end_date_year">
+                <option value="" selected disabled>Year</option>
+                @for($i = date('Y'); $i >= 1950; $i--)
+                  <option value="{{ $i }}">{{ $i }}</option>
+                @endfor
+              </select>
             </div>
+          </div>
 
-           <div style="display: flex; gap: 20px;">
+          <div class="mb-3 mt-3">
+            <label class="form-label fw-semibold">Grade</label>
+            <input type="text" class="form-control" name="grade">
+          </div>
 
-                <div style="flex: 1;">
-                    <label style="display: block; font-weight: 600;">Start Date</label>
-                    <input type="text" name="dayMonth" pattern="^([0][1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])$"
-                        placeholder="DD-MM" required
-                        title="Format harus DD-MM, contoh: 05-12"
-                        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
-                </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Activities and social activities</label>
+            <input type="text" class="form-control" name="activities">
+          </div>
 
-                <div style="flex: 1;">
-                    <input type="number" name="Year" min="1900" max="2100"
-                        placeholder="YYYY"
-                        style="margin-top: 24px; width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
-                </div>
-            </div>
-
-
-
-              <div style="display: flex; gap: 20px;">
-                <div style="flex: 1;">
-                    <label style="display: block; font-weight: 600;">End Date</label>
-                    <input type="text" name="dayMonth" pattern="^([0][1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])$"
-                        placeholder="DD-MM" required
-                        title="Format harus DD-MM, contoh: 05-12"
-                        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
-                </div>
-
-                <div style="flex: 1;">
-
-                    <input type="number" name="Year" min="1900" max="2100"
-                        placeholder="YYYY"
-                        style="margin-top: 24px; width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
-                </div>
-            </div>
-
-
-            <div>
-                <label style="display: block; font-weight: 600;">Description</label>
-                <textarea name="description" rows="3" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;"></textarea>
-            </div>
-
-            <button type="submit" style="margin-top: 12px; background-color: #1e2a78; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">
-                Save
-            </button>
-        </form>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Description</label>
+            <textarea class="form-control" name="description" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer border-0 px-4">
+          <button type="submit" class="btn btn-dark rounded-3">Save</button>
+        </div>
+        </div>
+      </form>
     </div>
-</div>
+  </div>
+  </div>
+

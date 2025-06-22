@@ -1,34 +1,40 @@
-<div id="skillsModul" class="modul" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
-    <div class="modul-content" style="background-color: #fff; margin: 4% auto; padding: 30px; border-radius: 12px; width: 95%; max-width: 700px; box-shadow: 0 5px 20px rgba(0,0,0,0.2);">
-        <span class="close" onclick="closeSkillsPopup()" style="float: right; font-size: 26px; font-weight: bold; cursor: pointer;">&times;</span>
-        <h2 style="font-size: 22px; font-weight: bold; margin-bottom: 20px;">Add Skills</h2>
-        <form onsubmit="saveSkills(event)" style="display: flex; flex-direction: column; gap: 15px;">
-            @csrf
-            <label for="skills" style="font-weight: bold;">Skills</label>
-           <input type="text" name="skills" id="skillsInput" style="padding: 10px; border-radius: 6px; border: 1px solid #ccc;" placeholder="Type a skill...">
-            <div style="background-color: #f1f8f4; padding: 15px; border-radius: 8px; margin-top: 10px;">
-                <p style="font-weight: 500; margin-bottom: 10px; color: #666;">Recommended Based on Your Profile</p>
-                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                    @php
-                        $recommended = ['Project Management', 'Research', 'Marketing', 'Training', 'Communication', 'Sale', 'Microsoft Excel', 'Customer Service'];
-                    @endphp
+<!-- Modal -->
+<div class="modal fade" id="addSkillModal" tabindex="-1" aria-labelledby="addSkillModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content rounded-4">
+      <div class="modal-header border-0">
+        <h4 class="modal-title fw-bold" id="addSkillModalLabel">Add Skills</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
 
-                    @foreach ($recommended as $skill)
-                        <button type="button" class="recommended-skill" data-skill="{{ $skill }}"
-                            style="padding: 8px 12px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff; cursor: pointer;">
-                            {{ $skill }}
-                        </button>
-                    @endforeach
-                </div>
+      <form action="{{ route('skills.store') }}" method="POST">
+        @csrf
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Skills</label>
+            <input type="text" class="form-control" name="skill_name" placeholder="Type a skill..." required>
+          </div>
+
+          <!-- Recommended Skills -->
+          <div class="bg-light p-3 rounded-3 border">
+            <p class="fw-semibold text-muted mb-2">Recommended Based on Your Profile</p>
+            <div class="d-flex flex-wrap gap-2">
+              @php
+                $suggestedSkills = ['Project Management', 'Research', 'Marketing', 'Training', 'Communication', 'Sale', 'Microsoft Excel', 'Customer Service'];
+              @endphp
+              @foreach($suggestedSkills as $skill)
+                <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill" onclick="document.querySelector('input[name=skill_name]').value = '{{ $skill }}'">
+                  {{ $skill }}
+                </button>
+              @endforeach
             </div>
+          </div>
+        </div>
 
-            <button type="submit" style="margin-top: 20px; background-color: #1d274d; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
-                Save
-            </button>
-        </form>
-         <form id="skillsForm" method="POST" action="{{ route('skills.store') }}" style="display: flex; flex-direction: column; gap: 15px;">
-            @csrf
-        </form>
-
+        <div class="modal-footer border-0 px-4">
+          <button type="submit" class="btn btn-dark rounded-3">Save</button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
