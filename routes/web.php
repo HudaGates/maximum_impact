@@ -16,6 +16,8 @@ use App\Http\Controllers\MentorController;
 use App\Http\Controllers\CompanyReportController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\BusinessGrowthController;
+use App\Http\Controllers\MemberController;;
+
 
 Route::get('/', function () {
     return redirect('landingpage');
@@ -23,7 +25,7 @@ Route::get('/', function () {
 
 Route::get('/account/setup', [AccountController::class, 'setup']);
 
-Route::get('/account/success', [AccountController::class, 'success']);
+Route::get('/account/success', [AccountController::class, 'success'])->name('account-success');
 
 Route::get('/step8', [StepController::class, 'showStep8'])->name('step8');
 Route::post('/step8', [StepController::class, 'submitStep8'])->name('step8.submit');
@@ -84,9 +86,9 @@ Route::get('/invest/investment-status', [InvestmentController::class, 'index'])-
 Route::get('/investment-report', [InvestmentController::class, 'report'])->name('investment.investment-report');
 Route::get('/investment-expense', [InvestmentController::class, 'expense'])->name('investment.investment-expense');
 Route::get('/investment/add-income', [InvestmentController::class, 'add'])->name('investment.add-income');
-Route::post('/investment/store', [InvestmentController::class, 'store1']);
+//Route::post('/investment/store', [InvestmentController::class, 'store1']);
 Route::get('/investment/add-expense', [InvestmentController::class, 'addexpense'])->name('investment.add-expense');
-Route::post('/expense/store2', [InvestmentController::class, 'store2']);
+//Route::post('/expense/store2', [InvestmentController::class, 'store2']);
 
 Route::get('/report-overview', [ReportController::class, 'overview'])->name('reports.overview');
 
@@ -155,6 +157,7 @@ Route::get('/dashboard-invest', [StepInvestController::class, 'showDashboard'])-
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('community.dashboard-business');
 Route::get('/dashboard-invest', [DashboardController::class, 'indexInvest'])->name('community.dashboard-invest');
 
+
 Route::get('/bussines-growth1', [BusinessGrowthController::class, 'step1'])->name('bussines-growth1');
 Route::post('/bussines-growth2', [BusinessGrowthController::class, 'step2'])->name('bussines-growth2');
 
@@ -198,4 +201,36 @@ Route::get('/bussines-growth8', function () {
 })->name('bussines-growth8-page');
 
 Route::post('/bussines-growth8', [BusinessGrowthController::class, 'step8'])->name('bussines-growth8');
+
+Route::post('/members', [MemberController::class, 'store'])->name('members.store');
+
+// Rute untuk menampilkan form edit member
+Route::get('/members/{member}/edit', [MemberController::class, 'edit'])->name('members.edit');
+
+// Rute untuk memproses update data member
+Route::put('/members/{member}', [MemberController::class, 'update'])->name('members.update');
+
+// Rute untuk menghapus member
+Route::delete('/members/{member}', [MemberController::class, 'destroy'])->name('members.destroy');
+
+// Rute utama untuk menampilkan profil mentor
+Route::get('/mentor/{mentor}', [MentorController::class, 'show'])->name('mentor.show');
+
+// Rute untuk mengedit dan update profil dasar & about
+Route::get('/mentor/{mentor}/edit', [MentorController::class, 'edit'])->name('mentor.edit');
+Route::put('/mentor/{mentor}', [MentorController::class, 'update'])->name('mentor.update');
+
+// Rute untuk Experience, Education, dan Skills
+Route::get('/investment-report', [InvestmentController::class, 'report'])->name('investment.investment-report');
+Route::get('/investment-expense', [InvestmentController::class, 'expense'])->name('investment.investment-expense');
+
+// Rute untuk menampilkan form tambah income
+Route::get('/investment/add-income', [InvestmentController::class, 'add'])->name('investment.add-income');
+// Rute untuk MENYIMPAN data income
+Route::post('/income/store', [InvestmentController::class, 'storeIncome'])->name('income.store');
+
+// Rute untuk menampilkan form tambah expense
+Route::get('/investment/add-expense', [InvestmentController::class, 'addexpense'])->name('investment.add-expense');
+// Rute untuk MENYIMPAN data expense
+Route::post('/expense/store', [InvestmentController::class, 'storeExpense'])->name('expense.store');
 

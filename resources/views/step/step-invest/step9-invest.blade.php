@@ -148,10 +148,10 @@
         <form method="POST" action="{{ route(name: 'step9-invest.submit') }}">
             @csrf
             <label>What should we call you?</label>
-            <input type="text" placeholder="Your name, please! We’ll use it to cheer you on in updates!">
+            <input type="text" name="investor_name" placeholder="..." value="{{ old('investor_name', $profile->investor_name ?? auth()->user()->first_name) }}">
 
             <label>Where should we send your wins?</label>
-            <input type="email" placeholder="Your email—so we can celebrate milestones, share tips, and more...">
+            <input type="email" name="investor_email" placeholder="..." value="{{ old('investor_email', $profile->investor_email ?? auth()->user()->email) }}">
 
             <button class="submit-button" type="submit">Start The Journey!</button>
 

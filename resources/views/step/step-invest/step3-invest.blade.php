@@ -138,7 +138,7 @@
             </p>
             <form method="POST" action="{{ route(name: "step3-invest.submit") }}">
                 @csrf
-                <textarea name="growth_plan" placeholder="Invest a second startup, Expand investments to 3 new sectors..."></textarea>
+                <textarea name="growth_plan" placeholder="...">{{ old('growth_plan', $profile->growth_plan ?? '') }}</textarea>
                 <div class="buttons">
                     <a href="{{ route(name: 'step-invest.step2-invest') }}" style="text-decoration: none" class="btn btn-prev">← Previous</a>
                     <button type="submit" class="btn btn-next">Continue →</button>

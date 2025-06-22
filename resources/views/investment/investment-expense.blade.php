@@ -69,24 +69,29 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($data as $i => $item)
-            <tr class="{{ $i % 2 === 1 ? 'bg-light' : '' }}">
-                <td><input type="checkbox"></td>
-                <td>{{ $i + 1 }}.</td>
-                <td>{{ $item['date'] }}</td>
-                <td>{{ $item['category'] }}</td>
-                <td>{{ $item['desc'] }}</td>
-                <td>{{ $item['amount'] }}</td>
-                <td><i class="bi bi-file-earmark-text me-1"></i>{{ $item['proof'] }}</td>
-            </tr>
-            @endforeach
-        </tbody>
-        <tfoot style="background-color: #F1F1FB;">
-            <tr>
-                <td colspan="5" class="text-end fw-bold">TOTAL</td>
-                <td colspan="2" class="fw-bold text-dark">$15 Million</td>
-            </tr>
-        </tfoot>
+    @forelse ($data as $i => $item)
+    <tr class="{{ $i % 2 === 1 ? 'bg-light' : '' }}">
+        <td><input type="checkbox"></td>
+        <td>{{ $i + 1 }}.</td>
+        <td>{{ \Carbon\Carbon::parse($item->date)->format('d/m/Y') }}</td>
+        <td>{{ $item->category }}</td>
+        <td>{{ $item->description }}</td>
+        <td>${{ number_format($item->amount, 2) }}</td>
+        <td><i class="bi bi-file-earmark-text me-1"></i>{{ $item->proof }}</td>
+    </tr>
+    @empty
+    <tr>
+        <td colspan="7" class="text-center">No expense data found.</td>
+    </tr>
+    @endforelse
+</tbody>
+<tfoot style="background-color: #F1F1FB;">
+    <tr>
+        <td colspan="5" class="text-end fw-bold">TOTAL</td>
+        {{-- Ganti nilai statis dengan variabel dari controller --}}
+        <td colspan="2" class="fw-bold text-dark">${{ number_format($total_expense, 2) }}</td>
+    </tr>
+</tfoot>
     </table>
 
     <div class="d-flex justify-content-between align-items-center mt-2">

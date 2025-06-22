@@ -146,7 +146,7 @@
       </p>
       <form method="POST" action="{{ route(name: 'step6.submit') }}">
         @csrf
-        <textarea name="team_plan" placeholder="Hire 2 senior developers, Launch leadership training, ..."></textarea>
+        <textarea name="team_plan" placeholder="Hire 2 senior developers, Launch leadership training, ...">{{ old('team_plan', $business->team_plan ?? '') }}</textarea>
         <div class="buttons">
           <a href="{{ route('step5') }}" style="text-decoration: none" class="btn btn-prev">← Previous</a>
           <button type="submit" class="btn btn-next">Continue →</button>

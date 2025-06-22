@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Member;
 
 class CompanyReportController extends Controller
 {
@@ -205,16 +206,14 @@ class CompanyReportController extends Controller
     }
 
     public function index1()
-    {
-        $members = [
-        (object)[ 'name' => 'Jane Cooper', 'photo' => '/img/jane.jpg', 'job_title' => 'CEO', 'department' => 'Lorem ipsum dolor sit...', 'location' => 'Location 1' ],
-        (object)[ 'name' => 'Wade Warren', 'photo' => '/img/wade.jpg', 'job_title' => 'CTO', 'department' => 'Lorem ipsum...', 'location' => 'Location 2' ],
-        (object)[ 'name' => 'Esther Howard', 'photo' => '/img/esther.jpg', 'job_title' => 'Team Lead', 'department' => 'Lorem ipsum...', 'location' => 'Location 1' ],
-        (object)[ 'name' => 'Cameron Williamson', 'photo' => '/img/cameron.jpg', 'job_title' => 'Team Lead', 'department' => 'Lorem ipsum...', 'location' => 'Location 2' ],
-        (object)[ 'name' => 'Brooklyn Simmons', 'photo' => '/img/brooklyn.jpg', 'job_title' => 'Team Lead', 'department' => 'Lorem ipsum...', 'location' => 'Location 2' ],
-    ];
+{
+    // 1. Hapus semua data statis
+    // 2. Ganti dengan satu baris ini untuk mengambil semua data dari database
+    $members = Member::all();
 
+    // 3. Kirim data $members yang sudah dari database ke view
     return view('community.company-profile', compact('members'));
+
     }
 
     // Menyimpan data profil perusahaan

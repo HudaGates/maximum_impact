@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Income;
+use App\Models\Expense;
+use App\Models\Investment; // Import model Investment
+use Carbon\Carbon;          // Import Carbon untuk manipulasi tanggal
 
 class InvestmentController extends Controller
 {
@@ -97,8 +101,9 @@ class InvestmentController extends Controller
         ];
 
         return view('investment.status', compact('investments'));
-}
-public function create()
+    }
+
+    public function create()
     {
         return view('investment.create', [
             'projects' => ['Project A- Housing Development', 'Project B - Application Development', 'Project C - Renewable Energy Factory'],
@@ -116,15 +121,14 @@ public function create()
             'payment_method' => 'required',
         ]);
 
-        // Simpan ke database atau proses lainnya di sini...
-
         return redirect()->route('investment.create')->with('success', 'Investment registered successfully.');
     }
-     public function index()
+
+    public function index()
     {
-        // Kamu bisa kirim data jika perlu
         return view('investment.investment-status');
     }
+
     public function show1()
     {
         $investment = Investment::where('user_id', auth()->id())->first();
@@ -133,11 +137,10 @@ public function create()
             abort(404, 'Investment not found');
         }
 
-        // Auto update dari 'Processed' ke 'Approved' jika lebih dari 1 menit
         if ($investment->status === 'Processed' && $investment->status_updated_at) {
             $elapsed = Carbon::now()->diffInMinutes($investment->status_updated_at);
 
-            if ($elapsed >= 1) { // kamu bisa ganti waktunya (misalnya 10)
+            if ($elapsed >= 1) {
                 $investment->status = 'Approved';
                 $investment->status_updated_at = Carbon::now();
                 $investment->save();
@@ -149,103 +152,59 @@ public function create()
         ]);
     }
 
-public function report()
+    public function report()
     {
-        // Dummy data to simulate database records
-        $data = [
-            [
-                'date' => '02/10/2024',
-                'sender' => 'Mikarta',
-                'source_bank' => 'BCA',
-                'destination_bank' => 'BNI',
-                'amount' => '$3 Million',
-                'funding_type' => 'Series C Funding',
-                'investment_type' => 'Crowdfunding',
-            ],
-            [
-                'date' => '02/10/2024',
-                'sender' => 'Micarta',
-                'source_bank' => 'BCA',
-                'destination_bank' => 'BNI',
-                'amount' => '$3 Million',
-                'funding_type' => 'Series C Funding',
-                'investment_type' => 'Crowdfunding',
-            ],
-            [
-                'no' => 3,
-                'date' => '02/10/2024',
-                'sender' => 'Mikarta',
-                'source_bank' => 'BCA',
-                'destination_bank' => 'BNI',
-                'amount' => '$3 Million',
-                'funding_type' => 'Series C Funding',
-                'investment_type' => 'Crowdfunding',
-            ],
-            [
-                'no' => 4,
-                'date' => '02/10/2024',
-                'sender' => 'Mikarta',
-                'source_bank' => 'BCA',
-                'destination_bank' => 'BNI',
-                'amount' => '$3 Million',
-                'funding_type' => 'Series C Funding',
-                'investment_type' => 'Crowdfunding',
-            ],
-            [
-                'no' => 5,
-                'date' => '02/10/2024',
-                'sender' => 'Mikarta',
-                'source_bank' => 'BCA',
-                'destination_bank' => 'BNI',
-                'amount' => '$3 Million',
-                'funding_type' => 'Series C Funding',
-                'investment_type' => 'Crowdfunding',
-            ],
-            // You can add more dummy data here up to 10 for the first page
-        ];
-
+        $data = Income::latest()->get();
         return view('investment.investment-report', compact('data'));
     }
+
     public function expense(Request $request)
     {
-        // Data dummy (biasanya ini dari database)
-        $data = collect([
-            ['date' => '02/10/2024', 'category' => 'Internal', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #001'],
-            ['date' => '02/10/2024', 'category' => 'External', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #002'],
-            ['date' => '02/10/2024', 'category' => 'Internal', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #003'],
-            ['date' => '02/10/2024', 'category' => 'External', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #004'],
-            ['date' => '02/10/2024', 'category' => 'Internal', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #005'],
-            ['date' => '02/10/2024', 'category' => 'External', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #006'],
-            ['date' => '02/10/2024', 'category' => 'Internal', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #007'],
-            ['date' => '02/10/2024', 'category' => 'External', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #008'],
-            ['date' => '02/10/2024', 'category' => 'Internal', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #009'],
-            ['date' => '02/10/2024', 'category' => 'External', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #010'],
-            ['date' => '02/10/2024', 'category' => 'Internal', 'desc' => 'Lorem ipsum dolor sit amet', 'amount' => '$3 Million', 'proof' => 'Receipt #011'],
-        ]);
-
-        // Pagination manual (karena data dari array)
-
-
-        return view('investment.investment-expense', compact('data'));
+        $data = Expense::latest()->get();
+        $total_expense = Expense::sum('amount');
+        
+        return view('investment.investment-expense', compact('data', 'total_expense'));
     }
+
     public function add()
     {
         return view('investment.add-income');
     }
 
-    public function store1(Request $request)
+    public function storeIncome(Request $request)
     {
-        // Validasi & simpan data di sini
-        return redirect()->back()->with('success', 'Income added successfully!');
+        $request->validate([
+            'date' => 'required|date',
+            'sender' => 'required|string|max:255',
+            'source_bank' => 'required|string|max:255',
+            'destination_bank' => 'required|string|max:255',
+            'amount' => 'required|numeric|min:0',
+            'funding_type' => 'required|string|max:255',
+            'investment_type' => 'required|string|max:255',
+        ]);
+        
+        Income::create($request->all());
+
+        return redirect()->route('investment.investment-report')->with('success', 'Income added successfully!');
     }
-     public function addexpense()
+
+    public function addexpense()
     {
         return view('investment.add-expense');
     }
 
-    public function store2(Request $request)
+    public function storeExpense(Request $request)
     {
-        // Validasi dan proses simpan (jika diperlukan)
-        return redirect()->back()->with('success', 'Expense added successfully!');
+        $request->validate([
+            'date' => 'required|date',
+            'amount' => 'required|numeric|min:0',
+            'category' => 'required|string|max:255',
+            'description' => 'required|string',
+            'proof' => 'nullable|string|max:255',
+        ]);
+
+        Expense::create($request->all());
+        
+        return redirect()->route('investment.investment-expense')->with('success', 'Expense added successfully!');
     }
 }

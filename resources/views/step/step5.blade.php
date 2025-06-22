@@ -145,7 +145,7 @@
         </p>
         <form method="POST" action="{{ route(name: 'step5.submit') }}">
           @csrf
-          <textarea name="profit_goal" placeholder="Achieve 20% net margin, Reach $100k net profit, ..."></textarea>
+          <textarea name="profit_goal" placeholder="Achieve 20% net margin, Reach $100k net profit, ...">{{ old('profit_goal', $business->profit_goal ?? '') }}</textarea>
           <div class="buttons">
             <a href="{{ route('step4') }}" style="text-decoration: none" class="btn btn-prev">← Previous</a>
             <button type="submit" class="btn btn-next">Continue →</button>

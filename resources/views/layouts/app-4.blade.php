@@ -163,7 +163,7 @@
             </div>
             <div class="mx-3 d-flex align-items-center gap-1">
                 <img src="{{ asset('images/user-circle.png') }}" alt="profile" width="24" height="24">
-                <span class="username">Hi, Adam</span>
+                <span class="username">Hi, {{ Auth::check() ? Auth::user()->first_name : 'Guest' }}</span>
                 <i class="bi bi-chevron-down small ms-1"></i>
             </div>
         </div>

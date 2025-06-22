@@ -73,20 +73,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($data as $index => $item)
-                    <tr>
-                        <td><input type="checkbox" /></td>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $item['date'] }}</td>
-                        <td>{{ $item['sender'] }}</td>
-                        <td>{{ $item['source_bank'] }}</td>
-                        <td>{{ $item['destination_bank'] }}</td>
-                        <td>{{ $item['amount'] }}</td>
-                        <td>{{ $item['funding_type'] }}</td>
-                        <td>{{ $item['investment_type'] }}</td>
-                    </tr>
-                @endforeach
-                </tbody>
+@foreach ($data as $index => $item)
+    <tr>
+        <td><input type="checkbox" /></td>
+        <td>{{ $index + 1 }}</td>
+        <td>{{ \Carbon\Carbon::parse($item->date)->format('d/m/Y') }}</td>
+        <td>{{ $item->sender }}</td>
+        <td>{{ $item->source_bank }}</td>
+        <td>{{ $item->destination_bank }}</td>
+        <td>${{ number_format($item->amount, 2) }}</td>
+        <td>{{ $item->funding_type }}</td>
+        <td>{{ $item->investment_type }}</td>
+    </tr>
+@endforeach
+</tbody>
             </table>
         </div>
 

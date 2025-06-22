@@ -145,7 +145,7 @@
         </p>
         <form method="POST" action="{{ route(name: 'step5-invest.submit') }}">
           @csrf
-          <textarea name="profit_goal" placeholder="Achieve 20% return on investment, Reach $100k net investment gains, ..."></textarea>
+          <textarea name="profit_goal" placeholder="...">{{ old('profit_goal', $profile->profit_goal ?? '') }}</textarea>
           <div class="buttons">
             <a href="{{ route('step-invest.step4-invest') }}" style="text-decoration: none" class="btn btn-prev">← Previous</a>
             <button type="submit" class="btn btn-next">Continue →</button>

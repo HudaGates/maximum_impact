@@ -146,7 +146,7 @@
       </p>
       <form method="POST" action="{{ route(name: 'step7-invest.submit') }}">
         @csrf
-        <input type="text" name="sdg_goal" placeholder="Select your investments SDGs...">
+        <input type="text" name="sdg_goal" placeholder="Select your investments SDGs..." value="{{ old('sdg_goal', $profile->sdg_goal ?? '') }}">
         <div class="buttons">
           <a href="{{ route('step-invest.step6-invest') }}" style="text-decoration: none" class="btn btn-prev">← Previous</a>
           <button type="submit" class="btn btn-next">Continue →</button>

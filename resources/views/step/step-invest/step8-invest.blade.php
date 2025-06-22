@@ -171,7 +171,7 @@
             @csrf
 
             <div class="form-group">
-                <textarea name="step8" placeholder="Invest in green energy funds, Diversify portfolio in Q3, Support women-led startups,..."></textarea>
+                <textarea name="strategy_plan" placeholder="...">{{ old('strategy_plan', $profile->strategy_plan ?? '') }}</textarea>
             </div>
 
             <div class="buttons">

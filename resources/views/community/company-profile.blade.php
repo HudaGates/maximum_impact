@@ -137,22 +137,37 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($members as $member)
-        <tr class="{{ $loop->odd ? 'bg-light' : '' }}">
-            <td>
-                <img src="{{ $member->photo }}" class="rounded-circle me-2" width="30" height="30">
-                {{ $member->name }}
-            </td>
-            <td>{{ $member->job_title }}</td>
-            <td>{{ $member->department }}</td>
-            <td>{{ $member->location }}</td>
-            <td>
-                <a href="#" class="text-primary me-2"><i class="bi bi-pencil-square"></i></a>
-                <a href="#" class="text-danger"><i class="bi bi-trash"></i></a>
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
+    @forelse ($members as $member)
+    <tr class="{{ $loop->odd ? 'bg-light' : '' }}">
+        <td>
+            <img src="{{ $member->photo ? asset('storage/' . $member->photo) : 'https://via.placeholder.com/30' }}" class="rounded-circle me-2" width="30" height="30" alt="{{ $member->name }}">
+            {{ $member->name }}
+        </td>
+        <td>{{ $member->job_title }}</td>
+        <td>{{ $member->department }}</td>
+        <td>{{ $member->location }}</td>
+        <td>
+            {{-- Tombol Edit --}}
+            <a href="{{ route('members.edit', $member->id) }}" class="text-primary me-2" title="Edit">
+                <i class="bi bi-pencil-square"></i>
+            </a>
+
+            {{-- Tombol Delete (di dalam form) --}}
+            <form action="{{ route('members.destroy', $member->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this member?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-link text-danger p-0" title="Delete">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </form>
+        </td>
+    </tr>
+    @empty
+    <tr>
+        <td colspan="5" class="text-center">No members found.</td>
+    </tr>
+    @endforelse
+</tbody>
 </table>
 
 <div class="text-center">

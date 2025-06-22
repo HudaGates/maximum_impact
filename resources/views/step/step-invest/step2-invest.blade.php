@@ -141,7 +141,7 @@
 
     <form method="POST" action="{{ route(name: 'step2-invest.submit') }}">
         @csrf
-        <input type="text" name="industry" placeholder="Enter your investment focus...">
+        <input type="text" name="investment_focus" placeholder="Enter your investment focus..." value="{{ old('investment_focus', $profile->investment_focus ?? '') }}">
 
         <div class="buttons">
             <a href="{{ route('step-invest.step1-invest') }}" style="text-decoration: none" class="btn btn-prev">← Previous</a></button>

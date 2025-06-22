@@ -124,7 +124,7 @@
 
       <form method="POST" action="{{ route('step1-invest.submit') }}">
         @csrf
-        <input type="text" name="business_name" placeholder="Enter your investment name..." required>
+        <input type="text" name="investment_name" placeholder="Enter your investment name..." required value="{{ old('investment_name', $profile->investment_name ?? '') }}">
         <button type="submit" class="btn btn-next">Continue →</button>
       </form>
 
