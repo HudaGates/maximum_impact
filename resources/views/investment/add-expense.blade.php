@@ -9,7 +9,7 @@
     @endif
 
     {{-- Gunakan named route untuk action --}}
-    <form method="POST" action="{{ route('expense.store') }}">
+    <form method="POST" action="{{ route('expense.store') }}" enctype="multipart/form-data">
         @csrf
 
         <div class="mb-3">
@@ -40,11 +40,42 @@
             @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
 
-        <div class="mb-3">
-            <label for="proof" class="form-label">Proof of Purchase</label>
-            <input type="text" class="form-control @error('proof') is-invalid @enderror" id="proof" name="proof" value="{{ old('proof') }}" placeholder="Receipt #001">
-            @error('proof') <div class="invalid-feedback">{{ $message }}</div> @enderror
+<div class="mb-3">
+    <label for="proof" class="form-label">Proof of Purchase</label>
+
+    <input 
+        type="file" 
+        class="form-control @error('proof') is-invalid @enderror" 
+        id="proof" 
+        name="proof" 
+        accept=".pdf,.jpg,.jpeg,.png"
+    >
+    @error('proof') 
+        <div class="invalid-feedback">{{ $message }}</div> 
+    @enderror
+    @if(!empty($expense->proof_path))
+    <div class="mb-3">
+        <label class="form-label">Uploaded Proof</label>
+        <div class="input-group">
+            <span class="input-group-text bg-white border-end-0">
+                <i class="bi bi-file-earmark"></i>
+            </span>
+            <a 
+                href="{{ asset('storage/' . $expense->proof_path) }}" 
+                target="_blank" 
+                class="form-control text-decoration-none text-primary border-start-0"
+                style="background-color: #f8f9fa;"
+            >
+                {{ basename($expense->proof_path) }}
+            </a>
         </div>
+    </div>
+@endif
+
+</div>
+
+
+
 
         <button type="submit" class="btn" style="background-color: #1F2A69; color: white;">Add Expense</button>
     </form>

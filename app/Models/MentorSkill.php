@@ -5,15 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Expense extends Model
+class MentorSkill extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'date',
-        'amount',
-        'category',
-        'description',
-        'proof_of_purchase',
+        'skill_name',
     ];
 }
