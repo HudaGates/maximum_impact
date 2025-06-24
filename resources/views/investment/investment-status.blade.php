@@ -2,8 +2,8 @@
 
 @section('content')
 @php
-    $statuses = ['Submitted', 'Processed', 'Approved'];
-    $currentStatus = $status ?? 'Submitted';
+    $statuses = [ 'Processed'," ", 'Approved'];
+    $currentStatus = $status ?? 'Processed';
     $currentIndex = array_search($currentStatus, $statuses);
 @endphp
 

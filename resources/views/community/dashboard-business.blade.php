@@ -290,6 +290,10 @@ function toggleReport() {
             </tbody>
         </table>
     </div>
+    <div class="d-flex justify-content-center gap-3 mt-3 mb-4">
+      <a href="{{ route('investment.status') }}" class="btn btn-outline-success d-flex align-items-center gap-2">
+        <i class="bi bi-person-check"></i>Incoming Investments</a>
+    </div>
 </div>
 <script>
 const chartDataSets = {

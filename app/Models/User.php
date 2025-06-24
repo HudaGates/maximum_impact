@@ -4,34 +4,41 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $fillable = [
+<<<<<<< HEAD
         'name',
+=======
+        'first_name',
+        'last_name',
+        'phone',
+>>>>>>> 6e6574ad0fd195575e7abe1c010c06a709328684
         'email',
         'password',
-        'headline', 
-        'location', 
+        'headline',
+        'location',
         'about',
+        'role',   // <-- PERUBAHAN: Ditambahkan agar bisa diisi
+        'status', // <-- PERUBAHAN: Ditambahkan agar bisa diisi
     ];
 
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -50,17 +57,44 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    
+    // =============================================================
+    // METHOD BARU YANG DITAMBAHKAN
+    // =============================================================
+    /**
+     * Accessor untuk mendapatkan nama lengkap pengguna.
+     * Ini akan menggabungkan first_name dan last_name.
+     *
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        // Menggabungkan first_name dan last_name menjadi satu
+        return "{$this->first_name} {$this->last_name}";
+    }
+    // =============================================================
 
-    public function educations() {
-    return $this->hasMany(MentorEducation::class, 'mentor_id');
-}
+    /**
+     * Mendefinisikan relasi ke model MentorEducation.
+     */
+    public function educations(): HasMany
+    {
+        return $this->hasMany(MentorEducation::class, 'mentor_id');
+    }
 
-public function experiences() {
-    return $this->hasMany(MentorExperience::class, 'mentor_id');
-}
+    /**
+     * Mendefinisikan relasi ke model MentorExperience.
+     */
+    public function experiences(): HasMany
+    {
+        return $this->hasMany(MentorExperience::class, 'mentor_id');
+    }
 
-public function skills() {
-    return $this->hasMany(MentorSkill::class, 'mentor_id');
-}
-
+    /**
+     * Mendefinisikan relasi ke model MentorSkill.
+     */
+    public function skills(): HasMany
+    {
+        return $this->hasMany(MentorSkill::class, 'mentor_id');
+    }
 }

@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>{{ $title ?? 'Register' }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
@@ -68,15 +69,22 @@
             <p class="text-muted mb-4">Lets Make an Account first!</p>
 
             <form class="w-75" method="POST" action="{{ route('register.step2.post') }}">
-                <div class="mb-3">
-                    <input type="email" name="email" class="form-control custom" placeholder="Email" required>
-                </div>
-                <div class="mb-3">
-                    <input type="password" name="password" class="form-control custom" placeholder="Password" required>
-                </div>
-                <a href="{{ route('login') }}" type="submit" class="btn btn-dark-blue w-100 mb-3"> Continue <i class="bi bi-arrow-right ms-2"></i></a></button>
-                <p class="text-center">Already have an account? <a href="/login" class="text-primary">Login</a></p>
-            </form>
+    @csrf
+    <div class="mb-3">
+        <input type="email" name="email" class="form-control custom @error('email') is-invalid @enderror" placeholder="Email" value="{{ old('email') }}" required>
+        @error('email')
+            <div class="text-danger mt-1">{{ $message }}</div>
+        @enderror
+    </div>
+    <div class="mb-3">
+        <input type="password" name="password" class="form-control custom @error('password') is-invalid @enderror" placeholder="Password" required>
+        @error('password')
+            <div class="text-danger mt-1">{{ $message }}</div>
+        @enderror
+    </div>
+    <button type="submit" class="btn btn-dark-blue w-100 mb-3">Continue <i class="bi bi-arrow-right ms-2"></i></button>
+    <p class="text-center">Already have an account? <a href="/login" class="text-primary">Login</a></p>
+</form>
 
             <div class="dot-pattern mt-4 ms-3">
                 @for ($i = 0; $i < 25; $i++)
@@ -85,10 +93,11 @@
             </div>
         </div>
 
+        <!-- Right -->
         <div class="col-md-6 bg-right position-relative">
             <div class="position-absolute bottom-0 end-0 m-4">
                 <div class="help-bubble shadow">
-                    <img src="{{ asset('images/max.png') }}" alt="help" width="24" class="me-2">
+                    <img src="{{ asset('assets/images/max.png') }}" alt="help" width="24" class="me-2">
                     Need Help?
                 </div>
             </div>

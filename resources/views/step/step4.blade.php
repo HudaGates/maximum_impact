@@ -142,7 +142,7 @@
             <p class="tip">(Pro tip: Aim 10% higher than “safe”!)</p>
             <form method="POST" action="{{ route(name: 'step4.submit') }}">
                 @csrf
-                <textarea name="ambition_plan" placeholder="Hit $50k/month in sales, Double recurring revenue, ..."></textarea>
+                <textarea name="ambition_plan" placeholder="Hit $50k/month in sales, Double recurring revenue, ...">{{ old('ambition_plan', $business->ambition_plan ?? '') }}</textarea>
                 <div class="buttons">
                     <a href="{{ route(name: 'step3') }}" style="text-decoration: none" class="btn btn-prev">← Previous</a>
                     <button type="submit" class="btn btn-next">Continue →</button>

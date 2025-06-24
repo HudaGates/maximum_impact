@@ -103,7 +103,8 @@ public function step3()
     }
     public function showStep9()
     {
-        return view('step.step9');
+        $proof = 'Receipt #001';
+        return view('step.step9', compact('proof'));
     }
     
 

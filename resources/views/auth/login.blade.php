@@ -58,17 +58,17 @@
             font-style: italic;
         }
 
-        .btn-full-width {
+        .btn {
             background-color: #1d2653;
             color: white;
-            display: block;
+            font-weight: 600;
+            padding: 12px;
             width: 100%;
-            text-align: center;
-            padding: 0.5rem 1rem;
-            font-weight: bold;
-            text-decoration: none;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 16px;
         }
-
 
         .btn:hover {
             opacity: 0.95;
@@ -134,6 +134,7 @@
     <div class="left-panel">
         <div class="dots">
             <svg viewBox="0 0 100 100">
+                <!-- Repeat dot pattern -->
                 <circle cx="10" cy="10" r="4" fill="#f3e8c9"/>
                 <circle cx="30" cy="10" r="4" fill="#f3e8c9"/>
                 <circle cx="50" cy="10" r="4" fill="#f3e8c9"/>
@@ -160,17 +161,14 @@
                 <label for="password">Password</label>
                 <input type="password" name="password" placeholder="Shh… your secret key to growth" required>
             </div>
-            <a href="{{ route('investor.index') }}" class="btn btn-costum btn-full-width" style="border-radius: 6px">
-  Launch My Dashboard! ↗
-</a>
-
+           <button type="submit" class="btn">Launch My Dashboard! ↗</button>
         </form>
-
 
         <p class="forgot-password">Forgot Your Password? 🔒</p>
         <p class="bottom-text">New to ImpactMate? <a href="{{ route('register.step1') }}">Join here</a> to turn your goals into glory!</p>
 
         <div class="dots-bottom">
+            <!-- Reuse dots SVG -->
             <svg viewBox="0 0 100 100">
                 <circle cx="10" cy="10" r="4" fill="#f3e8c9"/>
                 <circle cx="30" cy="10" r="4" fill="#f3e8c9"/>
@@ -188,7 +186,7 @@
 
     <div class="right-panel">
         <div class="help-btn">
-            <img src="{{ asset('images/max.png') }}" alt="Help">
+            <img src="{{ asset('assets/images/max.png') }}" alt="Help">
             Need Help?
         </div>
     </div>

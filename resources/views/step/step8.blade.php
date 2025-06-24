@@ -171,7 +171,7 @@
             @csrf
 
             <div class="form-group">
-                <textarea name="step8" placeholder="Boost marketing budget by 20%, Partner with influencers in Q3, ..."></textarea>
+                <textarea name="battle_plan" placeholder="Boost marketing budget by 20%, Partner with influencers in Q3, ...">{{ old('battle_plan', $business->battle_plan ?? '') }}</textarea>
             </div>
 
             <div class="buttons">
