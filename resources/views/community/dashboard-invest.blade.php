@@ -107,10 +107,7 @@
             </div>
         </div>
     </div>
-</div>
-
-<!-- Invested Company List & Recent Transaction Side by Side -->
-<div class="row mb-5">
+    <div class="row mb-3">
     <!-- Invested Company List -->
     <div class="col-md-6 mb-4">
         <div class="card p-3">
@@ -166,6 +163,10 @@
         <a href="{{route('investment.approve') }}" class="btn text-white px-5 py-2" style="background-color: #222d66; text-decoration: none;">Report</a></button>
     </div>
 </div>
+
+</div>
+
+<!-- Invested Company List & Recent Transaction Side by Side -->
 
 <script>
     const ctx = document.getElementById('fundingChart').getContext('2d');

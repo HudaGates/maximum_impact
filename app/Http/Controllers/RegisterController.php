@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use App\Models\User;
+
+
 
 class RegisterController extends Controller
 {
@@ -32,19 +36,21 @@ class RegisterController extends Controller
 
     public function showStep2()
     {
-        return view('auth.register-step2');
+        if (!Session::has('register.first_name')) {
+        return redirect()->route('register.step1')->withErrors(['msg' => 'Please complete step 1 first.']);
     }
-
+    return view('auth.register-step2');
+    }
     public function handleStep2(Request $request)
     {
         // Tambahkan validasi untuk email dan password
         $request->validate([
-            'email' => 'required|emai|unique:users,email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
         ]);
 
         // Simpan data dari session dan form step 2
-        $user = \App\Models\User::create([
+        $user = User::create([
             'first_name' => Session::get('register.first_name'),
             'last_name' => Session::get('register.last_name'),
             'phone' => Session::get('register.phone'),
@@ -60,6 +66,6 @@ class RegisterController extends Controller
 
         // Redirect ke halaman dashboard atau login
         auth()->login($user);
-        return redirect()->route('login')->with('success', 'Registration successful!');
+        return redirect()->route('community.dashboard')->with('success', 'Registration successful!');
     }
 }

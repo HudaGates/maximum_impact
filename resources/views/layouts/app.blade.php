@@ -221,43 +221,33 @@
     </button>
 
     <!-- Notification Dropdown -->
-    <div id="notifDropdown" class="shadow-lg rounded-4 p-3 bg-white position-absolute end-0 mt-2" style="width: 350px; display: none; z-index: 1000;">
-        <div class="d-flex align-items-start mb-3">
-            <img src="/images/john.jpg" class="rounded-circle me-2" width="45" height="45">
-            <div>
-                <p class="mb-1"><strong>Jhon Lenon</strong> <span class="text-primary">invite</span> to join <strong>collab</strong> with <br> PT Jaya Sentosa</p>
-                <small class="text-muted">5 minutes ago</small>
-                <div class="mt-1">
-                    <a href="{{ route('investment.status') }}" class="btn btn-sm" style="background-color:#1F2A69; color: white; text-decoration: none;;">accept</a></button>
-                    <a href="{{ route('investment.status') }}" class="btn btn-sm" style="background-color: red; color: white; text-decoration: none;">Ignore</a></button>
-                </div>
-            </div>
-        </div>
+    @php
+    $processedInvestments = \App\Models\InvestmentForm::where('status', 'Processed')->get();
+@endphp
 
-        <div class="d-flex align-items-start mb-3">
-            <img src="/images/absar.jpg" class="rounded-circle me-2" width="45" height="45">
-            <div>
-                <p class="mb-1">Your company <strong class="text-primary">has received</strong> a new <strong>investment</strong> offer from Absar Hamid.</p>
-                <small class="text-muted">20 minutes ago</small>
-                <div class="mt-1">
-                    <button class="btn btn-sm btn-primary">accept</button>
-                    <button class="btn btn-sm btn-danger">Ignore</button>
-                </div>
-            </div>
-        </div>
+@if ($processedInvestments->count())
+    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle notif-dot"></span>
+@endif
 
-        <div class="d-flex align-items-start">
-            <img src="/images/thom.jpg" class="rounded-circle me-2" width="45" height="45">
+<div id="notifDropdown" class="shadow-lg rounded-4 p-3 bg-white position-absolute end-0 mt-2" style="width: 350px; display: none; z-index: 1000;">
+    @foreach ($processedInvestments as $investment)
+        <div class="d-flex align-items-start mb-3">
+            <img src="/images/default-user.png" class="rounded-circle me-2" width="45" height="45">
             <div>
-                <p class="mb-1"><strong>Thom Yorke</strong> <span class="text-primary">invite</span> to join <strong>collab</strong> with <br> PT Radio Makmur</p>
-                <small class="text-muted">5 minutes ago</small>
+                <p class="mb-1">
+                    Investment of <strong>Rp{{ number_format($investment->amount, 0, ',', '.') }}</strong> is <span class="text-primary">awaiting approval</span>.
+                </p>
+                <small class="text-muted">{{ $investment->updated_at->diffForHumans() }}</small>
                 <div class="mt-1">
-                    <button class="btn btn-sm btn-primary">accept</button>
-                    <button class="btn btn-sm btn-danger">Ignore</button>
+                    <form action="{{ route('investment.approve', $investment->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-primary">Approve</button>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
+    @endforeach
+</div>
 </div>
 
             <div class="mx-3 d-flex align-items-center gap-1">

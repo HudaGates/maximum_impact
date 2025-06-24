@@ -65,7 +65,7 @@ Route::get('/step8', [StepController::class, 'showStep8'])->name('step8');
 Route::get('/myproject', [ProjectController::class, 'index'])->name('myproject.index');
 Route::get('/myproject/create', [ProjectController::class, 'create'])->name('projects.create');
 Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
-Route::get('myproject/create/sdgs', [ProjectController::class, 'sdgs'])->name('myproject.sdgs');
+Route::get('/myprojects/sdgs', [ProjectController::class, 'sdgs'])->name('myproject.sdgs');
 Route::get('/myproject/create/sdgs/indicators', [ProjectController::class, 'indicators'])->name('myproject.indikator');
 Route::get('/myproject/create/sdgs/metrics', [ProjectController::class, 'metrics'])->name('myproject.metrics');
 

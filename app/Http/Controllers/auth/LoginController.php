@@ -15,17 +15,21 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-           // return redirect()->route('/dashboard');
-        }
+    if (Auth::attempt($credentials)) {
+        $request->session()->regenerate();
 
-        return back()->withErrors([
-            'email' => 'Invalid credentials',
-        ]);
+        // Ambil ID user yang login
+        $userId = Auth::id(); // atau auth()->id()
+
+        // Misalnya, redirect ke dashboard dengan ID
+        return redirect()->route('dashboard')->with('user_id', $userId);
     }
+    return back()->withErrors([
+        'email' => 'Invalid credentials',
+    ]);
+}
 
     public function logout(Request $request)
     {

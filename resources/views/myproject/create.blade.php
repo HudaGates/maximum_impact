@@ -58,6 +58,22 @@
 </style>
 <div class="container py-5">
     <h2 class="fw-bold mb-4">Register New Project</h2>
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
@@ -89,11 +105,25 @@
                 <div class="mb-3">
     <label class="form-label d-block">Tag</label>
     <div class="border rounded p-3">
-        <button type="button" class="btn btn-primary px-4 py-2" style="border-radius: 8px;">
+        <button type="button" class="btn btn-primary px-4 py-2" style="border-radius: 8px;" onclick="promptTag()">
             Choose Tag
         </button>
+
+        <input type="hidden" name="tag" id="tagInput">
+        <div class="mt-2 text-muted" id="tagPreview" style="font-style: italic;"></div>
     </div>
 </div>
+
+<script>
+function promptTag() {
+    const tag = prompt("Enter tag(s), e.g. tech, startup");
+    if (tag !== null) {
+        document.getElementById('tagInput').value = tag;
+        document.getElementById('tagPreview').textContent = `Selected Tag: ${tag}`;
+    }
+}
+</script>
+
 
 
                 <div class="mb-3">
@@ -146,18 +176,38 @@
     <label for="pitch_deck" class="upload-box w-100 text-center">
         <div class="upload-icon bi-upload"></div>
         <div class="upload-text">Upload your PDF pitch deck outlining your project and investment needs.</div>
-        <input type="file" name="pitch_deck" id="pitch_deck" accept=".pdf" hidden>
+        <input type="file" name="pitch_deck" id="pitch_deck" accept=".pdf" hidden onchange="showPitchDeckName(this)">
     </label>
+    <div class="mt-2 text-muted text-center" id="pitchDeckFilename" style="font-style: italic;"></div>
 </div>
+<script>
+function showPitchDeckName(input) {
+    const fileName = input.files[0]?.name || 'No file chosen';
+    document.getElementById('pitchDeckFilename').textContent = `Selected: ${fileName}`;
+}
+</script>
+
 
 <div class="mb-4">
     <label class="form-label fw-bold">Video Presentation</label>
     <label for="video" class="upload-box w-100 text-center">
         <div class="upload-icon bi-upload"></div>
         <div class="upload-text">Upload a short video presenting your project and its key highlights.</div>
-        <input type="file" name="video" id="video" accept="video/*" hidden>
+        <input type="file" name="video" id="video" accept="video/*" hidden onchange="showVideoName(this)">
     </label>
+    <div class="mt-2 text-muted text-center" id="videoFilename" style="font-style: italic;"></div>
 </div>
+<script>
+function showPitchDeckName(input) {
+    const fileName = input.files[0]?.name || 'No file chosen';
+    document.getElementById('pitchDeckFilename').textContent = `Selected: ${fileName}`;
+}
+
+function showVideoName(input) {
+    const fileName = input.files[0]?.name || 'No file chosen';
+    document.getElementById('videoFilename').textContent = `Selected: ${fileName}`;
+}
+</script>
 
             </div>
 
@@ -193,7 +243,10 @@
 
                 <div class="mb-3">
                     <label class="form-label">SDGs Categories, Indicators, and Metrics</label>
-                    <a href="{{ route('myproject.sdgs') }}" type="button" name="sdgs" class="form-control text-center" style="text-decoration: none">Add SDGs, Indicators, Metric</a></button>
+                    <div class="mb-3">
+    <label class="form-label">SDGs Categories, Indicators, and Metrics</label>
+    <a href="{{ route('myproject.sdgs') }}" class="btn btn-outline-primary form-control text-center">Add SDGs, Indicators, Metric</a>
+</div>
                 </div>
 
                 <h5 class="fw-bold mt-4">Maps</h5>
