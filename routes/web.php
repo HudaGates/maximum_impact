@@ -126,6 +126,11 @@ Route::post('/education/store', [MentorController::class, 'store1'])->name('educ
 Route::post('/skills', [MentorController::class, 'store2'])->name('skills.store');
 Route::get('/mentor/{mentor}/edit', [MentorController::class, 'edit'])->name('mentor.edit');
 Route::put('/mentor/{mentor}', [MentorController::class, 'update'])->name('mentor.update');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard/edit', [MentorController::class, 'edit'])->name('dashboard.edit');
+    Route::post('/dashboard/update', [MentorController::class, 'update'])->name('dashboard.update');
+});
+
 
 Route::get('/community/company', [CompanyReportController::class, 'comp'])->name('company.comp');
 Route::get('/company-profile/{name}', [CompanyReportController::class, 'show'])->name('company.show');

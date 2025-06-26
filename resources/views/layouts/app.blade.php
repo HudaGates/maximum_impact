@@ -123,41 +123,12 @@
 
 <div class="main-content">
     <div class="topbar">
-        <div><i class="bi bi-list fs-5 me-3" role="button"></i></div>
+        <div>
+            <i class="bi bi-list fs-5 me-3" role="button"></i>
+        </div>
         <div class="d-flex align-items-center">
             <button class="icon-button" onclick="toggleQuest()">⭐</button>
 
-<<<<<<< HEAD
-    <!-- Notification Dropdown -->
-    @php
-    $processedInvestments = \App\Models\InvestmentForm::where('status', 'Processed')->get();
-@endphp
-
-@if ($processedInvestments->count())
-    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle notif-dot"></span>
-@endif
-
-<div id="notifDropdown" class="shadow-lg rounded-4 p-3 bg-white position-absolute end-0 mt-2" style="width: 350px; display: none; z-index: 1000;">
-    @foreach ($processedInvestments as $investment)
-        <div class="d-flex align-items-start mb-3">
-            <img src="/images/default-user.png" class="rounded-circle me-2" width="45" height="45">
-            <div>
-                <p class="mb-1">
-                    Investment of <strong>Rp{{ number_format($investment->amount, 0, ',', '.') }}</strong> is <span class="text-primary">awaiting approval</span>.
-                </p>
-                <small class="text-muted">{{ $investment->updated_at->diffForHumans() }}</small>
-                <div class="mt-1">
-                    <form action="{{ route('investment.approve', $investment->id) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-sm btn-primary">Approve</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    @endforeach
-</div>
-</div>
-=======
             <!-- ====================================================== -->
             <!-- LOGIKA DAN TAMPILAN NOTIFIKASI (LONCENG) -->
             <!-- ====================================================== -->
@@ -174,6 +145,7 @@
                     <h6 class="mb-3 border-bottom pb-2">Notifikasi</h6>
                     
                     @forelse(auth()->user()->unreadNotifications->take(5) as $notification)
+                        {{-- Notifikasi untuk Admin --}}
                         @if($notification->type == 'App\Notifications\NewInvestmentReceived')
                             <div class="mb-3 border-bottom pb-2">
                                 <p class="mb-1 small">Anda menerima tawaran <strong>investasi</strong> baru dari <strong>{{ $notification->data['investor_name'] }}</strong>.</p>
@@ -184,6 +156,8 @@
                                 <small class="text-muted d-block mt-1">{{ $notification->created_at->diffForHumans() }}</small>
                             </div>
                         @endif
+
+                        {{-- Notifikasi untuk User --}}
                         @if($notification->type == 'App\Notifications\InvestmentStatusUpdated')
                             <a href="{{ $notification->data['action_url'] ?? '#' }}" class="text-decoration-none text-dark">
                                 <div class="mb-3 border-bottom pb-2">
@@ -204,13 +178,29 @@
                 </div>
             </div>
             @endauth
->>>>>>> 6e6574ad0fd195575e7abe1c010c06a709328684
 
-            <div class="mx-3 d-flex align-items-center gap-1">
-                <img src="{{ asset('images/user-circle.png') }}" alt="profile" width="24" height="24">
-                <span class="username">Hi, {{ Auth::check() ? Auth::user()->first_name : 'Guest' }}</span>
-                <i class="bi bi-chevron-down small ms-1"></i>
-            </div>
+            <div class="mx-3 dropdown">
+    <div class="d-flex align-items-center gap-1 dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+        <img src="{{ asset('images/user-circle.png') }}" alt="profile" width="24" height="24">
+        <span class="username">Hi, {{ Auth::check() ? Auth::user()->first_name : 'Guest' }}</span>
+    </div>
+    
+    <ul class="dropdown-menu">
+        @auth
+            <li>
+                <form action="{{ route('logout') }}" method="POST" class="dropdown-item p-0">
+                    @csrf
+                    <button type="submit" class="btn btn-link text-decoration-none w-100 text-start px-3 py-2" style="color: #1F2A69">
+                        Logout
+                    </button>
+                </form>
+            </li>
+        @else
+            <li><a class="dropdown-item" href="{{ route('login') }}">Login</a></li>
+        @endauth
+    </ul>
+</div>
+
         </div>
     </div>
 
@@ -272,11 +262,13 @@
 <!-- JAVASCRIPT UNTUK QUEST DAN NOTIFIKASI -->
 <!-- ====================================================== -->
 <script>
+    // Script untuk Quest Panel (bintang)
     function toggleQuest() {
         const panel = document.getElementById('questPanel');
         panel.style.display = (panel.style.display === 'none' || panel.style.display === '') ? 'block' : 'none';
     }
 
+    // Script untuk Dropdown Notifikasi (lonceng) dengan Animasi
     document.addEventListener('DOMContentLoaded', function() {
         const notifToggle = document.getElementById('notifToggle');
         const notifDropdown = document.getElementById('notifDropdown');

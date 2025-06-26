@@ -15,7 +15,10 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-         $credentials = $request->only('email', 'password');
+         $credentials = $request->validate([
+        'email' => ['required', 'email'],
+        'password' => ['required'],
+    ]);
 
     if (Auth::attempt($credentials)) {
         $request->session()->regenerate();
@@ -24,11 +27,11 @@ class LoginController extends Controller
         $userId = Auth::id(); // atau auth()->id()
 
         // Misalnya, redirect ke dashboard dengan ID
-        return redirect()->route('dashboard')->with('user_id', $userId);
+        return redirect()->route('community.dashboard-business')->with('user_id', $userId);
     }
-    return back()->withErrors([
-        'email' => 'Invalid credentials',
-    ]);
+         return back()->withErrors([
+        'email' => 'Email atau password salah.',
+    ])->onlyInput('email');
 }
 
     public function logout(Request $request)

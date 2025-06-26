@@ -46,19 +46,22 @@
     </div>
 
     <div class="col-md-9">
-        <div class="input-group mb-4" style="max-width: 1000px; flex: 1;">
-    <span class="input-group-text bg-white border-end-0">
-        <i class="bi bi-search text-muted"></i>
-    </span>
-    <input type="text" name="search" class="form-control border-start-0 border-end-0" placeholder="Search Data" value="{{ request('search') }}">
-    <button class="btn text-white" style="background-color: #1F2A69;">Search</button>
-</div>
+        <form method="GET">
+    <div class="input-group mb-4" style="max-width: 1000px; flex: 1;">
+        <span class="input-group-text bg-white border-end-0">
+            <i class="bi bi-search text-muted"></i>
+        </span>
+        <input type="text" name="search" class="form-control border-start-0 border-end-0" placeholder="Search Data" value="{{ request('search') }}">
+        <button type="submit" class="btn text-white" style="background-color: #1F2A69;">Search</button>
+    </div>
+</form>
+
 
 <div class="d-flex justify-content-end mb-4" style="max-width: 1000px;">
     <button style="
         background: white;
         border: 1px solid green;
-        color: green;
+        color: green;   
         padding: 8px 16px;
         border-radius: 6px;
         font-weight: bold;

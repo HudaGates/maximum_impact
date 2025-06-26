@@ -116,4 +116,5 @@ public function store1(Request $request)
 
         return redirect()->back()->with('success', 'Skill added successfully!');
 }
+
 }

@@ -71,9 +71,9 @@
 </div>
 
 <div class="d-flex justify-content-center mt-4">
-  <button class="btn px-5 py-2" style="background-color: #263275; color: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+  <a href="{{ route('bussines-growth1') }}" class="btn px-5 py-2" style="background-color: #263275; color: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
     Setup Goals
-  </button>
+  </a>
 </div>
 <script>
   const ctx = document.getElementById('profitChart').getContext('2d');

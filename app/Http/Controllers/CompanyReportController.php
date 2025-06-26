@@ -7,32 +7,49 @@ use App\Models\Member;
 
 class CompanyReportController extends Controller
 {
-    public function comp()
-    {
-        $companies = [
-            [
-                'name' => 'Lion Bird',
-                'founded' => '17 Oct, 2020',
-                'last_funding' => '17 Oct, 2020',
-                'type' => 'Series A',
-                'employees' => 429,
-                'industries' => 'Lorem ipsum',
-                'description' => 'Lorem ipsum dolor sit amet',
-                'departments' => 'Engineering, Finance, HR'
-            ],
-             [
-                'name' => 'Adidas',
-                'founded' => '22 Oct, 2020',
-                'last_funding' => '21 Sep, 2020',
-                'type' => 'Series A',
-                'employees' => 492,
-                'industries' => 'Lorem ipsum',
-                'description' => 'Lorem ipsum dolor sit amet',
-                'departments' => 'Engineering, Finance, HR'
-            ],
-        ];
-        return view('community.find-company', compact('companies'));
-    }
+    public function comp(Request $request)
+{
+    $search = strtolower(request('search', ''));
+
+$allCompanies = [
+    [
+        'name' => 'Lion Bird',
+        'founded' => '17 Oct, 2020',
+        'last_funding' => '17 Oct, 2020',
+        'type' => 'Series A',
+        'employees' => 429,
+        'industries' => 'Lorem ipsum',
+        'description' => 'Lorem ipsum dolor sit amet',
+        'departments' => 'Engineering, Finance, HR'
+    ],
+    [
+        'name' => 'Adidas',
+        'founded' => '22 Oct, 2020',
+        'last_funding' => '21 Sep, 2020',
+        'type' => 'Series A',
+        'employees' => 492,
+        'industries' => 'Lorem ipsum',
+        'description' => 'Lorem ipsum dolor sit amet',
+        'departments' => 'Engineering, Finance, HR'
+    ],
+];
+
+$companies = collect($allCompanies)->filter(function ($company) use ($search) {
+    if ($search === '') return true;
+
+    return str_contains(strtolower($company['name']), $search)
+        || str_contains(strtolower($company['description']), $search)
+        || str_contains(strtolower($company['departments']), $search)
+        || str_contains(strtolower($company['industries']), $search);
+})->values()->toArray();
+
+
+    return view('community.find-company', [
+        'companies' => $companies,
+        'search' => $request->search
+    ]);
+}
+
     public function show($name)
     {
         // Dummy data bisa diganti nanti dengan database

@@ -13,11 +13,28 @@
     }
 </style>
 
-
 @section('content')
+@php
+    $search = request('search');
+    $allMentors = [
+        ['name' => 'Jane Cooper', 'skill' => 'UX Design', 'contact' => '070 4531 9507'],
+        ['name' => 'Wade Warren', 'skill' => 'Analysis and Synthesis in Design', 'contact' => '077 6140 9077'],
+        ['name' => 'Esther Howard', 'skill' => 'Experience Mapping', 'contact' => '077 4252 4776'],
+        ['name' => 'Leslie Alexander', 'skill' => 'User Description', 'contact' => '078 6439 0024'],
+        ['name' => 'Leslie Alexander', 'skill' => 'Content Design', 'contact' => '078 6439 0024'],
+        ['name' => 'Jenny Wilson', 'skill' => 'Design Evaluation', 'contact' => '078 6439 0024'],
+        ['name' => 'Guy Hawkins', 'skill' => 'Design Evaluation', 'contact' => '078 6439 0024'],
+        ['name' => 'Jane Cooper', 'skill' => 'UX Design', 'contact' => '078 6439 0024'],
+        ['name' => 'Robert Fox', 'skill' => 'UX Design', 'contact' => '078 6439 0024'],
+    ];
+
+    $mentors = collect($allMentors)->filter(function ($mentor) use ($search) {
+        return !$search || stripos($mentor['name'], $search) !== false || stripos($mentor['skill'], $search) !== false;
+    })->values();
+@endphp
+
 <div class="container-fluid px-4 mt-4">
 <h3 class="fw-bold mb-4" style="color: #232F65;">Find Mentor</h3>
-
 
 <div class="row mt-4">
     <div class="col-md-3">
@@ -49,17 +66,19 @@
     </div>
 
     <div class="col-md-9">
-        <div class="input-group mb-4" style="max-width: 1000px;">
-            <span class="input-group-text bg-white border-end-0">
-                <i class="bi bi-search text-muted"></i>
-            </span>
-            <input type="text" class="form-control border-start-0 border-end-0" placeholder="Search Data" value="{{ request('search') }}">
-            <button class="btn text-white" style="background-color: #1F2A69;">Search</button>
-        </div>
+        <form method="GET">
+            <div class="input-group mb-4" style="max-width: 1000px;">
+                <span class="input-group-text bg-white border-end-0">
+                    <i class="bi bi-search text-muted"></i>
+                </span>
+                <input type="text" name="search" class="form-control border-start-0 border-end-0" placeholder="Search Data" value="{{ request('search') }}">
+                <button type="submit" class="btn text-white" style="background-color: #1F2A69;">Search</button>
+            </div>
+        </form>
 
         <div class="table-responsive">
-                        <table class="table table-hover align-middle">
-                            <thead class="text-center align-middle costum header">
+            <table class="table table-hover align-middle">
+                <thead class="text-center align-middle custom-header">
                     <tr>
                         <th scope="col" style="background-color: #1F2A69; color: white; border-top-left-radius: 12px "><input type="checkbox"></th>
                         <th scope="col" style="background-color: #1F2A69; color: white;">Full Name</th>
@@ -71,20 +90,8 @@
                     </tr>
                 </thead>
 
-
-
                 <tbody>
-                    @foreach ([
-                        ['name' => 'Jane Cooper', 'skill' => 'UX Design', 'contact' => '070 4531 9507'],
-                        ['name' => 'Wade Warren', 'skill' => 'Analysis and Synthesis in Design', 'contact' => '077 6140 9077'],
-                        ['name' => 'Esther Howard', 'skill' => 'Experience Mapping', 'contact' => '077 4252 4776'],
-                        ['name' => 'Leslie Alexander', 'skill' => 'User Description', 'contact' => '078 6439 0024'],
-                        ['name' => 'Leslie Alexander', 'skill' => 'Content Design', 'contact' => '078 6439 0024'],
-                        ['name' => 'Jenny Wilson', 'skill' => 'Design Evaluation', 'contact' => '078 6439 0024'],
-                        ['name' => 'Guy Hawkins', 'skill' => 'Design Evaluation', 'contact' => '078 6439 0024'],
-                        ['name' => 'Jane Cooper', 'skill' => 'UX Design', 'contact' => '078 6439 0024'],
-                        ['name' => 'Robert Fox', 'skill' => 'UX Design', 'contact' => '078 6439 0024'],
-                    ] as $mentor)
+                    @forelse ($mentors as $mentor)
                     <tr>
                         <td><input type="checkbox"></td>
                         <td>
@@ -106,7 +113,11 @@
                         <td>Lorem ipsum dolor sit amet</td>
                         <td>Engineering, Finance, HR</td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="7" class="text-center">No results found.</td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
