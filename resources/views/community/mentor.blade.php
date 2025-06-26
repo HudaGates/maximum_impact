@@ -470,7 +470,7 @@
             inputSkills.forEach(skill => {
                 const skillTag = document.createElement('div');
                 skillTag.textContent = skill;
-                skillTag.style.cssText = `
+                skillTag.style.cssText =
                     padding: 6px 12px;
                     background-color: #e0f0e9;
                     color: #333;
@@ -479,7 +479,7 @@
                     border: 1px solid #bcdac8;
                     margin: 5px;
                     display: inline-block;
-                `;
+                ;
                 skillsDisplay.appendChild(skillTag);
             });
         }

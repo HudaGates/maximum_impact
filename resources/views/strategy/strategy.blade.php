@@ -39,27 +39,30 @@
 
 <!-- Progress Cards -->
 <div class="row g-4 mb-4">
-      @foreach ($cards as $card)
-      <div class="col-md-6 col-lg-4">
-        <div class="card shadow-sm border-0">
-          <div class="position-relative" style="background: repeating-conic-gradient(#ccc 0% 25%, transparent 0% 50%) center/20px 20px; height: 130px;">
-            <div class="position-absolute top-0 end-0 m-2">
-              <i class="bi bi-three-dots-vertical text-muted"></i>
-            </div>
+  @foreach ($cards as $card)
+  <div class="col-md-6 col-lg-4">
+    <a href="#setup-goals" class="text-decoration-none text-dark scroll-to-goals">
+      <div class="card shadow-sm border-0">
+        <div class="position-relative" style="background: repeating-conic-gradient(#ccc 0% 25%, transparent 0% 50%) center/20px 20px; height: 130px;">
+          <div class="position-absolute top-0 end-0 m-2">
+            <i class="bi bi-three-dots-vertical text-muted"></i>
           </div>
-          <a href="{{ route('bussines-growth1') }}" class="text-decoration-none text-dark">
-          <div class="p-3">
-            <h6 class="fw-bold mb-1" style="color: #1F2A69">{{ $card['title'] }}</h6>
-            <p class="small text-muted mb-3">{{ $card['desc'] }}</p>
-            <div class="d-flex justify-content-between small text-muted">
-              <span><i class="bi bi-calendar-event me-1"></i>{{ $card['date'] }}</span>
-              <span><i class="bi bi-geo-alt me-1"></i>{{ $card['location'] }}</span>
-            </div></a>
+        </div>
+        <div class="p-3">
+          <h6 class="fw-bold mb-1" style="color: #1F2A69">{{ $card['title'] }}</h6>
+          <p class="small text-muted mb-3">{{ $card['desc'] }}</p>
+          <div class="d-flex justify-content-between small text-muted">
+            <span><i class="bi bi-calendar-event me-1"></i>{{ $card['date'] }}</span>
+            <span><i class="bi bi-geo-alt me-1"></i>{{ $card['location'] }}</span>
           </div>
         </div>
       </div>
-      @endforeach
-    </div>
+    </a>
+  </div>
+  @endforeach
+</div>
+
+
 
 <!-- Chart -->
 <h5 class="fw-bold text-center mt-5 mb-4">Monthly Profit</h5>
@@ -70,12 +73,26 @@
   </div>
 </div>
 
-<div class="d-flex justify-content-center mt-4">
+<div class="d-flex justify-content-center mt-4" id="setup-goals">
   <a href="{{ route('bussines-growth1') }}" class="btn px-5 py-2" style="background-color: #263275; color: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
     Setup Goals
   </a>
 </div>
+
+
 <script>
+  document.querySelectorAll('.scroll-to-goals').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.querySelector('#setup-goals').scrollIntoView({
+        behavior: 'smooth'
+      });
+    });
+  });
+</script>
+
+<script>
+
   const ctx = document.getElementById('profitChart').getContext('2d');
   const profitChart = new Chart(ctx, {
     type: 'bar',

@@ -76,7 +76,7 @@
 </div>
 
 <div class="growth-container">
-  <form method="POST" action="{{ route('bussines-growth2') }}">
+
     @csrf
     <h4><strong>What goals does your company aim to achieve in the next 6 months?</strong></h4>
     <p><strong>First Month:</strong> <span style="float: right;">1/6</span></p>

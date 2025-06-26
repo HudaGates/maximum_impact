@@ -9,10 +9,7 @@
       <form action="{{ route('education.store') }}" method="POST">
       @csrf
       <div class="modal-content rounded-4">
-        <div class="modal-header">
-          <h5 class="modal-title fw-bold" id="addEducationModalLabel">Add Education</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
+
 
         <div class="modal-body">
           <div class="mb-3">
