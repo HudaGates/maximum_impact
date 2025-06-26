@@ -70,9 +70,9 @@ class InvestmentController extends Controller
         // Ambil data investasi, diurutkan dari yang terbaru
         $investments = $query->latest()->get();
         
-        // Asumsi: di model Investment, ada relasi `user` seperti ini:
+        // Asumsi: di model Investment, ada relasi user seperti ini:
         // public function user() { return $this->belongsTo(User::class); }
-        // Dan di model User, ada kolom `name` atau `investor_name`
+        // Dan di model User, ada kolom name atau investor_name
         // Jika nama investor ada di tabel 'investments', sesuaikan blade menjadi $item->investor_name
         
         // Kirim data ke view 'investment.status'
@@ -182,6 +182,18 @@ class InvestmentController extends Controller
         $data = Income::latest()->get();
         return view('investment.investment-report', compact('data'));
     }
+    public function deleteRejected($id)
+{
+    $investment = Investment::findOrFail($id);
+
+    if (strtolower($investment->status) === 'rejected') {
+        $investment->delete();
+        return redirect()->back()->with('success', 'Rejected investment has been deleted.');
+    }
+
+    return redirect()->back()->with('error', 'Only rejected investments can be deleted via this action.');
+}
+
 
     public function expense(Request $request)
     {

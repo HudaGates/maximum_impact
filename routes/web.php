@@ -95,6 +95,7 @@ Route::get('/investment', [InvestmentController::class, 'approve'])->name('inves
 Route::get('/investment/{id}/details', [InvestmentController::class, 'show'])->name('investment.details');
 Route::get('/investment/status', [InvestmentController::class, 'status'])->name('investment.status');
 Route::get('/invest/investment-status', [InvestmentController::class, 'index'])->name('investment.investment-status');
+Route::get('/investment/delete-rejected/{id}', [InvestmentController::class, 'deleteRejected'])->name('investment.deleteRejected');
 Route::get('/investment-report', [InvestmentController::class, 'report'])->name('investment.investment-report');
 Route::get('/investment-expense', [InvestmentController::class, 'expense'])->name('investment.investment-expense');
 Route::get('/investment/add-income', [InvestmentController::class, 'add'])->name('investment.add-income');

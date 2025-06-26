@@ -49,11 +49,22 @@
                     <td>{{ $item->destination_bank }}</td>
                     <td>{{ ucfirst($item->status) }}</td>
                     <td>
-                        <a href="{{ route('investment.investment-report', ['status' => $item->status]) }}"
-                           class="{{ $item->status === 'approved' ? 'text-success' : ($item->status === 'rejected' ? 'text-danger' : '') }}" style="text-decoration: none">
-                            {{ ucfirst($item->status) }}
-                        </a>
-                    </td>
+    @if(strtolower($item->status) === 'approved')
+        <a href="{{ route('investment.investment-report', ['status' => $item->status]) }}"
+           class="text-success" style="text-decoration: none">
+           {{ ucfirst($item->status) }}
+        </a>
+    @elseif(strtolower($item->status) === 'rejected')
+        <a href="{{ route('investment.deleteRejected', ['id' => $item->id]) }}"
+           class="text-danger" style="text-decoration: none"
+           onclick="return confirm('Are you sure you want to delete this rejected investment?');">
+           {{ ucfirst($item->status) }}
+        </a>
+    @else
+        {{ ucfirst($item->status) }}
+    @endif
+</td>
+
                 </tr>
                 @empty
                 <tr>
