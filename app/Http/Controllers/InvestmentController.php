@@ -30,21 +30,32 @@ class InvestmentController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        // 1. TAMBAHKAN 'investor_name' KE DALAM VALIDASI
+       $request->validate([
+            'investor_name' => 'required|string|max:255',
             'amount' => 'required|numeric|min:1',
             'funding_type' => 'required|string',
             'project' => 'required|string',
             'payment_method' => 'required|string',
+            // --- Validasi untuk kolom yang menyebabkan error ---
+            'sender' => 'required|string|max:255',
+            'origin_bank' => 'required|string|max:255',
+            'destination_bank' => 'required|string|max:255',
         ]);
 
-        $investment = Investment::create([
-            'user_id' => Auth::id(),
-            'amount' => $request->amount,
-            'funding_type' => $request->funding_type,
-            'project' => $request->project,
-            'payment_method' => $request->payment_method,
-            'status' => 'pending', // Menggunakan 'pending' agar sesuai dengan filter di view
-        ]);
+        
+    $investment = Investment::create([ 
+    'user_id' => Auth::id(),
+    'investor_name' => $request->investor_name,
+    'amount' => $request->amount,
+    'funding_type' => $request->funding_type,
+    'project' => $request->project,
+    'payment_method' => $request->payment_method,
+    'sender' => $request->sender,
+    'origin_bank' => $request->origin_bank,
+    'destination_bank' => $request->destination_bank,
+    'status' => 'pending', 
+]); 
 
         $admins = User::where('role', 'admin')->get();
 

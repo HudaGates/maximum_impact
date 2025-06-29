@@ -39,7 +39,7 @@
                 @forelse($investments as $item)
                 <tr>
                     {{-- Sisa kode Anda tidak diubah --}}
-                    <td>{{ $item->investor }}</td>
+                   <td>{{ $item->investor_name }}</td>
                     <td>{{ number_format($item->amount, 0, ',', '.') }} IDR</td>
                     <td>{{ \Carbon\Carbon::parse($item->date)->format('d M Y') }}</td>
                     <td>{{ $item->funding_type ?? 'Unknown' }}</td>

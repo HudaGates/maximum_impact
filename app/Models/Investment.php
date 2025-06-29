@@ -12,30 +12,27 @@ class Investment extends Model
 
     /**
      * The attributes that are mass assignable.
-     * Ini penting agar metode `create()` bisa berjalan.
      *
      * @var array<int, string>
      */
     protected $fillable = [
         'user_id',
+        'investor_name', // BARU: Ditambahkan agar bisa diisi
         'amount',
         'funding_type',
         'project',
         'payment_method',
+        'sender',
+        'origin_bank',
+        'destination_bank',
         'status',
     ];
 
-    // =============================================================
-    // INI ADALAH RELASI YANG HILANG DAN MENYEBABKAN ERROR
-    // =============================================================
     /**
      * Mendefinisikan bahwa sebuah Investment "milik" (belongs to) satu User.
      */
     public function user(): BelongsTo
     {
-        // Ini akan menghubungkan 'user_id' di tabel ini
-        // dengan 'id' di tabel 'users'.
         return $this->belongsTo(User::class, 'user_id');
     }
-    // =============================================================
 }

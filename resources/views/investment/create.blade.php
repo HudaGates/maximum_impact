@@ -25,9 +25,13 @@
             
             {{-- Baris 1: Investor & Type of Funding --}}
             <div class="col-md-5 mb-3">
+                {{-- KONFLIK DISELESAIKAN: Menggunakan label "Investor" dan menambahkan pesan error di bawahnya --}}
                 <label for="investor_name" class="form-label fw-semibold">Investor</label>
                 <input type="text" name="investor_name" id="investor_name" class="form-control border border-2 @error('investor_name') is-invalid @enderror"
                        placeholder="Investor" value="{{ old('investor_name', Auth::user()->name) }}" required>
+                @error('investor_name')
+                    <span class="text-danger small">{{ $message }}</span>
+                @enderror
             </div>
             <div class="col-md-5 mb-3">
                 <label for="funding_type" class="form-label fw-semibold">Type of Funding</label>
@@ -37,6 +41,9 @@
                         <option value="{{ $type }}" {{ old('funding_type') == $type ? 'selected' : '' }}>{{ $type }}</option>
                     @endforeach
                 </select>
+                @error('funding_type')
+                    <span class="text-danger small">{{ $message }}</span>
+                @enderror
             </div>
 
             {{-- Baris 2: Investment Amount & Project to Fund --}}
@@ -44,6 +51,9 @@
                 <label for="amount" class="form-label fw-semibold">Investment Amount</label>
                 <input type="number" name="amount" id="amount" class="form-control border border-2 @error('amount') is-invalid @enderror"
                        placeholder="Enter the amount you wish to invest" value="{{ old('amount') }}" required>
+                @error('amount')
+                    <span class="text-danger small">{{ $message }}</span>
+                @enderror
             </div>
             <div class="col-md-5 mb-3">
                 <label for="project" class="form-label fw-semibold">Project to Fund</label>
@@ -53,9 +63,11 @@
                         <option value="{{ $project }}" {{ old('project') == $project ? 'selected' : '' }}>{{ $project }}</option>
                     @endforeach
                 </select>
+                @error('project')
+                    <span class="text-danger small">{{ $message }}</span>
+                @enderror
             </div>
 
-            {{-- =================== PERUBAHAN UTAMA DI SINI =================== --}}
             {{-- Kita lanjutkan layout 2 kolom untuk informasi pembayaran --}}
 
             {{-- Baris 3: Payment Method & Sender --}}
@@ -67,23 +79,35 @@
                         <option value="{{ $method }}" {{ old('payment_method') == $method ? 'selected' : '' }}>{{ $method }}</option>
                     @endforeach
                 </select>
+                @error('payment_method')
+                    <span class="text-danger small">{{ $message }}</span>
+                @enderror
             </div>
             <div class="col-md-5 mb-3">
                 <label for="sender" class="form-label fw-semibold">Sender</label>
                 <input type="text" name="sender" id="sender" class="form-control border border-2 @error('sender') is-invalid @enderror"
                        placeholder="Enter sender's full name" value="{{ old('sender') }}" required>
+                @error('sender')
+                    <span class="text-danger small">{{ $message }}</span>
+                @enderror
             </div>
 
             {{-- Baris 4: Origin Bank & Destination Bank --}}
             <div class="col-md-5 mb-3">
                 <label for="origin_bank" class="form-label fw-semibold">Origin Bank</label>
                 <input type="text" name="origin_bank" id="origin_bank" class="form-control border border-2 @error('origin_bank') is-invalid @enderror"
-                       placeholder="" value="{{ old('origin_bank') }}" required>
+                       placeholder="e.g., Bank Central Asia (BCA)" value="{{ old('origin_bank') }}" required>
+                @error('origin_bank')
+                    <span class="text-danger small">{{ $message }}</span>
+                @enderror
             </div>
             <div class="col-md-5 mb-3">
                 <label for="destination_bank" class="form-label fw-semibold">Destination Bank</label>
                 <input type="text" name="destination_bank" id="destination_bank" class="form-control border border-2 @error('destination_bank') is-invalid @enderror"
-                       placeholder="" value="{{ old('destination_bank') }}" required>
+                       placeholder="e.g., Bank Mandiri" value="{{ old('destination_bank') }}" required>
+                @error('destination_bank')
+                    <span class="text-danger small">{{ $message }}</span>
+                @enderror
             </div>
 
         </div> {{-- Penutup untuk <div class="row justify-content-center"> --}}
