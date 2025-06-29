@@ -71,6 +71,7 @@ Route::post('/projects', [ProjectController::class, 'store'])->name('projects.st
 Route::get('/myprojects/sdgs', [ProjectController::class, 'sdgs'])->name('myproject.sdgs');
 Route::get('/myproject/create/sdgs/indicators', [ProjectController::class, 'indicators'])->name('myproject.indikator');
 Route::get('/myproject/create/sdgs/metrics', [ProjectController::class, 'metrics'])->name('myproject.metrics');
+Route::resource('projects', ProjectController::class);
 
 Route::get('/strategy', [StrategyController::class, 'index'])->name('strategy.index');
 Route::get('/strategy/strategy', [StrategyController::class, 'index1'])->name('strategy.strategy');

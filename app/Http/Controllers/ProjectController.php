@@ -105,7 +105,7 @@ class ProjectController extends Controller
         
     ]);
 
-    return redirect()->route('myprojects.index')->with('success', 'Project submitted successfully!');
+   return redirect()->route('projects.index')->with('success', 'Project submitted successfully!');
     }
     public function sdgs()
     {
