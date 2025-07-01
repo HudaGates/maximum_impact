@@ -183,3 +183,10 @@ Route::get('/members/{member}/edit', [MemberController::class, 'edit'])->name('m
 Route::put('/members/{member}', [MemberController::class, 'update'])->name('members.update');
 Route::delete('/members/{member}', [MemberController::class, 'destroy'])->name('members.destroy');
 
+Route::get('/myproject/sdgs', [ProjectController::class, 'sdgs'])->name('myproject.sdgs');
+
+// Route untuk halaman Indikator
+Route::get('/myproject/indikator', [ProjectController::class, 'indicators'])->name('myproject.indikator');
+
+// Route untuk halaman Metrik
+Route::get('/myproject/metrics', [ProjectController::class, 'metrics'])->name('myproject.metrics');

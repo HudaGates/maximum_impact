@@ -7,7 +7,7 @@
     <div class="d-flex align-items-center mb-5">
         <img src="{{ asset('images/lion.png') }}" alt="Investor Logo" width="150" class="me-4 rounded">
         <div>
-            <h4 class="mb-1 fw-semibold">Djoko Susanto</h4>
+            <h4 class="mb-1 fw-semibold">Lion Bird</h4>
             <p class="mb-0 text-muted">PT Sumber Alfaria Trijaya Tbk</p>
             <small class="text-muted">Previous Investment</small>
             <div class="fw-bold">$3 Million</div>
@@ -16,7 +16,7 @@
 
     <h5 class="fw-bold text-dark mb-4">Previous Investment</h5>
     <div class="table-responsive">
-        <table class="table mb-0">
+        <table class="table table-hover mb-0">
             <thead class="text-center align-middle">
                 <tr style="
                     background-color: #1F2A69;

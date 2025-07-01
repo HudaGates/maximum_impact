@@ -78,13 +78,13 @@
                 <table class="table table-hover align-middle">
                     <thead class="text-center align-middle">
                         <tr style="background-color: #1F2A69; color: white;">
-                            <th style="border-top-left-radius: 12px;"><input type="checkbox"></th>
-                            <th>Organization Name</th>
-                            <th>Number of Contacts</th>
-                            <th>Number of Investment</th>
-                            <th>Location</th>
-                            <th>Description</th>
-                            <th style="border-top-right-radius: 12px;">Departments</th>
+                            <th style="background-color: #1F2A69; color: white; border-top-left-radius: 12px;"><input type="checkbox"></th>
+                            <th style="background-color: #1F2A69; color: white">Organization Name</th>
+                            <th style="background-color: #1F2A69; color: white">Number of Contacts</th>
+                            <th style="background-color: #1F2A69; color: white">Number of Investment</th>
+                            <th style="background-color: #1F2A69; color: white">Location</th>
+                            <th style="background-color: #1F2A69; color: white">Description</th>
+                            <th style="background-color: #1F2A69; color: white; border-top-right-radius: 12px;">Departments</th>
                         </tr>
                     </thead>
                     <tbody>

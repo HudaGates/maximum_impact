@@ -97,7 +97,7 @@
         <div class="col-md-6 bg-right position-relative">
             <div class="position-absolute bottom-0 end-0 m-4">
                 <div class="help-bubble shadow">
-                    <img src="{{ asset('assets/images/max.png') }}" alt="help" width="24" class="me-2">
+                    <img src="{{ asset('images/max.png') }}" alt="help" width="24" class="me-2">
                     Need Help?
                 </div>
             </div>

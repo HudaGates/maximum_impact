@@ -109,16 +109,56 @@ class InvestmentController extends Controller
         return redirect()->back()->with('success', 'Investment status has been updated to ' . $request->status . '.');
     }
 
-    public function showUserStatus(Investment $investment)
-    {
-        if (Auth::id() !== $investment->user_id && !Auth::user()->isAdmin()) {
-             abort(403, 'Unauthorized Access');
-        }
+    // app/Http/Controllers/InvestmentController.php
 
-        return view('investment.investment-status', [
-            'status' => $investment->status
-        ]);
+// ... (kode controller lainnya)
+
+public function showUserStatus(Investment $investment)
+{
+    // 1. Otorisasi (kode ini sudah benar, kita pertahankan)
+    if (Auth::id() !== $investment->user_id && !Auth::user()->isAdmin()) {
+         abort(403, 'Unauthorized Access');
     }
+
+    // --- LOGIKA BARU DIMULAI DI SINI ---
+
+    // 2. Ambil status dari database dan ubah ke huruf kecil untuk konsistensi
+    $dbStatus = strtolower($investment->status);
+
+    // 3. Tentukan apakah statusnya ditolak (rejected)
+    $isRejected = ($dbStatus === 'rejected');
+
+    // 4. Tentukan teks status yang akan ditampilkan di progress bar (Submitted, Processed, Approved)
+    $displayStatus = 'Submitted'; // Nilai default
+
+    switch ($dbStatus) {
+        case 'pending':
+            // Status 'pending' di database kita anggap sebagai 'Submitted' di view
+            $displayStatus = 'Processed';
+            break;
+        case 'processed':
+            $displayStatus = 'Processed';
+            break;
+        case 'approved':
+            $displayStatus = 'Approved';
+            break;
+        case 'rejected':
+            // Jika ditolak, progress bar akan berhenti di tahap 'Processed'
+            // Ini adalah asumsi paling umum: penolakan terjadi saat diproses.
+            // Lingkaran 'Processed' akan menjadi merah.
+            $displayStatus = 'Processed';
+            break;
+    }
+
+    // 5. Kirim data yang sudah diolah ke view
+    return view('investment.investment-status', [
+        'status' => $displayStatus, // Variabel ini mengontrol panjang progress bar
+        'rejected' => $isRejected,  // Variabel ini mengontrol warna merah
+    ]);
+}
+
+
+// ... (sisa kode controller Anda)
 
     public function accept(Investment $investment, $notificationId)
     {

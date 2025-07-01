@@ -9,6 +9,11 @@ class Project extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'name',
         'description',
@@ -19,12 +24,16 @@ class Project extends Model
         'end_date',
         'pitch_deck',
         'video',
+        'cover_image', // <-- TAMBAHKAN INI
         'category',
         'investment_needs',
         'roadmap',
-        'user_id', // Tambahkan user_id ke fillable
+        'user_id', // <-- TAMBAHKAN INI
     ];
 
+    /**
+     * Dapatkan user yang memiliki proyek ini.
+     */
     public function user()
     {
         return $this->belongsTo(User::class);

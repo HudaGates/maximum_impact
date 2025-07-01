@@ -2,67 +2,159 @@
 
 @section('content')
 @php
-    $statuses = [ 'Processed'," ", 'Approved'];
+    // Daftar status
+    $statuses = ['Processed', '', 'Approved'];
+
+    // Status saat ini (dari controller)
     $currentStatus = $status ?? 'Processed';
+
+    // Variabel $rejected akan dikirim dari controller (true/false)
+    $isRejected = $rejected ?? false;
+
+    // Mencari index dari status saat ini
     $currentIndex = array_search($currentStatus, $statuses);
+    if ($currentIndex === false) {
+        $currentIndex = -1; // Status tidak valid
+    }
 @endphp
 
+{{-- CSS untuk Stepper --}}
+<style>
+    .stepper-wrapper {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        margin-bottom: 70px;
+    }
+
+    .stepper-item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+        text-align: center;
+    }
+
+    .stepper-item::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 6px;
+        background-color: #e0e0ff;
+        top: 12px;
+        transform: translateY(-50%);
+        right: 50%;
+        z-index: 1;
+    }
+
+    .stepper-item.completed::before {
+        background-color: #1E266D;
+    }
+
+    .stepper-item:first-child::before {
+        content: none;
+    }
+
+    .step-counter {
+        height: 24px;
+        width: 24px;
+        border-radius: 50%;
+        background-color: #e0e0ff;
+        z-index: 2;
+        position: relative;
+        margin-bottom: 10px;
+        transition: background-color 0.4s ease;
+    }
+
+    .stepper-item.completed .step-counter {
+        background-color: #8fef9d;
+    }
+
+    .step-name {
+        font-weight: 500;
+        color: #6c757d;
+    }
+
+    .stepper-item.completed .step-name {
+        color: #212529;
+    }
+
+    .stepper-item.rejected .step-counter {
+        background-color: #dc3545; /* Warna merah */
+    }
+
+    .stepper-item.rejected .step-name {
+        color: #dc3545; /* Teks label jadi merah */
+    }
+
+</style>
+
 <div class="container py-5">
-    <h3 class="fw-bold text-center mb-4">Investment Status</h3>
+    <h3 class="fw-bold text-center mb-5">Investment Status</h3>
 
-    <div class="position-relative mb-4" style="height: 40px;">
-
-        <div style="position:absolute; top: 50%; left: 10%; right: 10%; height:6px; background-color:#e0e0ff; transform: translateY(-50%); z-index:0;"></div>
-
-
-        <div style="
-            position:absolute;
-            top: 50%;
-            left: 10%;
-            width: {{ $currentIndex * 45 / 2 }}%;
-            height:6px;
-            background-color:#1E266D;
-            transform: translateY(-50%);
-            z-index:1;
-        "></div>
-
-
-        <div class="d-flex justify-content-between px-5 position-relative" style="z-index:2;">
-            @foreach ($statuses as $index => $label)
-                <div class="{{ $index <= $currentIndex ? 'bg-success' : 'bg-secondary' }} rounded-circle border border-white" style="width:20px; height:20px;"></div>
-            @endforeach
-        </div>
-    </div>
-
-
-    <div class="d-flex justify-content-between px-5 mb-5">
+    <div class="stepper-wrapper">
         @foreach ($statuses as $index => $label)
-            <div class="text-center fw-medium {{ $index <= $currentIndex ? 'text-dark' : 'text-muted' }}">
-                {{ $label }}
+            <div class="stepper-item {{ $index <= $currentIndex ? 'completed' : '' }} {{ ($index == $currentIndex && $isRejected) ? 'rejected' : '' }}">
+                <div class="step-counter"></div>
+                <div class="step-name">{{ $label }}</div>
             </div>
         @endforeach
     </div>
 
+    {{-- BAGIAN BARU UNTUK GAMBAR DAN STATUS --}}
+    @php
+        $imageName = 'processed.png'; // Gambar default
+        $titleText = $status;
+        $titleColorClass = 'text-primary'; // Warna biru tua seperti di desain Anda
 
+        if ($rejected) {
+            $imageName = 'rejected.png';
+            $titleText = 'Rejected';
+            $titleColorClass = 'text-danger'; // Merah
+        } else {
+            switch (strtolower($status)) {
+                case 'processed':
+                    $imageName = 'processed.png';
+                    break;
+                case 'approved':
+                    $imageName = 'approved.png';
+                    $titleText = 'Approved';
+                    $titleColorClass = 'text-success'; // Hijau
+                    break;
+                case 'processed':
+                default:
+                    $imageName = 'processed.png';
+                    break;
+            }
+        }
+    @endphp
+
+    <!-- Container untuk Gambar -->
     <div class="text-center mb-4">
-        <img src="{{ asset('images/' . strtolower($currentStatus) . '.png') }}" alt="{{ $currentStatus }}" width="300">
+        <img src="{{ asset('images/' . $imageName) }}" alt="{{ $titleText }}" style="max-width: 300px; height: auto;">
     </div>
 
-
+    <!-- Container untuk Judul dan Deskripsi -->
     <div class="text-center">
-        <h4 class="fw-bold text-primary">{{ $currentStatus }}</h4>
+        <h4 class="fw-bold {{ $titleColorClass }}">{{ $titleText }}</h4>
         <p class="text-muted mx-auto" style="max-width: 700px;">
-            @switch($currentStatus)
-                @case('Submitted')
-                    Your investment has been submitted and is awaiting processing.
-                    @break
-                @case('Processed')
-                    The investment is currently being handled by the processing team. This means that all necessary checks and evaluations are being conducted to ensure the investment meets the required criteria.
-                    @break
-                @case('Approved')
-                    Congratulations! Your investment has been approved and successfully passed all verification checks.
-                    @break
-            @endswitch
+            @if ($rejected)
+                We regret to inform you that your investment has been rejected. If you have any questions, please contact our support team.
+            @else
+                @switch(strtolower($status))
+                    @case('processed')
+                    @default
+                        The investment is currently being handled by the processing team. This means that all necessary checks and evaluations are being conducted to ensure the investment meets the required criteria.
+                        @break
+                    @case('approved')
+                        The Investment has passed all the necessary checks and has been formally accepted. At this stage, the investment is confirmed, and any relevant actions or follow-ups will proceed accordingly.
+                        @break
+                    @case('processed')
+                        The investment is currently being handled by the processing team. This means that all necessary checks and evaluations are being conducted to ensure the investment meets the required criteria.
+                        @break
+                @endswitch
+            @endif
         </p>
     </div>
 </div>
