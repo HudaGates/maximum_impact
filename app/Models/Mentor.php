@@ -9,10 +9,7 @@ class Mentor extends Model
 {
     use HasFactory;
 
-    /**
-     * Atribut yang bisa diisi secara massal.
-     * Nama kolom telah diperbarui sesuai migrasi.
-     */
+   
     protected $fillable = [
         'user_id',
         'name',
@@ -20,18 +17,16 @@ class Mentor extends Model
         'location',
         'institution',
         'about',
-        'profile_photo_path', // <--- PASTIKAN BARIS INI ADA DAN TIDAK DI-KOMENTAR
+        'profile_photo_path', 
     ];
 
-    /**
-     * Relasi ke model User (pemilik profil mentor ini).
-     */
+    
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // --- RELASI-RELASI INI SUDAH BENAR ---
+ 
     public function experiences() {
         return $this->hasMany(MentorExperience::class);
     }

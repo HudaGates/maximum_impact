@@ -9,9 +9,7 @@ class MentorEducation extends Model
 {
     use HasFactory;
 
-    /**
-     * PERBAIKAN: Kolom disesuaikan dengan file migrasi.
-     */
+
     protected $fillable = [
         'university',
         'title',
@@ -19,9 +17,9 @@ class MentorEducation extends Model
         'location',
         'start_date',
         'end_date',
-        'grade',              // 
-        'activities',         // 
-        'description',        //    // Sebelumnya 'end_year'
+        'grade',               
+        'activities',         
+        'description',       
     ];
 protected $dates = ['start_date', 'end_date'];
     public function user()

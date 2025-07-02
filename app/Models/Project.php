@@ -28,7 +28,11 @@ class Project extends Model
         'category',
         'investment_needs',
         'roadmap',
+
         'user_id', // <-- TAMBAHKAN INI
+
+        'user_id', 
+
     ];
 
     /**

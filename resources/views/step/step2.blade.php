@@ -143,6 +143,10 @@
         @csrf
         <input type="text" name="industry" placeholder="Enter your business industry..." value="{{ old('industry', $business->industry ?? '') }}">
 
+        @error('industry')
+        <span class="error">{{ $message }}</span>
+    @enderror
+
         <div class="buttons">
             <a href="{{ route('step1') }}" style="text-decoration: none" class="btn btn-prev">← Previous</a></button>
             <button type="submit" class="btn btn-next">Continue →</button>

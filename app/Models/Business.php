@@ -28,9 +28,7 @@ class Business extends Model
         'user_email',
     ];
 
-    /**
-     * Mendefinisikan relasi bahwa setiap bisnis dimiliki oleh satu user.
-     */
+    
     public function user()
     {
         return $this->belongsTo(User::class);

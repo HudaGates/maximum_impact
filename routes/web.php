@@ -19,6 +19,7 @@ use App\Http\Controllers\BusinessGrowthController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MentorProfileController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,11 +38,14 @@ Route::middleware('web')->group(function () {
 
     Route::get('/landingpage', [LandingPageController::class, 'index'])->name('landingpage');
 
+
     // ALUR PENDAFTARAN BARU
     Route::get('/account/success', [AccountController::class, 'success'])->name('account.success');
     Route::get('/account/setup', [StepController::class, 'showAccountSetup'])->name('account.setup');
 
     Route::get('/step1', [StepController::class, 'showStep1'])->name('step1');
+Route::middleware(['auth'])->group(function () {
+Route::get('/step1', [StepController::class, 'showStep1'])->name('step1');
 Route::post('/step1', [StepController::class, 'submitStep1'])->name('step1.submit');
 Route::get('/step2', [StepController::class, 'showStep2'])->name('step2');
 Route::post('/step2', [StepController::class, 'submitStep2'])->name('step2.submit');
@@ -59,6 +63,7 @@ Route::get('/step8', [StepController::class, 'showStep8'])->name('step8');
 Route::post('/step8', [StepController::class, 'submitStep8'])->name('step8.submit');
 Route::get('/step9', [StepController::class, 'showStep9'])->name('step9');
 Route::post('/step9', [StepController::class, 'submitStep9'])->name('step9.submit');
+});
 
     Route::get('/myproject', [ProjectController::class, 'index'])->name('myproject.index');
     Route::get('/myproject/create', [ProjectController::class, 'create'])->name('projects.create');
@@ -71,9 +76,15 @@ Route::post('/step9', [StepController::class, 'submitStep9'])->name('step9.submi
     Route::get('/strategy', [StrategyController::class, 'index'])->name('strategy.index');
     Route::get('/strategy/strategy', [StrategyController::class, 'index1'])->name('strategy.strategy');
 
+
     Route::get('/community/investor', [InvestorController::class, 'index'])->name('investor.index');
     Route::get('/community/find-investor-2', [InvestorController::class, 'findInvestor'])->name('community.find-investor-2');
     Route::get('/community/investor/{id}', [InvestorController::class, 'show'])->name('investor.profile');
+
+Route::get('/strategy', [StrategyController::class, 'index'])->name('strategy.index');
+Route::get('/strategy/strategy', [StrategyController::class, 'index1'])->name('strategy.strategy');
+Route::get('/strategy', [StrategyController::class, 'index'])->name('strategy');
+
 
     Route::get('/invest', [InvestmentController::class, 'create'])->name('investment.create');
     Route::post('/invest', [InvestmentController::class, 'store'])->name('investment.store');
@@ -156,6 +167,18 @@ Route::get('/bussines-growth6', [BusinessGrowthController::class, 'showStep6'])-
 Route::get('/bussines-growth7', [BusinessGrowthController::class, 'showStep7'])->name('bussines-growth7-page');
 Route::get('/bussines-growth8', [BusinessGrowthController::class, 'showStep8'])->name('bussines-growth8-page');
 
+
+
+// Rute untuk menampilkan halaman (GET)
+Route::get('/bussines-growth1', [BusinessGrowthController::class, 'showStep1'])->name('bussines-growth1');
+Route::get('/bussines-growth2', [BusinessGrowthController::class, 'showStep2'])->name('bussines-growth2-page');
+Route::get('/bussines-growth3', [BusinessGrowthController::class, 'showStep3'])->name('bussines-growth3-page');
+Route::get('/bussines-growth4', [BusinessGrowthController::class, 'showStep4'])->name('bussines-growth4-page');
+Route::get('/bussines-growth5', [BusinessGrowthController::class, 'showStep5'])->name('bussines-growth5-page');
+Route::get('/bussines-growth6', [BusinessGrowthController::class, 'showStep6'])->name('bussines-growth6-page');
+Route::get('/bussines-growth7', [BusinessGrowthController::class, 'showStep7'])->name('bussines-growth7-page');
+Route::get('/bussines-growth8', [BusinessGrowthController::class, 'showStep8'])->name('bussines-growth8-page');
+
 // Rute untuk memproses data form (POST)
 Route::post('/bussines-growth2', [BusinessGrowthController::class, 'storeStep1'])->name('bussines-growth2');
 Route::post('/bussines-growth3', [BusinessGrowthController::class, 'storeStep2'])->name('bussines-growth3');
@@ -177,6 +200,3 @@ Route::post('/bussines-growth8', [BusinessGrowthController::class, 'storeStep7']
 
 
 });
-// =====================================================================
-//      AKHIR DARI WEB MIDDLEWARE GROUP
-// =====================================================================

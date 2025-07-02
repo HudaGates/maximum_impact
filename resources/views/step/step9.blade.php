@@ -146,14 +146,16 @@
         </p>
 
         <form method="POST" action="{{ route(name: 'step9.submit') }}">
-            @csrf
-            <label>What should we call you?</label>
-            <input type="text" placeholder="Your name, please! We’ll use it to cheer you on in updates!">
+    @csrf
+    <label>What should we call you?</label>
+    {{-- TAMBAHKAN name="user_name" --}}
+    <input type="text" name="user_name" placeholder="Your name, please! We’ll use it to cheer you on in updates!" required>
 
-            <label>Where should we send your wins?</label>
-            <input type="email" placeholder="Your email—so we can celebrate milestones, share tips, and more...">
+    <label>Where should we send your wins?</label>
+    {{-- TAMBAHKAN name="user_email" --}}
+    <input type="email" name="user_email" placeholder="Your email—so we can celebrate milestones, share tips, and more..." required>
 
-            <button class="submit-button" type="submit">Start The Journey!</button>
+    <button class="submit-button" type="submit">Start The Journey!</button>
 
             <p class="terms">
                 By proceeding, you agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
