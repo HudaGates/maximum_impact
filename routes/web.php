@@ -19,6 +19,7 @@ use App\Http\Controllers\BusinessGrowthController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MentorProfileController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,7 +45,7 @@ Route::get('/account/success', [AccountController::class, 'success'])->name('acc
 Route::get('/account/setup', [StepController::class, 'showAccountSetup'])->name('account.setup');
 // =============================
 
-
+Route::middleware(['auth'])->group(function () {
 Route::get('/step1', [StepController::class, 'showStep1'])->name('step1');
 Route::post('/step1', [StepController::class, 'submitStep1'])->name('step1.submit');
 Route::get('/step2', [StepController::class, 'showStep2'])->name('step2');
@@ -63,6 +64,7 @@ Route::get('/step8', [StepController::class, 'showStep8'])->name('step8');
 Route::post('/step8', [StepController::class, 'submitStep8'])->name('step8.submit');
 Route::get('/step9', [StepController::class, 'showStep9'])->name('step9');
 Route::post('/step9', [StepController::class, 'submitStep9'])->name('step9.submit');
+});
 
 
 Route::get('/myproject', [ProjectController::class, 'index'])->name('myproject.index');
@@ -75,6 +77,7 @@ Route::resource('projects', ProjectController::class);
 
 Route::get('/strategy', [StrategyController::class, 'index'])->name('strategy.index');
 Route::get('/strategy/strategy', [StrategyController::class, 'index1'])->name('strategy.strategy');
+Route::get('/strategy', [StrategyController::class, 'index'])->name('strategy');
 
 Route::get('/community/investor', [InvestorController::class, 'index'])->name('investor.index');
 Route::get('/community/find-investor-2', [InvestorController::class, 'findInvestor'])->name('community.find-investor-2');
@@ -159,21 +162,25 @@ Route::post('/step9-invest', [StepInvestController::class, 'submitStep9'])->name
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('community.dashboard-business');
 Route::get('/dashboard-invest', [DashboardController::class, 'indexInvest'])->name('community.dashboard-invest');
 
-Route::get('/bussines-growth1', [BusinessGrowthController::class, 'step1'])->name('bussines-growth1');
-Route::post('/bussines-growth2', [BusinessGrowthController::class, 'step2'])->name('bussines-growth2');
-Route::get('/bussines-growth2', function () { return view('myproject.bussines-growth2'); })->name('bussines-growth2-page');
-Route::post('/bussines-growth3', [BusinessGrowthController::class, 'step3'])->name('bussines-growth3');
-Route::get('/bussines-growth3', function () { return view('myproject.bussines-growth3'); })->name('bussines-growth3-page');
-Route::post('/bussines-growth4', [BusinessGrowthController::class, 'step4'])->name('bussines-growth4');
-Route::get('/bussines-growth4', function () { return view('myproject.bussines-growth4'); })->name('bussines-growth4-page');
-Route::post('/bussines-growth5', [BusinessGrowthController::class, 'step5'])->name('bussines-growth5');
-Route::get('/bussines-growth5', function () { return view('myproject.bussines-growth5'); })->name('bussines-growth5-page');
-Route::get('/bussines-growth6', [BusinessGrowthController::class, 'step6'])->name('bussines-growth6-page');
-Route::post('/bussines-growth6', [BusinessGrowthController::class, 'step6'])->name('bussines-growth6');
-Route::post('/bussines-growth7', [BusinessGrowthController::class, 'step7'])->name('bussines-growth7');
-Route::get('/bussines-growth7', function () { return view('myproject.bussines-growth7'); })->name('bussines-growth7-page');
-Route::get('/bussines-growth8', function () { return view('myproject.bussines-growth8'); })->name('bussines-growth8-page');
-Route::post('/bussines-growth8', [BusinessGrowthController::class, 'step8'])->name('bussines-growth8');
+
+
+// Rute untuk menampilkan halaman (GET)
+Route::get('/bussines-growth1', [BusinessGrowthController::class, 'showStep1'])->name('bussines-growth1');
+Route::get('/bussines-growth2', [BusinessGrowthController::class, 'showStep2'])->name('bussines-growth2-page');
+Route::get('/bussines-growth3', [BusinessGrowthController::class, 'showStep3'])->name('bussines-growth3-page');
+Route::get('/bussines-growth4', [BusinessGrowthController::class, 'showStep4'])->name('bussines-growth4-page');
+Route::get('/bussines-growth5', [BusinessGrowthController::class, 'showStep5'])->name('bussines-growth5-page');
+Route::get('/bussines-growth6', [BusinessGrowthController::class, 'showStep6'])->name('bussines-growth6-page');
+Route::get('/bussines-growth7', [BusinessGrowthController::class, 'showStep7'])->name('bussines-growth7-page');
+Route::get('/bussines-growth8', [BusinessGrowthController::class, 'showStep8'])->name('bussines-growth8-page');
+
+// Rute untuk memproses data form (POST)
+Route::post('/bussines-growth2', [BusinessGrowthController::class, 'storeStep1'])->name('bussines-growth2');
+Route::post('/bussines-growth3', [BusinessGrowthController::class, 'storeStep2'])->name('bussines-growth3');
+Route::post('/bussines-growth4', [BusinessGrowthController::class, 'storeStep3'])->name('bussines-growth4');
+Route::post('/bussines-growth5', [BusinessGrowthController::class, 'storeStep4'])->name('bussines-growth5');
+Route::post('/bussines-growth6', [BusinessGrowthController::class, 'storeStep5'])->name('bussines-growth6');
+Route::post('/bussines-growth8', [BusinessGrowthController::class, 'storeStep7'])->name('bussines-growth8');
 
 Route::post('/members', [MemberController::class, 'store'])->name('members.store');
 Route::get('/members/{member}/edit', [MemberController::class, 'edit'])->name('members.edit');

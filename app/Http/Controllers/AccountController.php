@@ -23,8 +23,7 @@ class AccountController extends Controller
             return redirect()->route('login');
         }
 
-        // Ambil nama depan dari user yang login
-        // Pastikan nama kolom di database Anda 'first_name' atau sesuaikan
+        
         $firstName = $user->first_name ?? 'there'; 
 
         // Kirim nama ke view 'account-success'

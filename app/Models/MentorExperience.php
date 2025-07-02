@@ -9,9 +9,7 @@ class MentorExperience extends Model
 {
     use HasFactory;
 
-    /**
-     * PERBAIKAN: Kolom disesuaikan dengan file migrasi.
-     */
+    
     protected $fillable = [
         'mentor_id',
         'position',

@@ -1,6 +1,5 @@
 <?php
 
-// app/Models/Member.php
 
 namespace App\Models;
 

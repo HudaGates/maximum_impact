@@ -79,6 +79,6 @@
     If  your business has no revenue yet, feel free to enter 0.”
   </p>
 
-  <a href="{{ route('bussines-growth8-page') }}" class="btn text-decoration-none">Next</a>
+  <a href="{{ route('strategy') }}" class="btn text-decoration-none">Next</a>
 </div>
 @endsection

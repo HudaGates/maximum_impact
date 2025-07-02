@@ -28,9 +28,7 @@ class InvestorProfile extends Model
         'investor_email',
     ];
 
-    /**
-     * Mendefinisikan relasi bahwa setiap profil investor dimiliki oleh satu user.
-     */
+   
     public function user()
     {
         return $this->belongsTo(User::class);

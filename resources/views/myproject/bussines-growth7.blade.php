@@ -70,25 +70,24 @@
 </style>
 
 <div class="position-relative">
-  <img src="/images/decor-titik.png" class="decor-top-left" alt="Decor">
-  <img src="/images/decor-titik.png" class="decor-bottom-right" alt="Decor">
+    <img src="/images/decor-titik.png" class="decor-top-left" alt="Decor">
+    <img src="/images/decor-titik.png" class="decor-bottom-right" alt="Decor">
 </div>
 
 <div class="growth-container">
-  <form method="POST" action="{{ route('bussines-growth8') }}">
-    @csrf
-    <h4><strong>Write your strategy to achive your business development target.</strong></h4>
-    <p><strong>First Month:</strong> <span style="float: right;">1/6</span></p>
-
-    <div style="position: relative;">
-      <textarea name="month1" required></textarea>
-      <img src="/images/logo-m.png" class="logo-m" alt="Logo M">
-    </div>
-
-    <div class="btn-container">
-      <a href="{{ route('bussines-growth6-page') }}" class="btn text-decoration-none">Back</a>
-      <button type="submit" class="btn">Send</button>
-    </div>
-  </form>
+    <form method="POST" action="{{ route('bussines-growth8') }}">
+        @csrf
+        <h4><strong>Write your strategy to achive your business development target.</strong></h4>
+        <p><strong>First Month:</strong> <span style="float: right;">1/6</span></p>
+        <div style="position: relative;">
+            {{-- NAMA INPUT DIUBAH AGAR UNIK --}}
+            <textarea name="strategy_month_1" required></textarea>
+            <img src="/images/logo-m.png" class="logo-m" alt="Logo M">
+        </div>
+        <div class="btn-container">
+            <a href="{{ route('bussines-growth6-page') }}" class="btn text-decoration-none">Back</a>
+            <button type="submit" class="btn">Send</button>
+        </div>
+    </form>
 </div>
 @endsection

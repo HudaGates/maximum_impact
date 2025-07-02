@@ -17,7 +17,7 @@ class Investment extends Model
      */
     protected $fillable = [
         'user_id',
-        'investor_name', // BARU: Ditambahkan agar bisa diisi
+        'investor_name', 
         'amount',
         'funding_type',
         'project',
@@ -28,9 +28,7 @@ class Investment extends Model
         'status',
     ];
 
-    /**
-     * Mendefinisikan bahwa sebuah Investment "milik" (belongs to) satu User.
-     */
+   
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

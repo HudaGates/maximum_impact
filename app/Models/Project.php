@@ -22,7 +22,7 @@ class Project extends Model
         'category',
         'investment_needs',
         'roadmap',
-        'user_id', // Tambahkan user_id ke fillable
+        'user_id', 
     ];
 
     public function user()
