@@ -121,18 +121,15 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/community/mentor', [MentorController::class, 'index'])->name('mentors.index');
 Route::get('/community/mentor/{id}', [MentorController::class, 'show'])->name('mentors.show');
-Route::get('/mentor', [MentorController::class, 'index1'])->name('mentor.dashboard');
-Route::post('/experience/store', [MentorController::class, 'store'])->name('experience.store');
-Route::get('/experience/create', [MentorController::class, 'create'])->name('experience.create');
-Route::post('/education/store', [MentorController::class, 'store1'])->name('education.store');
-Route::post('/skills', [MentorController::class, 'store2'])->name('skills.store');
-Route::get('/mentor/{mentor}/edit', [MentorController::class, 'edit'])->name('mentor.edit');
-Route::put('/mentor/{mentor}', [MentorController::class, 'update'])->name('mentor.update');
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard/edit', [MentorController::class, 'edit'])->name('dashboard.edit');
-    Route::post('/dashboard/update', [MentorController::class, 'update'])->name('dashboard.update');
-});
+Route::get('/mentor', [MentorController::class, 'index1'])->name('mentor.dashboard');Route::middleware('sudah_login')->group(function() {
+    Route::get('/mentor', [MentorController::class, 'index1'])->name('mentor.dashboard');
+    Route::put('/mentor/{mentor}', [MentorController::class, 'update'])->name('mentor.update');
 
+    // ... rute-rute terproteksi lainnya
+    Route::post('/experience/store', [MentorController::class, 'store'])->name('experience.store');
+    Route::post('/education/store', [MentorController::class, 'store1'])->name('education.store');
+    Route::post('/skills', [MentorController::class, 'store2'])->name('skills.store');
+});
 
 Route::get('/community/company', [CompanyReportController::class, 'comp'])->name('company.comp');
 Route::get('/company-profile/{name}', [CompanyReportController::class, 'show'])->name('company.show');
@@ -183,3 +180,4 @@ Route::get('/members/{member}/edit', [MemberController::class, 'edit'])->name('m
 Route::put('/members/{member}', [MemberController::class, 'update'])->name('members.update');
 Route::delete('/members/{member}', [MemberController::class, 'destroy'])->name('members.destroy');
 
+Route::put('/dashboard/profile', [MentorController::class, 'updateProfile'])->name('mentor.profile.update');

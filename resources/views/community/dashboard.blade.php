@@ -4,62 +4,118 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 <div class="container py-4">
-    <div class="card mb-4 rounded-4">
-        <div class="card mb-4 rounded-4 overflow-hidden border-0" style="position: relative;">
-    <!-- Banner atas -->
-    <div style="background-color: #232d65; height: 100px;"></div>
-<div class="col-auto">
-                <img src="{{ asset('images/agradi.jpg') }}"
-                     class="rounded-circle border border-white shadow"
-                     width="140" height="140"
-                     style="object-fit: cover; position: absolute; top:10px; left:20px;"
-                     alt="Profile Picture">
-            </div>
-    <div class="card-body position-relative pt-0">
-        <div class="row">
-            <!-- Foto profil -->
+    {{-- Menampilkan pesan sukses setelah update --}}
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
-            <!-- Info pengguna -->
-            <div class="col ps-5 ms-5 mt-5">
-                <h2 class="fw-bold text-dark mb-1" style="color: #232d65 !important;">{{ $user['name'] }}</h2>
-                <h5 class="mb-1">{{ $user['job_title'] }}</h5>
-                <p class="text-muted mb-0">{{ $user['location'] }}</p>
-            </div>
+    {{-- Kartu Header Profil --}}
+    <div class="card mb-4 rounded-4 overflow-hidden border-0" style="position: relative;">
+        <!-- Banner atas -->
+        <div style="background-color: #232d65; height: 100px;"></div>
+        <div class="col-auto">
+            {{-- Ambil foto profil secara dinamis, dengan gambar default --}}
+            <img src="{{ $mentor->profile_photo_path ? asset('storage/' . $mentor->profile_photo_path) : asset('images/agradi.jpg') }}"
+                 class="rounded-circle border border-white shadow"
+                 width="140" height="140"
+                 style="object-fit: cover; position: absolute; top:10px; left:20px;"
+                 alt="Profile Picture">
+        </div>
+        <div class="card-body position-relative pt-0">
+            <div class="row">
+                <!-- Info pengguna -->
+                <div class="col ps-5 ms-5 mt-5">
+                    {{-- Gunakan data dari objek $mentor --}}
+                    <h2 class="fw-bold text-dark mb-1" style="color: #232d65 !important;">{{ $mentor->name }}</h2>
+                    <h5 class="mb-1">{{ $mentor->job_title }}</h5>
+                    <p class="text-muted mb-0">{{ $mentor->location }}</p>
+                </div>
 
-            <!-- Tombol Edit dan Institusi -->
-            <div class="col-auto text-end mt-3">
-                <button class="btn btn-outline-dark mb-2">
-                    <i class="bi bi-pencil"></i> Edit
-                </button>
-                <div class="d-flex align-items-center justify-content-end">
-                    <div class="bg-light rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px;">
-                        <i class="bi bi-buildings text-secondary"></i>
-                    </div>
-                    <div class="text-start small">
-                        <div>{{ $user['institution'] }}</div>
+                <!-- Tombol Edit dan Institusi -->
+                <div class="col-auto text-end mt-3">
+                    {{-- Tombol ini akan membuka modal edit --}}
+                    <button class="btn btn-outline-dark mb-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                        <i class="bi bi-pencil"></i> Edit
+                    </button>
+                    <div class="d-flex align-items-center justify-content-end">
+                        <div class="bg-light rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px;">
+                            <i class="bi bi-buildings text-secondary"></i>
+                        </div>
+                        <div class="text-start small">
+                            <div>{{ $mentor->institution }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
-   <div class="card rounded-4 border-0 shadow-sm mb-4 px-4 py-3">
-    <div class="d-flex justify-content-between align-items-start mb-3">
-        <h2 class="fw-bold mb-0">About</h2>
-        <button class="btn btn-outline-secondary btn-sm d-flex align-items-center">
-            <i class="bi bi-pencil me-1"></i> Edit
-        </button>
+
+    {{-- Kartu About --}}
+    <div class="card rounded-4 border-0 shadow-sm mb-4 px-4 py-3">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <h2 class="fw-bold mb-0">About</h2>
+             {{-- Tombol ini juga membuka modal yang sama --}}
+            <button class="btn btn-outline-secondary btn-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                <i class="bi bi-pencil me-1"></i> Edit
+            </button>
+        </div>
+        <div class="text-muted" style="font-size: 16px; text-align: justify; line-height: 1.8;">
+            {{ $mentor->about }}
+        </div>
     </div>
-    <div class="text-muted" style="font-size: 16px; text-align: justify; line-height: 1.8;">
-        {{ $user['about'] }}
-    </div>
-    <div class="text-muted mt-3" style="font-size: 16px; text-align: justify; line-height: 1.8;">
-        {{ $user['about'] }}
+</div>
+
+{{-- Modal untuk Edit Profil --}}
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileModalLabel">Edit Profil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            {{-- Form untuk mengirim data yang sudah diperbarui --}}
+            <form action="{{ route('mentor.profile.update') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="profile_photo" class="form-label">Foto Profil</label>
+                        <input class="form-control" type="file" id="profile_photo" name="profile_photo" accept="image/*">
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nama Lengkap</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $mentor->name) }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="job_title" class="form-label">Jabatan</label>
+                        <input type="text" class="form-control" id="job_title" name="job_title" value="{{ old('job_title', $mentor->job_title) }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Lokasi</label>
+                        <input type="text" class="form-control" id="location" name="location" value="{{ old('location', $mentor->location) }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="institution" class="form-label">Institusi</label>
+                        <input type="text" class="form-control" id="institution" name="institution" value="{{ old('institution', $mentor->institution) }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="about" class="form-label">Tentang Saya</label>
+                        <textarea class="form-control" id="about" name="about" rows="5" required>{{ old('about', $mentor->about) }}</textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-{{-- Experience Section --}}
- @include('community.addexperience')
+
+@include('community.addexperience')
 
 <div class="card rounded-4 border mb-4 p-4">
     <div class="d-flex justify-content-between align-items-start mb-3">
@@ -116,8 +172,6 @@
         </div>
     @endforeach
 </div>
-
-
 
 {{-- Education Section --}}
  @include('community.addeducation')

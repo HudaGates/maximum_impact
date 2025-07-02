@@ -13,6 +13,7 @@ class MentorExperience extends Model
      * PERBAIKAN: Kolom disesuaikan dengan file migrasi.
      */
     protected $fillable = [
+        'mentor_id',
         'position',
         'type',
         'company',
