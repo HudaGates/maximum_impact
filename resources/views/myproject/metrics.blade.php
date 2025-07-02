@@ -32,7 +32,7 @@
     {{-- Footer --}}
     <div class="d-flex justify-content-between align-items-center mt-4">
         <div class="fw-semibold">3 Categories Selected</div>
-        <div class="text-muted small">Next</div>
+        <a href="{{ route('projects.create') }}" class="next-link" style="text-decoration: none">Next</a>
     </div>
 </div>
 @endsection

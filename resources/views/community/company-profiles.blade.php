@@ -5,7 +5,7 @@
 @section('content')
 <h2 class="fw-bold mb-4">Profile Company</h2>
 
-<div class="card shadow-sm border-0 rounded-4 mb-4 p-4 d-flex flex-row align-items-start" style="max-width: 800px;">
+<div class="card shadow-sm border-0 rounded-4 mb-4 p-4 d-flex flex-row align-items-start" style="max-width: 800px; margin-left: 300px;">
 
     <img src="{{ asset($company['logo']) }}" alt="Logo" class="me-4 rounded-3" style="width: 100px; height: 100px; object-fit: contain;">
 
@@ -29,21 +29,25 @@
 
 <h4 class="fw-bold mb-4 text-center">Our Team</h4>
 <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
+  {{-- Loop ini akan menggunakan variabel $team yang sudah berisi data dari database --}}
   @foreach ($team as $member)
     <div class="col d-flex justify-content-center">
       <div class="card shadow-sm rounded-4 border-0" style="width: 200px;">
-        <img src="{{ asset($member['image']) }}"
-             alt="{{ $member['name'] }}"
+        {{-- Ubah cara menampilkan gambar, sesuaikan dengan path storage --}}
+        <img src="{{ $member->photo ? asset('storage/' . $member->photo) : 'https://via.placeholder.com/200x200.png?text=No+Image' }}"
+             alt="{{ $member->name }}"
              class="card-img-top rounded-top-4"
              style="height: 200px; object-fit: cover;">
         <div class="card-body text-center">
-          <h6 class="fw-bold mb-0">{{ $member['name'] }}</h6>
-          <small class="text-muted">{{ $member['position'] }}</small>
+          {{-- Ubah cara mengakses nama dan posisi sesuai kolom di database --}}
+          <h6 class="fw-bold mb-0">{{ $member->name }}</h6>
+          <small class="text-muted">{{ $member->job_title }}</small>
         </div>
       </div>
     </div>
   @endforeach
 </div>
+
 <div class="container my-5">
     <h4 class="fw-bold text-primary mb-4">Previous Funding</h4>
 

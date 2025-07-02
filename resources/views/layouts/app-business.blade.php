@@ -214,7 +214,7 @@
         <h5>Quest</h5>
         <div class="quest-card">
             <div class="d-flex justify-content-between align-items-center fw-semibold">
-                <span>Start Your Business</span>
+                <span>Input Your Goals</span>
                 <span class="quest-progress-text">0/5</span>
             </div>
             <div class="progress mt-1" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
@@ -222,25 +222,12 @@
             </div>
             <div class="d-flex justify-content-between align-items-center mt-2">
                 <small class="text-muted">+50 MaxPoint</small>
-                <a href="{{ route('step1') }}" class="btn btn-sm quest-btn">Do It</a>
+                <a href="{{ route('strategy.strategy') }}" class="btn btn-sm quest-btn">Do It</a>
             </div>
         </div>
         <div class="quest-card">
             <div class="d-flex justify-content-between align-items-center fw-semibold">
-                <span>Start Invest</span>
-                <span class="quest-progress-text">0/5</span>
-            </div>
-            <div class="progress mt-1" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar" style="width: 0%"></div>
-            </div>
-            <div class="d-flex justify-content-between align-items-center mt-2">
-                <small class="text-muted">+50 MaxPoint</small>
-                <a href="{{ route('step-invest.step1-invest') }}" class="btn btn-sm quest-btn">Do It</a>
-            </div>
-        </div>
-        <div class="quest-card">
-            <div class="d-flex justify-content-between align-items-center fw-semibold">
-                <span>Add Experience</span>
+                <span>Report Your Achievment</span>
                 <span class="quest-progress-text">0/5</span>
             </div>
             <div class="progress mt-1" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">

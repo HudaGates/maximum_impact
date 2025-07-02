@@ -4,17 +4,13 @@
     <meta charset="UTF-8">
     <title>ImpactMate - Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-
-
         }
-.btn-custom {
+        .btn-custom {
             background-color: #F4E6AC;
             color: #1F2A69;
             font-weight: 600;
@@ -75,26 +71,6 @@
             max-width: 700px;
             margin: 10px auto;
         }
-        section::before,
-section::after {
-    content: "";
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: white;
-    border-radius: 50%;
-    box-shadow: 0 30px white, 0 60px white, 0 90px white, 0 120px white;
-}
-
-section::before {
-    left: 20px;
-    top: 40px;
-}
-
-section::after {
-    right: 20px;
-    top: 40px;
-}
 
         .stat-grid {
             margin-top: 40px;
@@ -128,7 +104,6 @@ section::after {
     </style>
 </head>
 <body>
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark py-3" style="background-color: #000;">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="#">
@@ -142,7 +117,6 @@ section::after {
     </div>
 </nav>
 
-<!-- Hero Section -->
 <section class="hero position-relative">
     <div class="container">
         <h1>Turn Profit into Purpose, and<br>Accelerate Your Business Growth</h1>
@@ -156,7 +130,6 @@ section::after {
     </div>
 </section>
 
-<!-- Stats Section -->
 <section class="section-stats position-relative">
     <div class="container">
         <h2>Measure . Grow . Transform</h2>
@@ -182,11 +155,60 @@ section::after {
                 <h3>82%</h3>
                 <p>Company Growth</p>
             </div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const animateValue = (obj, start, end, duration, prefix = '', suffix = '') => {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            let currentValue = progress * (end - start) + start;
+            if (Number.isInteger(end)) {
+                obj.innerHTML = prefix + Math.floor(currentValue).toLocaleString() + suffix;
+            } else {
+                obj.innerHTML = prefix + currentValue.toFixed(1) + suffix;
+            }
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            } else {
+                 obj.innerHTML = prefix + end.toLocaleString() + suffix;
+            }
+        };
+        window.requestAnimationFrame(step);
+    };
+
+    const statSection = document.querySelector(".stat-grid");
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counters = statSection.querySelectorAll("h3");
+                counters.forEach(counter => {
+                    const originalText = counter.innerText;
+                    const parts = originalText.match(/([^\d,.]*)([\d,.]+)(.*)/);
+                    if (parts) {
+                        const prefix = parts[1];
+                        const value = parseFloat(parts[2].replace(/,/g, ''));
+                        const suffix = parts[3];
+                        animateValue(counter, 0, value, 2000, prefix, suffix);
+                    }
+                });
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.5
+    });
+
+    if (statSection) {
+        observer.observe(statSection);
+    }
+});
+</script>
         </div>
         <img src="{{ asset('images/bg-m.png') }}" class="line-m d-none d-md-block" alt="Line Shape">
     </div>
 </section>
-<!-- SDG Section -->
+
 <section style="background-color: #FAE6C8; padding: 80px 0; position: relative;">
     <div class="container text-center">
         <h2 class="fw-bold" style="color: #1F2A69;">Lead with Purpose, <br>Create Sustainable Future</h2>
@@ -208,7 +230,6 @@ section::after {
     </div>
 </section>
 
-<!-- 6 Month Growth Section -->
 <section class="py-5 text-center">
     <div class="container">
         <h2 class="fw-bold" style="color: #1F2A69;">Grow Your Business within 6 Months!</h2>
@@ -229,7 +250,7 @@ section::after {
         <a href="#" class="btn btn-main mt-4">Get Our 6 Month Success Framework →</a>
     </div>
 </section>
-<!-- CTA: Elevate Your Business -->
+
 <section style="background-color: #FAE6C8; padding: 60px 0;">
     <div class="container text-center">
         <h2 class="fw-bold" style="color: #1F2A69;">Elevate Your Business with ImpactMate</h2>
@@ -238,7 +259,6 @@ section::after {
     </div>
 </section>
 
-<!-- Partner Logos -->
 <section class="py-5">
     <div class="container text-center">
         <h2 class="fw-bold" style="color: #1F2A69;">Take Action Towards a<br>Sustainable Future</h2>
@@ -265,7 +285,6 @@ section::after {
     </div>
 </section>
 
-<!-- Footer -->
 <footer class="text-white py-5" style="background-color: #1F2A69;">
     <div class="container d-flex flex-column flex-md-row justify-content-between align-items-start">
         <div class="mb-4 mb-md-0">

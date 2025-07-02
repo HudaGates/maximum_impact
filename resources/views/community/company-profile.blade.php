@@ -107,6 +107,11 @@
                     <label class="form-label">Website</label>
                     <input type="text" name="website" class="form-control" placeholder="Input your website address">
                 </div>
+                <div class="col-12">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="4" placeholder="Tell us about your company"></textarea>
+                </div>
+                
                 <div class="col-12 text-center mt-4">
                     <a href="{{ route('community.company-profiles') }}" type="submit" class="save-button" style="text-decoration: none">Save</a></button>
                 </div>

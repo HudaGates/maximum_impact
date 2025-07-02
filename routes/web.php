@@ -190,3 +190,4 @@ Route::get('/myproject/indikator', [ProjectController::class, 'indicators'])->na
 
 // Route untuk halaman Metrik
 Route::get('/myproject/metrics', [ProjectController::class, 'metrics'])->name('myproject.metrics');
+

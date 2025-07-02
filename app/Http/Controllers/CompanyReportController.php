@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Member;
+use App\Models\Company;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyReportController extends Controller
 {
@@ -223,39 +225,56 @@ $companies = collect($allCompanies)->filter(function ($company) use ($search) {
     }
 
     public function index1()
-{
-    // 1. Hapus semua data statis
-    // 2. Ganti dengan satu baris ini untuk mengambil semua data dari database
-    $members = Member::all();
+    {
+        $members = Member::all();
+        $company = Company::first(); // Ambil data profil perusahaan pertama yang ada
 
-    // 3. Kirim data $members yang sudah dari database ke view
-    return view('community.company-profile', compact('members'));
-
+        return view('community.company-profile', compact('members', 'company'));
     }
 
-    // Menyimpan data profil perusahaan
-    public function store(Request $request)
+    /**
+     * Menyimpan atau Memperbarui data profil perusahaan dari form admin.
+     * Method 'store' Anda sebelumnya tidak benar, ini versi yang sudah diperbaiki.
+     */
+    public function storeCompanyProfile(Request $request)
     {
+        // 1. Validasi input dari form
         $validated = $request->validate([
             'company_name' => 'required|string|max:255',
             'industry' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'website' => 'nullable|url',
+            'description' => 'nullable|string',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Validasi untuk logo
         ]);
-        $members = [
-        (object)[ 'name' => 'Jane Cooper', 'photo' => '/img/jane.jpg', 'job_title' => 'CEO', 'department' => 'Lorem ipsum dolor sit...', 'location' => 'Location 1' ],
-        (object)[ 'name' => 'Wade Warren', 'photo' => '/img/wade.jpg', 'job_title' => 'CTO', 'department' => 'Lorem ipsum...', 'location' => 'Location 2' ],
-        (object)[ 'name' => 'Esther Howard', 'photo' => '/img/esther.jpg', 'job_title' => 'Team Lead', 'department' => 'Lorem ipsum...', 'location' => 'Location 1' ],
-        (object)[ 'name' => 'Cameron Williamson', 'photo' => '/img/cameron.jpg', 'job_title' => 'Team Lead', 'department' => 'Lorem ipsum...', 'location' => 'Location 2' ],
-        (object)[ 'name' => 'Brooklyn Simmons', 'photo' => '/img/cameron.jpg', 'job_title' => 'Team Lead', 'department' => 'Lorem ipsum...', 'location' => 'Location 2' ],
-    ];
 
-    return view('company.profile', compact('members'));
+        // Cari data company yang sudah ada
+        $company = Company::first();
 
+        $dataToUpdate = [
+            'name' => $validated['company_name'],
+            'industry' => $validated['industry'],
+            'location' => $validated['location'],
+            'website' => $validated['website'],
+            'description' => $validated['description'],
+        ];
 
-        Company::create($validated);
+        // 2. Handle upload logo jika ada
+        if ($request->hasFile('logo')) {
+            // Hapus logo lama jika ada
+            if ($company && $company->logo_path) {
+                Storage::disk('public')->delete($company->logo_path);
+            }
+            // Simpan logo baru dan dapatkan path-nya
+            $path = $request->file('logo')->store('company_logos', 'public');
+            $dataToUpdate['logo_path'] = $path;
+        }
 
-        return redirect()->back()->with('success', 'Company profile saved successfully!');
+        // 3. Gunakan updateOrCreate untuk membuat data jika belum ada, atau update jika sudah ada
+        Company::updateOrCreate(['id' => optional($company)->id], $dataToUpdate);
+
+        // 4. Redirect ke halaman profil publik dengan pesan sukses
+        return redirect()->route('community.company-profiles')->with('success', 'Company profile saved successfully!');
     }
     public function store1(Request $request)
 {
@@ -282,7 +301,7 @@ $companies = collect($allCompanies)->filter(function ($company) use ($search) {
 }
 public function profile()
     {
-        // Data statis untuk contoh (bisa diambil dari database jika dibutuhkan)
+        // Data company dan fundings tetap statis sesuai kode asli Anda.
         $company = [
             'name' => 'Lion Bird',
             'type' => 'Software as a Service (SaaS)',
@@ -292,27 +311,18 @@ public function profile()
             'logo' => 'images/lion-bird.png',
         ];
 
-        $team = [
-    [
-        'name' => 'Claire',
-        'position' => 'Web Designer',
-        'image' => 'images/team/claire.png',
-    ],
-    [
-        'name' => 'Albert Flores',
-        'position' => 'Marketing Coordinator',
-        'image' => 'images/team/albert.png',
-    ],
-    // ... dan seterusnya
-];
-    $fundings = [
-    ['team' => 'Dallas Cowboys', 'industry' => 'Software', 'stage' => 'Series A', 'amount' => '$2 Million', 'year' => '2021'],
-    ['team' => 'Chicago Bears', 'industry' => 'Renewable Energy', 'stage' => 'Seed', 'amount' => '$1.5 Million', 'year' => '2020'],
-    ['team' => 'Green Bay Packers', 'industry' => 'Software', 'stage' => 'Series A', 'amount' => '$2 Million', 'year' => '2021'],
-    ['team' => 'Carolina Panthers', 'industry' => 'Health Care', 'stage' => 'Series B', 'amount' => '$3 Million', 'year' => '2022'],
-];
+        $fundings = [
+            ['team' => 'Dallas Cowboys', 'industry' => 'Software', 'stage' => 'Series A', 'amount' => '$2 Million', 'year' => '2021'],
+            ['team' => 'Chicago Bears', 'industry' => 'Renewable Energy', 'stage' => 'Seed', 'amount' => '$1.5 Million', 'year' => '2020'],
+            ['team' => 'Green Bay Packers', 'industry' => 'Software', 'stage' => 'Series A', 'amount' => '$2 Million', 'year' => '2021'],
+            ['team' => 'Carolina Panthers', 'industry' => 'Health Care', 'stage' => 'Series B', 'amount' => '$3 Million', 'year' => '2022'],
+        ];
 
+        // [MODIFIKASI] Mengambil semua data anggota tim dari tabel 'members' di database.
+        // Array statis `$team` yang lama telah diganti dengan query ini.
+        $team = Member::all();
 
+        // Mengirim semua data (termasuk data team yang sudah dinamis) ke view.
         return view('community.company-profiles', compact('company', 'team', 'fundings'));
     }
 }
