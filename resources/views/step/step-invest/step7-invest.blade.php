@@ -42,7 +42,7 @@
             padding: 16px;
             width: 80%;
             margin-left: 50px;
-            max-width: 515px;
+            max-width: 560px;
             background: #EFE2BA;
             border: none;
             border-radius: 6px;

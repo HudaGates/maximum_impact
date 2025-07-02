@@ -11,7 +11,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // Daftarkan HANYA alias kustom Anda.
+        // Laravel akan menangani alias 'auth' secara otomatis jika Anda menggunakan grup 'web'.
+        $middleware->alias([
+            'sudah_login' => \App\Http\Middleware\PastikanSudahLogin::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

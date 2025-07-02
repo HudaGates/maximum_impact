@@ -49,8 +49,7 @@ class BusinessGrowthController extends Controller
     public function step8(Request $request)
 {
     $month1 = $request->input('month1');
-    // Simpan data jika diperlukan
-
+    
     return redirect()->route('bussines-growth8-page');
 }
 

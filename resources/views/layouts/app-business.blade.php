@@ -235,7 +235,7 @@
             </div>
             <div class="d-flex justify-content-between align-items-center mt-2">
                 <small class="text-muted">+50 MaxPoint</small>
-                <a href="{{ route('mentor.dashboard') }}" class="btn btn-sm quest-btn">Do It</a>
+                <a href="#" class="btn btn-sm quest-btn">Claim</a>
             </div>
         </div>
     </div>

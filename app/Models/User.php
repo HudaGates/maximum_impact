@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use App\Models\Mentor;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -29,7 +29,8 @@ class User extends Authenticatable
         'location',
         'about',
         'role',   // <-- PERUBAHAN: Ditambahkan agar bisa diisi
-        'status', // <-- PERUBAHAN: Ditambahkan agar bisa diisi
+        'status',
+         // <-- PERUBAHAN: Ditambahkan agar bisa diisi
     ];
 
     /**
@@ -93,5 +94,12 @@ class User extends Authenticatable
     public function skills(): HasMany
     {
         return $this->hasMany(MentorSkill::class, 'mentor_id');
+    }
+    public function mentor()
+    {
+        // Menandakan bahwa satu User memiliki (hasOne) satu profil Mentor.
+        // Ini mengasumsikan bahwa di tabel 'mentors' Anda, 
+        // ada sebuah kolom bernama 'user_id' untuk menyimpan ID user.
+        return $this->hasOne(Mentor::class);
     }
 }

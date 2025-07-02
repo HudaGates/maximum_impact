@@ -59,7 +59,7 @@
             padding: 33px;
             width: 80%;
             height: 100px;
-            max-width: 515px;
+            max-width: 560px;
             background: #EFE2BA;
             border: none;
             border-radius: 6px;

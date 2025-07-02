@@ -54,7 +54,7 @@ $companies = collect($allCompanies)->filter(function ($company) use ($search) {
 
     public function show($name)
     {
-        // Dummy data bisa diganti nanti dengan database
+        
         $companies = [
            1 => [
                 'name' => 'Lion Bird',
@@ -76,7 +76,7 @@ $companies = collect($allCompanies)->filter(function ($company) use ($search) {
                 'description' => 'Lorem ipsum dolor sit amet',
                 'departments' => 'Engineering, Finance, HR'
             ],
-            // Tambah data lainnya sesuai kebutuhan...
+            
         ];
 
         return view('community.company-profile', compact('companies'));
@@ -90,23 +90,20 @@ $companies = collect($allCompanies)->filter(function ($company) use ($search) {
      */
     public function index()
     {
-        // Di sini Anda akan mengambil data yang diperlukan untuk ditampilkan di laporan.
-        // Contoh data (ini harusnya diambil dari database):
-
-        // Data Perusahaan
+        
         $company = [
             'name' => 'Lion Bird',
             'slogan' => 'Smart Robotics for Construction Sites',
-            'logo' => asset('images/mask-group.png') // Asumsi logo disimpan di public/images
+            'logo' => asset('images/mask-group.png') 
         ];
 
-        // Data Progres (Misalnya, dari data bulanan)
+        
         $progress = [
             'percentage' => 75, // Contoh persentase progres
             'label' => 'This Month’s Completed Report'
         ];
 
-        // Data Status Pembaruan
+        
         $statuses = [
             [
                 'title' => 'Business Development',
@@ -141,7 +138,7 @@ $companies = collect($allCompanies)->filter(function ($company) use ($search) {
             ]
         ];
 
-        // Data untuk chart (seperti yang ada di blade Anda, tapi ini bisa dinamis)
+        
         $chartData = [
             'revenue' => [
                 'label' => "Revenue",
@@ -160,7 +157,7 @@ $companies = collect($allCompanies)->filter(function ($company) use ($search) {
             ]
         ];
 
-        // Data Proyek (ini bisa dari model ProjectFund atau sejenisnya)
+        
         $projectFunds = [
             [
                 'no' => 1,
@@ -214,7 +211,7 @@ $companies = collect($allCompanies)->filter(function ($company) use ($search) {
             ],
         ];
 
-        // Meneruskan data ke view
+        
         return view('community.companyreport', compact(
             'company',
             'progress',
@@ -238,7 +235,7 @@ $companies = collect($allCompanies)->filter(function ($company) use ($search) {
      */
     public function storeCompanyProfile(Request $request)
     {
-        // 1. Validasi input dari form
+        
         $validated = $request->validate([
             'company_name' => 'required|string|max:255',
             'industry' => 'required|string|max:255',
@@ -248,7 +245,7 @@ $companies = collect($allCompanies)->filter(function ($company) use ($search) {
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Validasi untuk logo
         ]);
 
-        // Cari data company yang sudah ada
+        
         $company = Company::first();
 
         $dataToUpdate = [
@@ -259,21 +256,21 @@ $companies = collect($allCompanies)->filter(function ($company) use ($search) {
             'description' => $validated['description'],
         ];
 
-        // 2. Handle upload logo jika ada
+        
         if ($request->hasFile('logo')) {
-            // Hapus logo lama jika ada
+            
             if ($company && $company->logo_path) {
                 Storage::disk('public')->delete($company->logo_path);
             }
-            // Simpan logo baru dan dapatkan path-nya
+            
             $path = $request->file('logo')->store('company_logos', 'public');
             $dataToUpdate['logo_path'] = $path;
         }
 
-        // 3. Gunakan updateOrCreate untuk membuat data jika belum ada, atau update jika sudah ada
+        
         Company::updateOrCreate(['id' => optional($company)->id], $dataToUpdate);
 
-        // 4. Redirect ke halaman profil publik dengan pesan sukses
+        
         return redirect()->route('community.company-profiles')->with('success', 'Company profile saved successfully!');
     }
     public function store1(Request $request)
@@ -286,7 +283,7 @@ $companies = collect($allCompanies)->filter(function ($company) use ($search) {
         'photo' => 'nullable|image|max:2048',
     ]);
 
-    // Simpan file
+   
     if ($request->hasFile('photo')) {
         $path = $request->file('photo')->store('photos', 'public');
         $validated['photo'] = '/storage/' . $path;
@@ -294,10 +291,10 @@ $companies = collect($allCompanies)->filter(function ($company) use ($search) {
         $validated['photo'] = '/img/default.jpg';
     }
 
-    // Simpan ke DB (dummy / simulasi)
+    
     session()->push('members', (object) $validated);
 
-    return redirect()->route('community.company-profile', ['tab' => 'people'])->with('success', 'Member added!');
+    return redirect()->route('community.company-profiles', ['tab' => 'people'])->with('success', 'Member added!');
 }
 public function profile()
     {

@@ -28,13 +28,22 @@
     }
 </style>
 
-<div class="investor-banner mb-5">
-    <div class="banner-text">
-        <p class="small">INVESTOR</p>
-        <h1>Agraditya Putra <span>👋</span></h1>
-    </div>
-    <img src="{{ asset('images/agradi.jpg') }}" alt="Profile" class="profile-pic">
+{{-- Melindungi blok ini agar hanya tampil jika ada pengguna yang login --}}
+@auth
+    <div class="investor-banner mb-5">
+        <div class="banner-text">
+    <p class="small">INVESTOR</p>
+    {{-- Ini akan bekerja karena $user sekarang adalah objek yang benar --}}
+    <h1>{{ $user->name }} <span>👋</span></h1> 
 </div>
+
+<img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('images/jane.png') }}" 
+     alt="Profile" 
+     class="profile-pic">
+    </div>
+@endauth
+
+{{-- Opsional: Tampilkan sesuatu jika tidak ada yang login --}}
 
 <div class="stats mb-5">
     <div class="stat-box">

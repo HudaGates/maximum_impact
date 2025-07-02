@@ -23,29 +23,25 @@ use App\Http\Controllers\MentorProfileController;
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
 
-// Rute utama (homepage) akan langsung diarahkan ke landing page
-Route::get('/', function () {
-    return redirect()->route('landingpage');
-});
+// =====================================================================
+//      AWAL DARI WEB MIDDLEWARE GROUP (INI ADALAH SOLUSINYA)
+// =====================================================================
+Route::middleware('web')->group(function () {
 
-// === INI ADALAH RUTE BARU YANG DITAMBAHKAN UNTUK LANDING PAGE ===
-Route::get('/landingpage', [LandingPageController::class, 'index'])->name('landingpage');
-// =============================================================
+    // Rute utama (homepage) akan langsung diarahkan ke landing page
+    Route::get('/', function () {
+        return redirect()->route('landingpage');
+    });
 
-// === ALUR PENDAFTARAN BARU ===
-Route::get('/account/success', [AccountController::class, 'success'])->name('account.success');
-Route::get('/account/setup', [StepController::class, 'showAccountSetup'])->name('account.setup');
-// =============================
+    Route::get('/landingpage', [LandingPageController::class, 'index'])->name('landingpage');
 
+    // ALUR PENDAFTARAN BARU
+    Route::get('/account/success', [AccountController::class, 'success'])->name('account.success');
+    Route::get('/account/setup', [StepController::class, 'showAccountSetup'])->name('account.setup');
 
-Route::get('/step1', [StepController::class, 'showStep1'])->name('step1');
+    Route::get('/step1', [StepController::class, 'showStep1'])->name('step1');
 Route::post('/step1', [StepController::class, 'submitStep1'])->name('step1.submit');
 Route::get('/step2', [StepController::class, 'showStep2'])->name('step2');
 Route::post('/step2', [StepController::class, 'submitStep2'])->name('step2.submit');
@@ -64,83 +60,69 @@ Route::post('/step8', [StepController::class, 'submitStep8'])->name('step8.submi
 Route::get('/step9', [StepController::class, 'showStep9'])->name('step9');
 Route::post('/step9', [StepController::class, 'submitStep9'])->name('step9.submit');
 
+    Route::get('/myproject', [ProjectController::class, 'index'])->name('myproject.index');
+    Route::get('/myproject/create', [ProjectController::class, 'create'])->name('projects.create');
+    Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
+    Route::get('/myprojects/sdgs', [ProjectController::class, 'sdgs'])->name('myproject.sdgs');
+    Route::get('/myproject/create/sdgs/indicators', [ProjectController::class, 'indicators'])->name('myproject.indikator');
+    Route::get('/myproject/create/sdgs/metrics', [ProjectController::class, 'metrics'])->name('myproject.metrics');
+    Route::resource('projects', ProjectController::class);
 
-Route::get('/myproject', [ProjectController::class, 'index'])->name('myproject.index');
-Route::get('/myproject/create', [ProjectController::class, 'create'])->name('projects.create');
-Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
-Route::get('/myprojects/sdgs', [ProjectController::class, 'sdgs'])->name('myproject.sdgs');
-Route::get('/myproject/create/sdgs/indicators', [ProjectController::class, 'indicators'])->name('myproject.indikator');
-Route::get('/myproject/create/sdgs/metrics', [ProjectController::class, 'metrics'])->name('myproject.metrics');
-Route::resource('projects', ProjectController::class);
+    Route::get('/strategy', [StrategyController::class, 'index'])->name('strategy.index');
+    Route::get('/strategy/strategy', [StrategyController::class, 'index1'])->name('strategy.strategy');
 
-Route::get('/strategy', [StrategyController::class, 'index'])->name('strategy.index');
-Route::get('/strategy/strategy', [StrategyController::class, 'index1'])->name('strategy.strategy');
+    Route::get('/community/investor', [InvestorController::class, 'index'])->name('investor.index');
+    Route::get('/community/find-investor-2', [InvestorController::class, 'findInvestor'])->name('community.find-investor-2');
+    Route::get('/community/investor/{id}', [InvestorController::class, 'show'])->name('investor.profile');
 
-Route::get('/community/investor', [InvestorController::class, 'index'])->name('investor.index');
-Route::get('/community/find-investor-2', [InvestorController::class, 'findInvestor'])->name('community.find-investor-2');
-Route::get('/community/investor/{id}', [InvestorController::class, 'show'])->name('investor.profile');
+    Route::get('/invest', [InvestmentController::class, 'create'])->name('investment.create');
+    Route::post('/invest', [InvestmentController::class, 'store'])->name('investment.store');
+    Route::get('/investment/{investment}/status', [InvestmentController::class, 'showUserStatus'])->name('investment.show_status');
+    Route::patch('/investment/{investment}/update-status', [InvestmentController::class, 'updateStatus'])->name('investment.updateStatus');
+    Route::get('/investment', [InvestmentController::class, 'approve'])->name('investment.approve');
+    Route::get('/investment/{id}/details', [InvestmentController::class, 'show'])->name('investment.details');
+    Route::get('/investment/status', [InvestmentController::class, 'status'])->name('investment.status');
+    Route::get('/invest/investment-status', [InvestmentController::class, 'index'])->name('investment.investment-status');
+    Route::get('/investment/delete-rejected/{id}', [InvestmentController::class, 'deleteRejected'])->name('investment.deleteRejected');
+    Route::get('/investment-report', [InvestmentController::class, 'report'])->name('investment.investment-report');
+    Route::get('/investment-expense', [InvestmentController::class, 'expense'])->name('investment.investment-expense');
+    Route::get('/investment/add-income', [InvestmentController::class, 'add'])->name('investment.add-income');
+    Route::get('/investment/add-expense', [InvestmentController::class, 'addexpense'])->name('investment.add-expense');
+    Route::post('/income/store', [InvestmentController::class, 'storeIncome'])->name('income.store');
+    Route::post('/expense/store', [InvestmentController::class, 'storeExpense'])->name('expense.store');
+    Route::get('/investment/{investment}/accept/{notification}', [InvestmentController::class, 'accept'])->name('investment.accept');
+    Route::get('/investment/{investment}/ignore/{notification}', [InvestmentController::class, 'ignore'])->name('investment.ignore');
 
-// === BAGIAN INVESTASI YANG DIPERBARUI ===
-Route::get('/invest', [InvestmentController::class, 'create'])->name('investment.create');
-Route::post('/invest', [InvestmentController::class, 'store'])->name('investment.store');
+    Route::get('/report-overview', [ReportController::class, 'overview'])->name('reports.overview');
 
-// INI RUTE BARU YANG DITAMBAHKAN untuk menampilkan status investasi spesifik milik pengguna
-Route::get('/investment/{investment}/status', [InvestmentController::class, 'showUserStatus'])->name('investment.show_status');
+    Route::get('/register-step1', [RegisterController::class, 'showStep1'])->name('register.step1');
+    Route::post('/register-step1', [RegisterController::class, 'handleStep1'])->name('register.step1.post');
+    Route::get('/register-step2', [RegisterController::class, 'showStep2'])->name('register.step2');
+    Route::post('/register-step2', [RegisterController::class, 'handleStep2'])->name('register.step2.post');
 
-// === RUTE BARU UNTUK MENANGANI AKSI APPROVE/REJECT DARI HALAMAN ADMIN ===
-Route::patch('/investment/{investment}/update-status', [InvestmentController::class, 'updateStatus'])->name('investment.updateStatus');
-// =========================================================================
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [LoginController::class, 'login']);
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Rute ini tetap dipertahankan karena mungkin digunakan di alur lain
-Route::get('/investment', [InvestmentController::class, 'approve'])->name('investment.approve');
-Route::get('/investment/{id}/details', [InvestmentController::class, 'show'])->name('investment.details');
-Route::get('/investment/status', [InvestmentController::class, 'status'])->name('investment.status');
-Route::get('/invest/investment-status', [InvestmentController::class, 'index'])->name('investment.investment-status');
-Route::get('/investment/delete-rejected/{id}', [InvestmentController::class, 'deleteRejected'])->name('investment.deleteRejected');
-Route::get('/investment-report', [InvestmentController::class, 'report'])->name('investment.investment-report');
-Route::get('/investment-expense', [InvestmentController::class, 'expense'])->name('investment.investment-expense');
-Route::get('/investment/add-income', [InvestmentController::class, 'add'])->name('investment.add-income');
-Route::get('/investment/add-expense', [InvestmentController::class, 'addexpense'])->name('investment.add-expense');
-Route::post('/income/store', [InvestmentController::class, 'storeIncome'])->name('income.store');
-Route::post('/expense/store', [InvestmentController::class, 'storeExpense'])->name('expense.store');
-// Rute untuk notifikasi, tidak perlu diubah
-Route::get('/investment/{investment}/accept/{notification}', [InvestmentController::class, 'accept'])->name('investment.accept');
-Route::get('/investment/{investment}/ignore/{notification}', [InvestmentController::class, 'ignore'])->name('investment.ignore');
-// =========================================
+    Route::get('/community/mentor', [MentorController::class, 'index'])->name('mentors.index');
+    Route::get('/community/mentor/{id}', [MentorController::class, 'show'])->name('mentors.show');
 
-Route::get('/report-overview', [ReportController::class, 'overview'])->name('reports.overview');
+    // Memperbaiki sintaks yang error dan menggabungkannya
+    Route::middleware('sudah_login')->group(function() {
+        Route::get('/mentor', [MentorController::class, 'index1'])->name('mentor.dashboard');
+        Route::put('/mentor/{mentor}', [MentorController::class, 'update'])->name('mentor.update');
+        Route::post('/experience/store', [MentorController::class, 'store'])->name('experience.store');
+        Route::post('/education/store', [MentorController::class, 'store1'])->name('education.store');
+        Route::post('/skills', [MentorController::class, 'store2'])->name('skills.store');
+    });
 
-Route::get('/register-step1', [RegisterController::class, 'showStep1'])->name('register.step1');
-Route::post('/register-step1', [RegisterController::class, 'handleStep1'])->name('register.step1.post');
-Route::get('/register-step2', [RegisterController::class, 'showStep2'])->name('register.step2');
-Route::post('/register-step2', [RegisterController::class, 'handleStep2'])->name('register.step2.post');
+    Route::get('/community/company', [CompanyReportController::class, 'comp'])->name('company.comp');
+    Route::get('/company-profile/{name}', [CompanyReportController::class, 'show'])->name('company.show');
+    Route::get('/community/company/profile', [CompanyReportController::class, 'index1'])->name('company.profile');
+    Route::post('/members/store', [CompanyReportController::class, 'store'])->name('members.store');
+    Route::get('/company-profiles', [CompanyReportController::class, 'profile'])->name('community.company-profiles');
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
-Route::get('/community/mentor', [MentorController::class, 'index'])->name('mentors.index');
-Route::get('/community/mentor/{id}', [MentorController::class, 'show'])->name('mentors.show');
-Route::get('/mentor', [MentorController::class, 'index1'])->name('mentor.dashboard');
-Route::post('/experience/store', [MentorController::class, 'store'])->name('experience.store');
-Route::get('/experience/create', [MentorController::class, 'create'])->name('experience.create');
-Route::post('/education/store', [MentorController::class, 'store1'])->name('education.store');
-Route::post('/skills', [MentorController::class, 'store2'])->name('skills.store');
-Route::get('/mentor/{mentor}/edit', [MentorController::class, 'edit'])->name('mentor.edit');
-Route::put('/mentor/{mentor}', [MentorController::class, 'update'])->name('mentor.update');
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard/edit', [MentorController::class, 'edit'])->name('dashboard.edit');
-    Route::post('/dashboard/update', [MentorController::class, 'update'])->name('dashboard.update');
-});
-
-
-Route::get('/community/company', [CompanyReportController::class, 'comp'])->name('company.comp');
-Route::get('/company-profile/{name}', [CompanyReportController::class, 'show'])->name('company.show');
-Route::get('/community/company/profile', [CompanyReportController::class, 'index1'])->name('company.profile');
-Route::post('/members/store', [CompanyReportController::class, 'store'])->name('members.store');
-Route::get('/company-profiles', [CompanyReportController::class, 'profile'])->name('community.company-profiles');
-
-Route::get('/step1-invest', [StepInvestController::class, 'showStep1'])->name('step-invest.step1-invest');
+    Route::get('/step1-invest', [StepInvestController::class, 'showStep1'])->name('step-invest.step1-invest');
 Route::post('/step1-invest', [StepInvestController::class, 'submitStep1'])->name('step1-invest.submit');
 Route::get('/step2-invest', [StepInvestController::class, 'showStep2'])->name('step-invest.step2-invest');
 Route::post('/step2-invest', [StepInvestController::class, 'submitStep2'])->name('step2-invest.submit');
@@ -159,35 +141,42 @@ Route::post('/step8-invest', [StepInvestController::class, 'submitStep8'])->name
 Route::get('/step9-invest', [StepInvestController::class, 'showStep9'])->name('step-invest.step9-invest');
 Route::post('/step9-invest', [StepInvestController::class, 'submitStep9'])->name('step9-invest.submit');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('community.dashboard-business');
-Route::get('/dashboard-invest', [DashboardController::class, 'indexInvest'])->name('community.dashboard-invest');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('community.dashboard-business');
+        Route::get('/dashboard-invest', [DashboardController::class, 'indexInvest'])
+        ->middleware('auth')
+        ->name('community.dashboard-invest');
+    
+    // ... semua route bussines-growth ...
+    Route::get('/bussines-growth1', [BusinessGrowthController::class, 'showStep1'])->name('bussines-growth1');
+Route::get('/bussines-growth2', [BusinessGrowthController::class, 'showStep2'])->name('bussines-growth2-page');
+Route::get('/bussines-growth3', [BusinessGrowthController::class, 'showStep3'])->name('bussines-growth3-page');
+Route::get('/bussines-growth4', [BusinessGrowthController::class, 'showStep4'])->name('bussines-growth4-page');
+Route::get('/bussines-growth5', [BusinessGrowthController::class, 'showStep5'])->name('bussines-growth5-page');
+Route::get('/bussines-growth6', [BusinessGrowthController::class, 'showStep6'])->name('bussines-growth6-page');
+Route::get('/bussines-growth7', [BusinessGrowthController::class, 'showStep7'])->name('bussines-growth7-page');
+Route::get('/bussines-growth8', [BusinessGrowthController::class, 'showStep8'])->name('bussines-growth8-page');
 
-Route::get('/bussines-growth1', [BusinessGrowthController::class, 'step1'])->name('bussines-growth1');
-Route::post('/bussines-growth2', [BusinessGrowthController::class, 'step2'])->name('bussines-growth2');
-Route::get('/bussines-growth2', function () { return view('myproject.bussines-growth2'); })->name('bussines-growth2-page');
-Route::post('/bussines-growth3', [BusinessGrowthController::class, 'step3'])->name('bussines-growth3');
-Route::get('/bussines-growth3', function () { return view('myproject.bussines-growth3'); })->name('bussines-growth3-page');
-Route::post('/bussines-growth4', [BusinessGrowthController::class, 'step4'])->name('bussines-growth4');
-Route::get('/bussines-growth4', function () { return view('myproject.bussines-growth4'); })->name('bussines-growth4-page');
-Route::post('/bussines-growth5', [BusinessGrowthController::class, 'step5'])->name('bussines-growth5');
-Route::get('/bussines-growth5', function () { return view('myproject.bussines-growth5'); })->name('bussines-growth5-page');
-Route::get('/bussines-growth6', [BusinessGrowthController::class, 'step6'])->name('bussines-growth6-page');
-Route::post('/bussines-growth6', [BusinessGrowthController::class, 'step6'])->name('bussines-growth6');
-Route::post('/bussines-growth7', [BusinessGrowthController::class, 'step7'])->name('bussines-growth7');
-Route::get('/bussines-growth7', function () { return view('myproject.bussines-growth7'); })->name('bussines-growth7-page');
-Route::get('/bussines-growth8', function () { return view('myproject.bussines-growth8'); })->name('bussines-growth8-page');
-Route::post('/bussines-growth8', [BusinessGrowthController::class, 'step8'])->name('bussines-growth8');
+// Rute untuk memproses data form (POST)
+Route::post('/bussines-growth2', [BusinessGrowthController::class, 'storeStep1'])->name('bussines-growth2');
+Route::post('/bussines-growth3', [BusinessGrowthController::class, 'storeStep2'])->name('bussines-growth3');
+Route::post('/bussines-growth4', [BusinessGrowthController::class, 'storeStep3'])->name('bussines-growth4');
+Route::post('/bussines-growth5', [BusinessGrowthController::class, 'storeStep4'])->name('bussines-growth5');
+Route::post('/bussines-growth6', [BusinessGrowthController::class, 'storeStep5'])->name('bussines-growth6');
+Route::post('/bussines-growth8', [BusinessGrowthController::class, 'storeStep7'])->name('bussines-growth8');
 
-Route::post('/members', [MemberController::class, 'store'])->name('members.store');
-Route::get('/members/{member}/edit', [MemberController::class, 'edit'])->name('members.edit');
-Route::put('/members/{member}', [MemberController::class, 'update'])->name('members.update');
-Route::delete('/members/{member}', [MemberController::class, 'destroy'])->name('members.destroy');
+    Route::post('/members', [MemberController::class, 'store'])->name('members.store');
+    Route::get('/members/{member}/edit', [MemberController::class, 'edit'])->name('members.edit');
+    Route::put('/members/{member}', [MemberController::class, 'update'])->name('members.update');
+    Route::delete('/members/{member}', [MemberController::class, 'destroy'])->name('members.destroy');
+    
+    Route::get('/myproject/metrics', [ProjectController::class, 'metrics'])->name('myproject.metrics');
 
-Route::get('/myproject/sdgs', [ProjectController::class, 'sdgs'])->name('myproject.sdgs');
+    Route::put('/dashboard/profile', [MentorController::class, 'updateProfile'])->name('mentor.profile.update');
 
-// Route untuk halaman Indikator
-Route::get('/myproject/indikator', [ProjectController::class, 'indicators'])->name('myproject.indikator');
+    // RUTE YANG ANDA PERBAIKI SEKARANG AKAN BERFUNGSI DENGAN BAIK
 
-// Route untuk halaman Metrik
-Route::get('/myproject/metrics', [ProjectController::class, 'metrics'])->name('myproject.metrics');
 
+});
+// =====================================================================
+//      AKHIR DARI WEB MIDDLEWARE GROUP
+// =====================================================================

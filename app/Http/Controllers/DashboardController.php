@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 
@@ -13,6 +14,8 @@ class DashboardController extends Controller
     }
     public function indexInvest()
     {
+        $user =Auth::user();
+
         // Statistik ringkas
         $stats = [
             'projects' => 312,
@@ -41,8 +44,8 @@ class DashboardController extends Controller
             ['date' => '2024-10-11', 'company' => 'Massive Dynamic', 'amount' => '$1,345,678'],
             ['date' => '2024-10-11', 'company' => 'DOSE Yearly Invest.', 'amount' => '$3,000,000'],
         ];
-
+        
         // Kirim semua data ke Blade
-        return view('community.dashboard-invest', compact('stats', 'company', 'txn'));
+        return view('community.dashboard-invest', compact('user','stats', 'company', 'txn'));
     }
 }
