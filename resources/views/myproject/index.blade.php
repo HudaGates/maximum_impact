@@ -79,23 +79,21 @@
                          style="object-fit: cover;">
 
                     <div class="card-body d-flex flex-column">
-                        {{-- Tampilkan tag pertama sebagai badge --}}
+                        
                         @php
                             $firstTag = $project->tag ? explode(',', $project->tag)[0] : 'General';
                         @endphp
                         <span class="badge bg-light text-dark align-self-start mb-2 fw-normal">{{ $firstTag }}</span>
                         
-                        {{-- Nama Proyek --}}
+                        
                         <h6 class="fw-bold card-title">{{ $project->name }}</h6>
                         
-                        {{-- Deskripsi Proyek dengan batasan karakter --}}
+                       
                         <p class="small text-muted flex-grow-1">{{ Str::limit($project->description, 110) }}</p>
                         
                         <div class="d-flex justify-content-between text-muted small mt-auto pt-2">
-                            {{-- Format tanggal menggunakan Carbon --}}
-                            <span><i class="bi bi-calendar3 me-1"></i>{{ \Carbon\Carbon::parse($project->created_at)->format('d M Y') }}</span>
                             
-                            {{-- Ambil nama pembuat dari relasi user --}}
+                            <span><i class="bi bi-calendar3 me-1"></i>{{ \Carbon\Carbon::parse($project->start_date)->format('d M Y') }}</span>
                             <span><i class="bi bi-person me-1"></i>{{ $project->user->name ?? Auth::user()->name }}</span>
                         </div>
                     </div>
@@ -105,7 +103,7 @@
         @endif
     </div>
 
-    {{-- Tombol (hanya tampil jika sudah ada proyek) --}}
+    
     @if(!$projects->isEmpty())
     <div class="text-center mt-4">
         <a href="{{ route('projects.create') }}" class="btn text-white px-5 py-2" style="background-color: #222d66; text-decoration: none;">Register New Project</a>
@@ -146,7 +144,6 @@
                         callbacks: {
                             label: function(context) {
                                 let count = context.raw;
-                                // Tambahkan 's' jika jumlahnya bukan 1
                                 return ` ${count} project${count !== 1 ? 's' : ''}`;
                             }
                         }
@@ -156,9 +153,7 @@
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            // Pastikan ticks (garis bantu y) hanya menampilkan angka bulat
                             precision: 0,
-                            // Atur stepSize agar sesuai dengan data, bisa dimulai dari 1
                             stepSize: Math.ceil(Math.max(...chartData) / 5) || 1
                         }
                     },

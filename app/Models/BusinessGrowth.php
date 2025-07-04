@@ -9,32 +9,22 @@ class BusinessGrowth extends Model
 {
     use HasFactory;
 
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
+    // Nama tabel sudah benar
     protected $table = 'business_growths';
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
+     * Ini adalah inti perbaikannya. Kolomnya sekarang generik.
      */
     protected $fillable = [
-        'goals_month_1',
-        'revenue_target_month_2',
-        'profit_target_month_1',
-        'team_dev_target_month_1',
-        'social_impact_target_month_1',
-        'strategy_month_1',
+        'user_id',
+        'month',
+        'year',
+        'goals',
+        'revenue_target',
+        'profit_target',
+        'team_dev_target',
+        'social_impact_target',
+        'strategy',
     ];
-
-    /**
-     * The attributes that should be cast.
-     * Kita tidak lagi membutuhkan casting ke array.
-     *
-     * @var array
-     */
-    protected $casts = [];
 }

@@ -1,4 +1,5 @@
 <?php
+// dalam file ...fix_business_growths_table_structure.php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -6,31 +7,33 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('business_growths', function (Blueprint $table) {
-            $table->id();
+        Schema::table('business_growths', function (Blueprint $table) {
+            // HAPUS kolom-kolom lama yang spesifik per bulan
+            $table->dropColumn([
+                'goals_month_1',
+                'revenue_target_month_2',
+                'profit_target_month_3',
+                'team_dev_target_month_4',
+                'social_impact_target_month_5',
+                'strategy_month_6',
+            ]);
 
-            // Kolom-kolom ini sekarang sesuai 1-to-1 dengan 'name' pada textarea di setiap view
-            $table->text('goals_month_1')->nullable();                  // Dari bussines-growth1.blade.php
-            $table->text('revenue_target_month_2')->nullable();         // Dari bussines-growth2.blade.php
-            $table->text('profit_target_month_1')->nullable();          // Dari bussines-growth3.blade.php
-            $table->text('team_dev_target_month_1')->nullable();       // Dari bussines-growth4.blade.php
-            $table->text('social_impact_target_month_1')->nullable();   // Dari bussines-growth5.blade.php
-            $table->text('strategy_month_1')->nullable();               // Dari bussines-growth7.blade.php
-            
-            $table->timestamps();
+            // TAMBAHKAN kolom-kolom baru yang dinamis dan generik
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->after('id');
+            $table->integer('month')->after('user_id'); // Untuk menyimpan bulan (1, 2, 3, dst.)
+            $table->integer('year')->after('month');  // Untuk menyimpan tahun (2024, 2025)
+
+            $table->text('goals')->nullable();
+            $table->text('revenue_target')->nullable();
+            $table->text('profit_target')->nullable();
+            $table->text('team_dev_target')->nullable();
+            $table->text('social_impact_target')->nullable();
+            $table->text('strategy')->nullable();
+
+            // Pastikan tidak ada data ganda untuk user di bulan dan tahun yang sama
+            $table->unique(['user_id', 'month', 'year']);
         });
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('business_growths');
     }
 };

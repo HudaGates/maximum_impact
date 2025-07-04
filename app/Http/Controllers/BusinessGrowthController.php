@@ -2,99 +2,142 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BusinessGrowth; // Import model yang benar
 use Illuminate\Http\Request;
-use App\Models\BusinessGrowth;
+use Illuminate\Support\Facades\Auth; // Untuk mendapatkan user yang login
+use Carbon\Carbon; // Untuk mendapatkan tahun saat ini
 
 class BusinessGrowthController extends Controller
 {
-    // --- FUNGSI UNTUK MENAMPILKAN HALAMAN (VIEW) ---
-    // Tidak ada perubahan di sini
-    public function showStep1() { return view('myproject.bussines-growth1'); }
-    public function showStep2() { return view('myproject.bussines-growth2'); }
-    public function showStep3() { return view('myproject.bussines-growth3'); }
-    public function showStep4() { return view('myproject.bussines-growth4'); }
-    public function showStep5() { return view('myproject.bussines-growth5'); }
-    public function showStep6() { return view('myproject.bussines-growth6'); }
-    public function showStep7() { return view('myproject.bussines-growth7'); }
-    public function showStep8() { return view('myproject.bussines-growth8'); }
-
-    // --- FUNGSI UNTUK MENYIMPAN DATA (STORE) ---
-
-    // Fungsi helper untuk mencari data di session atau membuat entri baru
-    private function findOrCreate(Request $request)
+    /**
+     * Fungsi private untuk mengambil data BusinessGrowth yang ada
+     * untuk user, bulan, dan tahun tertentu.
+     */
+    private function getGrowthData($month)
     {
-        $id = $request->session()->get('business_growth_id');
-        // findOrNew() akan mencari ID, jika tidak ada, ia akan membuat instance model baru
-        return BusinessGrowth::findOrNew($id);
+        // Pastikan bulan adalah angka yang valid sebelum melakukan query
+        if (!is_numeric($month)) {
+            return null;
+        }
+
+        return BusinessGrowth::where('user_id', Auth::id())
+                                ->where('month', $month)
+                                ->where('year', Carbon::now()->year)
+                                ->first(); // first() karena kita hanya mengharapkan satu entri per bulan
     }
 
-    // Menyimpan data dari view: bussines-growth1.blade.php
+    /**
+     * Fungsi private untuk menyimpan atau memperbarui data
+     * menggunakan 'updateOrCreate' yang efisien.
+     */
+    private function storeOrUpdateData(Request $request, array $dataToStore)
+    {
+        // Validasi bahwa 'month' ada dan merupakan angka
+        $validated = $request->validate([
+            'month' => 'required|integer|between:1,12'
+        ]);
+
+        BusinessGrowth::updateOrCreate(
+            [
+                // Kriteria untuk MENCARI record
+                'user_id' => Auth::id(),
+                'month'   => $validated['month'],
+                'year'    => Carbon::now()->year,
+            ],
+            // Data untuk DISIMPAN (jika tidak ditemukan) atau DIPERBARUI (jika ditemukan)
+            $dataToStore
+        );
+    }
+
+    // --- FUNGSI UNTUK MENAMPILKAN HALAMAN FORM (VIEWS) ---
+    // Setiap fungsi 'show' sekarang mengambil bulan dari URL dan mencari data yang sudah ada.
+
+    public function showStep1(Request $request) {
+        $month = $request->query('month');
+        $data = $this->getGrowthData($month);
+        return view('myproject.bussines-growth1', ['month' => $month, 'data' => $data]);
+    }
+
+    public function showStep2(Request $request) {
+        $month = $request->query('month');
+        $data = $this->getGrowthData($month);
+        return view('myproject.bussines-growth2', ['month' => $month, 'data' => $data]);
+    }
+
+    public function showStep3(Request $request) {
+        $month = $request->query('month');
+        $data = $this->getGrowthData($month);
+        return view('myproject.bussines-growth3', ['month' => $month, 'data' => $data]);
+    }
+
+    public function showStep4(Request $request) {
+        $month = $request->query('month');
+        $data = $this->getGrowthData($month);
+        return view('myproject.bussines-growth4', ['month' => $month, 'data' => $data]);
+    }
+
+    public function showStep5(Request $request) {
+        $month = $request->query('month');
+        $data = $this->getGrowthData($month);
+        return view('myproject.bussines-growth5', ['month' => $month, 'data' => $data]);
+    }
+    
+    // Halaman transisi, hanya meneruskan bulan
+    public function showStep6(Request $request) {
+        return view('myproject.bussines-growth6', ['month' => $request->query('month')]);
+    }
+
+    public function showStep7(Request $request) {
+        $month = $request->query('month');
+        $data = $this->getGrowthData($month);
+        return view('myproject.bussines-growth7', ['month' => $month, 'data' => $data]);
+    }
+
+    public function showStep8(Request $request) {
+        // Halaman "Selesai", hanya meneruskan bulan untuk tombol 'Back to Dashboard'
+        return view('myproject.bussines-growth8', ['month' => $request->query('month')]);
+    }
+
+    // --- FUNGSI UNTUK MEMPROSES DATA FORM (STORE) ---
+    // Setiap fungsi 'store' sekarang memanggil helper 'storeOrUpdateData'.
+    
     public function storeStep1(Request $request)
     {
-        $growth = BusinessGrowth::create([
-            'goals_month_1' => $request->input('goals_month_1')
-        ]);
-        $request->session()->put('business_growth_id', $growth->id);
-        return redirect()->route('bussines-growth2-page');
+        $this->storeOrUpdateData($request, ['goals' => $request->input('goals')]);
+        return redirect()->route('business-growth.step2.show', ['month' => $request->month]);
     }
 
-    // Menyimpan data dari view: bussines-growth2.blade.php
     public function storeStep2(Request $request)
     {
-        $growth = $this->findOrCreate($request);
-        $growth->revenue_target_month_2 = $request->input('revenue_target_month_2');
-        $growth->save();
-        return redirect()->route('bussines-growth3-page');
+        $this->storeOrUpdateData($request, ['revenue_target' => $request->input('revenue_target')]);
+        return redirect()->route('business-growth.step3.show', ['month' => $request->month]);
     }
 
-    // Menyimpan data dari view: bussines-growth3.blade.php
     public function storeStep3(Request $request)
     {
-        $growth = $this->findOrCreate($request);
-        $growth->profit_target_month_1 = $request->input('profit_target_month_1');
-        $growth->save();
-        return redirect()->route('bussines-growth4-page');
+        $this->storeOrUpdateData($request, ['profit_target' => $request->input('profit_target')]);
+        return redirect()->route('business-growth.step4.show', ['month' => $request->month]);
     }
 
-    // Menyimpan data dari view: bussines-growth4.blade.php
     public function storeStep4(Request $request)
     {
-        $growth = $this->findOrCreate($request);
-        $growth->team_dev_target_month_1 = $request->input('team_dev_target_month_1');
-        $growth->save();
-        return redirect()->route('bussines-growth5-page');
+        $this->storeOrUpdateData($request, ['team_dev_target' => $request->input('team_dev_target')]);
+        return redirect()->route('business-growth.step5.show', ['month' => $request->month]);
     }
     
-    // Menyimpan data dari view: bussines-growth5.blade.php
     public function storeStep5(Request $request)
     {
-        $growth = $this->findOrCreate($request);
-        $growth->social_impact_target_month_1 = $request->input('social_impact_target_month_1');
-        $growth->save();
-        return redirect()->route('bussines-growth6-page');
+        $this->storeOrUpdateData($request, ['social_impact_target' => $request->input('social_impact_target')]);
+        // Arahkan ke halaman transisi (step 6)
+        return redirect()->route('business-growth.step6.show', ['month' => $request->month]);
     }
     
-    // Menyimpan data dari view: bussines-growth7.blade.php
+    // Tidak ada storeStep6 karena itu hanya halaman transisi
+    
     public function storeStep7(Request $request)
     {
-        $growth = $this->findOrCreate($request);
-        $growth->strategy_month_1 = $request->input('strategy_month_1');
-        $growth->save();
-
-        // Hapus session ID setelah langkah terakhir
-        $request->session()->forget('business_growth_id');
-        
-        return redirect()->route('bussines-growth8-page');
+        $this->storeOrUpdateData($request, ['strategy' => $request->input('strategy')]);
+        // Setelah langkah terakhir, arahkan ke halaman "Selesai" (step 8)
+        return redirect()->route('business-growth.step8.show', ['month' => $request->month]);
     }
-
-
-    public function step8(Request $request)
-{
-    $month1 = $request->input('month1');
-    
-    return redirect()->route('bussines-growth8-page');
 }
-
-}
-
-

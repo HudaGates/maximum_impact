@@ -26,13 +26,14 @@ class ProjectController extends Controller
         $chartData = array_fill(0, 12, 0);
 
         // 3. Loop setiap proyek dan hitung berdasarkan bulan pembuatannya
-        foreach ($projects as $project) {
-            // Ambil bulan dari tanggal 'created_at' (misal: 1 untuk Januari, 2 untuk Februari, dst.)
-            $month = Carbon::parse($project->created_at)->month;
+        // Loop setiap proyek dan hitung berdasarkan bulan MULAI PROYEK (start_date)
+foreach ($projects as $project) {
+    // Ambil bulan dari tanggal 'start_date' (misal: 1 untuk Januari, 2 untuk Februari, dst.)
+    $month = Carbon::parse($project->start_date)->month;
             
-            // Tambahkan 1 ke bulan yang sesuai. Kurangi 1 karena array dimulai dari indeks 0.
-            $chartData[$month - 1]++;
-        }
+    // Tambahkan 1 ke bulan yang sesuai. Kurangi 1 karena array dimulai dari indeks 0.
+    $chartData[$month - 1]++;
+}
 
         // 4. Kirim semua data yang diperlukan ke view
         return view('myproject.index', [

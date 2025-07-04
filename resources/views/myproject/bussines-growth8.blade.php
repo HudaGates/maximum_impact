@@ -2,48 +2,40 @@
 
 @section('content')
 <style>
-  .decor-top-left {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 100px;
-    z-index: 1;
-  }
-
-  .decor-bottom-right {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 100px;
-    z-index: 1;
-  }
+  .decor-top-left { position: absolute; top: 20px; left: 20px; width: 100px; z-index: 1; }
+  .decor-bottom-right { position: absolute; bottom: 20px; right: 20px; width: 100px; z-index: 1; }
 
   .logo-m {
     position: absolute;
     width: 280px;
-    top: 40%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    opacity: 1;
+    opacity: 0.1; /* Opacity dikurangi agar lebih soft */
     z-index: 0;
   }
 
   .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     text-align: center;
     z-index: 2;
-    width: 100%;
-    max-width: 600px;
+    padding: 20px;
   }
 
   .message-text {
     font-size: 25px;
     color: #333;
     line-height: 1.6;
-    margin-bottom: 50px; /* Jarak dengan tombol */
+    margin-bottom: 40px; /* Jarak dengan tombol */
+    max-width: 600px;
   }
 
   .btn {
@@ -53,15 +45,15 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 100px;
+    width: 180px; /* Lebar ditambah agar pas dengan teks */
     text-align: center;
     display: inline-block;
-    margin-left: -400px; /* Tombol lebih ke kiri dari tengah */
-    margin-top: -100px; /* Menggeser tombol ke atas */
-}
+    text-decoration: none;
+  }
 
   .btn:hover {
     background-color: #18234b;
+    color: white;
   }
 </style>
 
@@ -73,12 +65,14 @@
 <img src="/images/logo-m.png" class="logo-m" alt="Logo M">
 
 <div class="content-wrapper">
+  {{-- Teks diubah agar lebih sesuai dengan halaman "Selesai" --}}
   <p class="message-text">
-   “You're amazing! You’ve made it through the first month successfully.
-    Now, let's evaluate your achievements from last month<br><br>
-    If  your business has no revenue yet, feel free to enter 0.”
+   Congratulations! Your goals and strategies for this month have been saved.
+   You can always come back to edit them from the dashboard.
   </p>
 
-  <a href="{{ route('strategy') }}" class="btn text-decoration-none">Next</a>
+  {{-- INTI PERBAIKANNYA ADA DI SINI --}}
+  {{-- Mengarahkan kembali ke dasbor dengan filter bulan yang benar --}}
+  <a href="{{ route('community.dashboard-business', ['month' => request('month')]) }}" class="btn">Back to Dashboard</a>
 </div>
 @endsection

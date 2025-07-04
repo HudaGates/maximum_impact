@@ -84,6 +84,7 @@ Route::post('/step9', [StepController::class, 'submitStep9'])->name('step9.submi
 Route::get('/strategy', [StrategyController::class, 'index'])->name('strategy.index');
 Route::get('/strategy/strategy', [StrategyController::class, 'index1'])->name('strategy.strategy');
 Route::get('/strategy', [StrategyController::class, 'index'])->name('strategy');
+Route::post('/strategy/strategy', [StrategyController::class, 'storeStrategy'])->name('strategy.store');
 
 
     Route::get('/invest', [InvestmentController::class, 'create'])->name('investment.create');
@@ -158,34 +159,42 @@ Route::post('/step9-invest', [StepInvestController::class, 'submitStep9'])->name
         ->name('community.dashboard-invest');
     
     // ... semua route bussines-growth ...
-    Route::get('/bussines-growth1', [BusinessGrowthController::class, 'showStep1'])->name('bussines-growth1');
-Route::get('/bussines-growth2', [BusinessGrowthController::class, 'showStep2'])->name('bussines-growth2-page');
-Route::get('/bussines-growth3', [BusinessGrowthController::class, 'showStep3'])->name('bussines-growth3-page');
-Route::get('/bussines-growth4', [BusinessGrowthController::class, 'showStep4'])->name('bussines-growth4-page');
-Route::get('/bussines-growth5', [BusinessGrowthController::class, 'showStep5'])->name('bussines-growth5-page');
-Route::get('/bussines-growth6', [BusinessGrowthController::class, 'showStep6'])->name('bussines-growth6-page');
-Route::get('/bussines-growth7', [BusinessGrowthController::class, 'showStep7'])->name('bussines-growth7-page');
-Route::get('/bussines-growth8', [BusinessGrowthController::class, 'showStep8'])->name('bussines-growth8-page');
-
-
-
 // Rute untuk menampilkan halaman (GET)
-Route::get('/bussines-growth1', [BusinessGrowthController::class, 'showStep1'])->name('bussines-growth1');
-Route::get('/bussines-growth2', [BusinessGrowthController::class, 'showStep2'])->name('bussines-growth2-page');
-Route::get('/bussines-growth3', [BusinessGrowthController::class, 'showStep3'])->name('bussines-growth3-page');
-Route::get('/bussines-growth4', [BusinessGrowthController::class, 'showStep4'])->name('bussines-growth4-page');
-Route::get('/bussines-growth5', [BusinessGrowthController::class, 'showStep5'])->name('bussines-growth5-page');
-Route::get('/bussines-growth6', [BusinessGrowthController::class, 'showStep6'])->name('bussines-growth6-page');
-Route::get('/bussines-growth7', [BusinessGrowthController::class, 'showStep7'])->name('bussines-growth7-page');
-Route::get('/bussines-growth8', [BusinessGrowthController::class, 'showStep8'])->name('bussines-growth8-page');
+// Hapus semua route "bussines-growth" yang lama dan ganti dengan blok ini.
 
-// Rute untuk memproses data form (POST)
-Route::post('/bussines-growth2', [BusinessGrowthController::class, 'storeStep1'])->name('bussines-growth2');
-Route::post('/bussines-growth3', [BusinessGrowthController::class, 'storeStep2'])->name('bussines-growth3');
-Route::post('/bussines-growth4', [BusinessGrowthController::class, 'storeStep3'])->name('bussines-growth4');
-Route::post('/bussines-growth5', [BusinessGrowthController::class, 'storeStep4'])->name('bussines-growth5');
-Route::post('/bussines-growth6', [BusinessGrowthController::class, 'storeStep5'])->name('bussines-growth6');
-Route::post('/bussines-growth8', [BusinessGrowthController::class, 'storeStep7'])->name('bussines-growth8');
+Route::prefix('business-growth')->name('business-growth.')->group(function () {
+    
+    // --- Langkah 1 ---
+    Route::get('/step1', [BusinessGrowthController::class, 'showStep1'])->name('step1.show');
+    Route::post('/step1', [BusinessGrowthController::class, 'storeStep1'])->name('step1.store');
+
+    // --- Langkah 2 ---
+    Route::get('/step2', [BusinessGrowthController::class, 'showStep2'])->name('step2.show');
+    Route::post('/step2', [BusinessGrowthController::class, 'storeStep2'])->name('step2.store');
+
+    // --- Langkah 3 ---
+    Route::get('/step3', [BusinessGrowthController::class, 'showStep3'])->name('step3.show');
+    Route::post('/step3', [BusinessGrowthController::class, 'storeStep3'])->name('step3.store');
+    
+    // --- Langkah 4 ---
+    Route::get('/step4', [BusinessGrowthController::class, 'showStep4'])->name('step4.show');
+    Route::post('/step4', [BusinessGrowthController::class, 'storeStep4'])->name('step4.store');
+
+    // --- Langkah 5 ---
+    Route::get('/step5', [BusinessGrowthController::class, 'showStep5'])->name('step5.show');
+    Route::post('/step5', [BusinessGrowthController::class, 'storeStep5'])->name('step5.store');
+    
+    // --- Langkah 6 (Halaman Transisi) ---
+    Route::get('/step6', [BusinessGrowthController::class, 'showStep6'])->name('step6.show');
+    // Tidak ada route POST untuk step 6 karena itu hanya halaman perantara
+
+    // --- Langkah 7 ---
+    Route::get('/step7', [BusinessGrowthController::class, 'showStep7'])->name('step7.show');
+    Route::post('/step7', [BusinessGrowthController::class, 'storeStep7'])->name('step7.store');
+
+    // --- Langkah 8 (Halaman Selesai) ---
+    Route::get('/step8', [BusinessGrowthController::class, 'showStep8'])->name('step8.show');
+});
 
     Route::post('/members', [MemberController::class, 'store'])->name('members.store');
     Route::get('/members/{member}/edit', [MemberController::class, 'edit'])->name('members.edit');
