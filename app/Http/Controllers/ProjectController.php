@@ -15,27 +15,17 @@ class ProjectController extends Controller
      */
      public function index()
     {
-        // 1. Ambil semua proyek milik user yang login
         $projects = Project::where('user_id', Auth::id())->latest()->get();
-
-        // 2. Siapkan data untuk chart
-        // Buat label untuk 12 bulan
         $chartLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        
-        // Buat array data dengan nilai awal 0 untuk setiap bulan
         $chartData = array_fill(0, 12, 0);
 
-        // 3. Loop setiap proyek dan hitung berdasarkan bulan pembuatannya
-        // Loop setiap proyek dan hitung berdasarkan bulan MULAI PROYEK (start_date)
-foreach ($projects as $project) {
-    // Ambil bulan dari tanggal 'start_date' (misal: 1 untuk Januari, 2 untuk Februari, dst.)
-    $month = Carbon::parse($project->start_date)->month;
-            
-    // Tambahkan 1 ke bulan yang sesuai. Kurangi 1 karena array dimulai dari indeks 0.
-    $chartData[$month - 1]++;
-}
+        foreach ($projects as $project) {
+            $month = Carbon::parse($project->created_at)->month;
+            if (isset($chartData[$month - 1])) {
+                $chartData[$month - 1]++;
+            }
+        }
 
-        // 4. Kirim semua data yang diperlukan ke view
         return view('myproject.index', [
             'projects' => $projects,
             'chartLabels' => $chartLabels,
@@ -46,25 +36,34 @@ foreach ($projects as $project) {
     /**
      * Menampilkan formulir untuk membuat proyek baru.
      */
-    public function create()
+    public function create(Request $request)
     {
-        // Definisikan semua tag yang bisa dipilih di formulir
-        $allTags = [
-            'Agriculture', 'Air', 'Biodiversity and Ecosystems', 'Climate',
-            'Diversity and Inclusion', 'Education', 'Employment', 'Energy',
-            'Financial Services', 'Health', 'Infrastructure', 'Land',
-            'Oceans and Coastal Zones', 'Pollution', 'Real Estate', 'Waste', 'Water',
-            'Smallholder Agriculture', 'Sustainable Agriculture', 'Food Security', 'Clean Air',
-            'Biodiversity and Ecosystem Conservation', 'Climate Change Mitigation',
-            'Climate Resilience and Adaptation', 'Gender Lens', 'Racial Equity',
-            'Access to Quality Education', 'Quality Jobs', 'Energy Access', 'Clean Energy',
-            'Energy Efficiency', 'Financial Inclusion', 'Access to Quality Healthcare',
-            'Nutrition', 'Resilient Infrastructure', 'Natural Resources Conservation',
-            'Sustainable Land Management'
-        ];
+        $selectedSdgs = $request->input('selected_sdgs', []);
+        
+        // Mengambil data form yang tersimpan dari session
+        $formData = $request->session()->get('project_form_data', []);
 
-        // Kirim variabel $allTags ke view
-        return view('myproject.create', ['allTags' => $allTags]);
+    // 3. Definisikan allTags
+    $allTags = [
+        'Agriculture', 'Air', 'Biodiversity and Ecosystems', 'Climate',
+        'Diversity and Inclusion', 'Education', 'Employment', 'Energy',
+        'Financial Services', 'Health', 'Infrastructure', 'Land',
+        'Oceans and Coastal Zones', 'Pollution', 'Real Estate', 'Waste', 'Water',
+        'Smallholder Agriculture', 'Sustainable Agriculture', 'Food Security', 'Clean Air',
+        'Biodiversity and Ecosystem Conservation', 'Climate Change Mitigation',
+        'Climate Resilience and Adaptation', 'Gender Lens', 'Racial Equity',
+        'Access to Quality Education', 'Quality Jobs', 'Energy Access', 'Clean Energy',
+        'Energy Efficiency', 'Financial Inclusion', 'Access to Quality Healthcare',
+        'Nutrition', 'Resilient Infrastructure', 'Natural Resources Conservation',
+        'Sustainable Land Management'
+    ];
+
+    // 4. Kirim data yang sudah benar ke view
+    return view('myproject.create', [
+            'allTags' => $allTags,
+            'selectedSdgs' => $selectedSdgs,
+            'formData' => $formData
+        ]);
     }
 
     /**
@@ -72,6 +71,19 @@ foreach ($projects as $project) {
      */
     public function store(Request $request)
     {
+
+        if ($request->input('action') == 'save_and_select_sdgs') {
+            
+            // Simpan semua input KECUALI token, action, dan semua input file
+            $request->session()->put('project_form_data', $request->except([
+                '_token', 'action', 'cover_image', 'pitch_deck', 'video'
+            ]));
+
+            // Arahkan ke halaman pemilihan SDG (sesuai alur terakhir)
+            return redirect()->route('sdgs.step1');
+        }
+
+
         // Validasi input dari formulir
         $request->validate([
             'name' => 'required|string|max:255',
@@ -96,22 +108,10 @@ foreach ($projects as $project) {
         // Gabungkan tanggal dari dropdown menjadi format yang bisa dibaca oleh Carbon
         $startDateString = $request->start_day . '-' . $request->start_month . '-' . $request->start_year;
         $endDateString = $request->end_day . '-' . $request->end_month . '-' . $request->end_year;
-        
-        // Proses upload file jika ada
-        $coverImagePath = null;
-        if ($request->hasFile('cover_image')) {
-            $coverImagePath = $request->file('cover_image')->store('project_covers', 'public');
-        }
 
-        $pitchDeckPath = null;
-        if ($request->hasFile('pitch_deck')) {
-            $pitchDeckPath = $request->file('pitch_deck')->store('pitch_decks', 'public');
-        }
-
-        $videoPath = null;
-        if ($request->hasFile('video')) {
-            $videoPath = $request->file('video')->store('videos', 'public');
-        }
+        $coverImagePath = $request->hasFile('cover_image') ? $request->file('cover_image')->store('project_covers', 'public') : null;
+        $pitchDeckPath = $request->hasFile('pitch_deck') ? $request->file('pitch_deck')->store('pitch_decks', 'public') : null;
+        $videoPath = $request->hasFile('video') ? $request->file('video')->store('videos', 'public') : null;
         
         // Buat entri baru di tabel 'projects'
         Project::create([
@@ -129,17 +129,28 @@ foreach ($projects as $project) {
             'category' => $request->category,
             'investment_needs' => $request->investment_needs,
             'roadmap' => $request->roadmap,
+            'sdgs_data' => $request->sdgs_data,
         ]);
 
         // Arahkan kembali ke halaman daftar proyek dengan pesan sukses
+        $request->session()->forget(['project_form_data', 'selected_sdgs']);
+
         return redirect()->route('myproject.index')->with('success', 'Project has been registered successfully!');
     }
-
     // METHOD DI BAWAH INI TIDAK DIUBAH AGAR FUNGSIONALITAS LAIN TETAP BERJALAN
     
     public function sdgs()
     {
-        return view('myproject.sdgs');
+        $allSdgs = [ /* ... data lengkap SDG Anda (dengan id, name, image) ... */ ];
+        $previouslySelected = session('selected_sdgs', []);
+        return view('myproject.sdgs', compact('allSdgs', 'previouslySelected'));
+    }
+
+    public function saveSdgsAndGoToIndicators(Request $request)
+    {
+        $request->validate(['sdgs' => 'nullable|array']);
+        $request->session()->put('selected_sdgs', $request->input('sdgs', []));
+        return redirect()->route('myproject.indikator'); // Lanjut ke halaman selanjutnya
     }
 
     public function indicators()
@@ -147,9 +158,10 @@ foreach ($projects as $project) {
         return view('myproject.indikator');
     }
 
-   public function metrics()
+   public function metrics(Request $request)
     {
         $metrics = [
+            // Your metric data here...
             [
                 'id' => 1,
                 'title' => 'Client Individuals: Smallholder',
@@ -174,5 +186,28 @@ foreach ($projects as $project) {
         ];
 
         return view('myproject.metrics', compact('metrics'));
-        }
+    }
+
+    /**
+     * Ini method KUNCI. Dipanggil di akhir untuk kembali ke form utama.
+     */
+    public function saveFinalSelectionAndReturn(Request $request)
+    {
+        // 1. Validasi input untuk memastikan tipenya array (meskipun kosong)
+        $request->validate([
+            'selected_metrics' => 'nullable|array'
+        ]);
+        
+        // 2. Ambil array berisi judul metrik yang dipilih dari form
+        $selectedData = $request->input('selected_metrics', []);
+
+        // 3. Hapus data lama dari session untuk menghindari konflik
+        $request->session()->forget(['selected_sdgs', 'selected_metrics']);
+
+        // 4. Arahkan kembali ke halaman create, sambil membawa data pilihan di URL
+        // URL akan terlihat seperti: /projects/create?selected_sdgs[]=Judul+Metrik+1&selected_sdgs[]=Judul+Metrik+2
+        return redirect()->route('projects.create', [
+            'selected_sdgs' => $selectedData
+        ]);
+    }
 }

@@ -71,7 +71,8 @@ Route::post('/step9', [StepController::class, 'submitStep9'])->name('step9.submi
     Route::get('/myprojects/sdgs', [ProjectController::class, 'sdgs'])->name('myproject.sdgs');
     Route::get('/myproject/create/sdgs/indicators', [ProjectController::class, 'indicators'])->name('myproject.indikator');
     Route::get('/myproject/create/sdgs/metrics', [ProjectController::class, 'metrics'])->name('myproject.metrics');
-    Route::resource('projects', ProjectController::class);
+    Route::post('/myproject/save-selection', [ProjectController::class, 'saveFinalSelectionAndReturn'])->name('projects.saveSelection');
+    
 
     Route::get('/strategy', [StrategyController::class, 'index'])->name('strategy.index');
     Route::get('/strategy/strategy', [StrategyController::class, 'index1'])->name('strategy.strategy');

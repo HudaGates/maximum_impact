@@ -241,11 +241,25 @@
                 </div>
 
                 <h5 class="fw-bold mt-4">Impact and Metrics</h5>
+<div class="mb-3">
+    <label class="form-label">SDGs Categories, Indicators, and Metrics</label>
+    
+    {{-- Area untuk menampilkan badge/hasil pilihan --}}
+    <div class="border rounded p-3 mb-2">
+        <div id="sdgsPreviewContainer" class="d-flex flex-wrap align-items-center min-vh-2" style="gap: 8px;">
+            {{-- Placeholder ini akan hilang jika ada data --}}
+            <span id="sdgPlaceholder" class="text-muted fst-italic">No SDGs selected</span>
+        </div>
+    </div>
 
-                <div class="mb-3">
-                    <label class="form-label">SDGs Categories, Indicators, and Metrics</label>
-                    <a href="{{ route('myproject.sdgs') }}" class="btn btn-outline-primary form-control text-center">Add SDGs, Indicators, Metric</a>
-                </div>
+    {{-- Tombol untuk memulai/mengubah alur pemilihan --}}
+    <a href="{{ route(name: 'myproject.sdgs') }}" class="btn btn-outline-primary form-control text-center">
+        Add/Edit SDGs Selection
+    </a>
+
+    {{-- Input tersembunyi yang akan menyimpan data untuk dikirim ke database --}}
+    <input type="hidden" name="sdgs_data" id="selectedSdgsInput">
+</div>
 
                 <h5 class="fw-bold mt-4">Maps</h5>
                 <div class="mb-3">
@@ -290,58 +304,80 @@
 @endsection
 
 @push('scripts')
-{{-- SCRIPT UNTUK TAG MODAL --}}
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    
+    // --- BAGIAN UNTUK SDGs (YANG BARU & LENGKAP) ---
+    const selectedSdgsData = @json($selectedSdgs ?? []);
+    const sdgsPreviewContainer = document.getElementById('sdgsPreviewContainer');
+    const selectedSdgsInput = document.getElementById('selectedSdgsInput');
+    const sdgPlaceholder = document.getElementById('sdgPlaceholder');
+
+    function updateSdgsPreview() {
+        if (selectedSdgsData && selectedSdgsData.length > 0) {
+            sdgPlaceholder.style.display = 'none';
+            sdgsPreviewContainer.innerHTML = '';
+            selectedSdgsInput.value = selectedSdgsData.join(', ');
+
+            selectedSdgsData.forEach(sdg => {
+                const badge = document.createElement('span');
+                badge.className = 'badge';
+                badge.textContent = sdg;
+                badge.style.cssText = "font-size: 0.9em; padding: 0.5em 0.75em; background-color: #e9e9f7; color: #1F2A69; border-radius: 6px; font-weight: 500;";
+                sdgsPreviewContainer.appendChild(badge);
+            });
+        } else {
+            sdgPlaceholder.style.display = 'inline';
+        }
+    }
+    // Panggil fungsi untuk menampilkan SDG saat halaman dimuat
+    updateSdgsPreview();
+
+
+    // --- BAGIAN UNTUK TAGS MODAL (KODE LAMA ANDA, SUDAH BENAR) ---
     const saveTagsButton = document.getElementById('saveTagsButton');
     const selectedTagsInput = document.getElementById('selectedTagsInput');
     const tagsPreviewContainer = document.getElementById('tagsPreviewContainer');
     const tagPlaceholder = document.getElementById('tagPlaceholder');
     const tagModalElement = document.getElementById('tagModal');
-    const tagModal = new bootstrap.Modal(tagModalElement);
+    if (tagModalElement) {
+        const tagModal = new bootstrap.Modal(tagModalElement);
 
-    function updateTagsPreview() {
-        // Ambil nilai dari input tersembunyi
-        const tags = selectedTagsInput.value ? selectedTagsInput.value.split(',') : [];
-        
-        // Kosongkan container preview
-        tagsPreviewContainer.innerHTML = '';
-        
-        if (tags.length > 0 && tags[0] !== '') {
-            if (tagPlaceholder) tagPlaceholder.style.display = 'none';
-            // Jika ada tag, buat badge untuk setiap tag
-            tags.forEach(tag => {
-                const badge = document.createElement('span');
-                badge.className = 'badge';
-                badge.textContent = tag;
-                tagsPreviewContainer.appendChild(badge);
-            });
-        } else {
-            if (tagPlaceholder) tagPlaceholder.style.display = 'inline';
+        function updateTagsPreview() {
+            const tags = selectedTagsInput.value ? selectedTagsInput.value.split(',') : [];
+            tagsPreviewContainer.innerHTML = '';
+            if (tags.length > 0 && tags[0] !== '') {
+                if (tagPlaceholder) tagPlaceholder.style.display = 'none';
+                tags.forEach(tag => {
+                    const badge = document.createElement('span');
+                    badge.className = 'badge';
+                    badge.textContent = tag;
+                    tagsPreviewContainer.appendChild(badge);
+                });
+            } else {
+                if (tagPlaceholder) tagPlaceholder.style.display = 'inline';
+            }
         }
-    }
 
-    // Event listener saat modal akan ditampilkan
-    tagModalElement.addEventListener('show.bs.modal', function () {
-        const previouslySelectedTags = selectedTagsInput.value.split(',').filter(t => t);
-        document.querySelectorAll('.tag-checkbox').forEach(checkbox => {
-            checkbox.checked = previouslySelectedTags.includes(checkbox.value);
+        tagModalElement.addEventListener('show.bs.modal', function () {
+            const previouslySelectedTags = selectedTagsInput.value.split(',').filter(t => t);
+            document.querySelectorAll('.tag-checkbox').forEach(checkbox => {
+                checkbox.checked = previouslySelectedTags.includes(checkbox.value);
+            });
         });
-    });
 
-    // Event listener untuk tombol 'Save' di modal
-    saveTagsButton.addEventListener('click', function () {
-        const selectedTags = [];
-        document.querySelectorAll('.tag-checkbox:checked').forEach(checkbox => {
-            selectedTags.push(checkbox.value);
+        saveTagsButton.addEventListener('click', function () {
+            const selectedTags = [];
+            document.querySelectorAll('.tag-checkbox:checked').forEach(checkbox => {
+                selectedTags.push(checkbox.value);
+            });
+            selectedTagsInput.value = selectedTags.join(',');
+            updateTagsPreview();
+            tagModal.hide();
         });
-        selectedTagsInput.value = selectedTags.join(',');
+
         updateTagsPreview();
-        tagModal.hide();
-    });
-
-    // Panggil fungsi sekali saat halaman dimuat untuk menampilkan data `old()` jika ada
-    updateTagsPreview();
+    }
 });
 </script>
 @endpush
